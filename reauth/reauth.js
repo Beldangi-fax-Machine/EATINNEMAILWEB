@@ -5,6 +5,6 @@ const supabase = window.supabase.createClient(
 
 supabase.auth.onAuthStateChange((event, session) => {
     if (event === 'USER_UPDATED') {
-        window.location.href = 'https://geteatinn.app'
+        window.location.href = 'https://eatinn.org'
     }
 })
