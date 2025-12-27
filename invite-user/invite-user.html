@@ -13,18 +13,72 @@
             background-color: #f5f5f5;
         }
         .container {
-            text-align: center;
             background: white;
             padding: 40px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #4338CA;
+        }
+        button:disabled {
+            background-color: #9CA3AF;
+            cursor: not-allowed;
+        }
+        #message {
+            margin-top: 15px;
+            text-align: center;
+            color: #666;
+        }
+        .password-form {
+            display: none;
+        }
+        .loading {
+            display: block;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Processing your invitation...</h2>
-        <p>Please wait while we set up your account.</p>
+        <div class="loading" id="loading">
+            <h2>Processing your invitation...</h2>
+            <p>Please wait while we set up your account.</p>
+        </div>
+        <div class="password-form" id="passwordForm">
+            <h2>Set Your Password</h2>
+            <p>Create a password to complete your account setup.</p>
+            <input type="password" id="newPassword" placeholder="Enter password (min 6 characters)" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+            <button onclick="setPassword()" id="submitBtn">Create Account</button>
+            <p id="message"></p>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="invite-user.js"></script>
