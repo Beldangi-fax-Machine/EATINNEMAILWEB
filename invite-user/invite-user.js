@@ -5,41 +5,181 @@ const supabase = window.supabase.createClient(
 
 let sessionReady = false
 
-function showError(message) {
-    document.getElementById('loading').innerHTML = `
-        <h2 style="color: #dc2626;">Invitation Failed</h2>
-        <p>${message}</p>
-        <a href="https://eatinn.org" style="color: #4F46E5;">Return to Home</a>
-    `
+const loadingState = document.getElementById('loadingState')
+const formState = document.getElementById('formState')
+const successState = document.getElementById('successState')
+const errorState = document.getElementById('errorState')
+const errorMessageEl = document.getElementById('errorMessage')
+const message = document.getElementById('message')
+const submitBtn = document.getElementById('submitBtn')
+const btnText = document.getElementById('btnText')
+const btnSpinner = document.getElementById('btnSpinner')
+const newPasswordInput = document.getElementById('newPassword')
+const confirmPasswordInput = document.getElementById('confirmPassword')
+
+function showState(state) {
+    loadingState.classList.add('hidden')
+    formState.classList.add('hidden')
+    successState.classList.add('hidden')
+    errorState.classList.add('hidden')
+    state.classList.remove('hidden')
 }
 
-function showPasswordForm() {
-    document.getElementById('loading').style.display = 'none'
-    document.getElementById('passwordForm').style.display = 'block'
+function showForm() {
+    showState(formState)
 }
 
-async function handleInvite() {
-    const hash = window.location.hash
+function showSuccess() {
+    showState(successState)
+    setTimeout(() => {
+        window.location.href = 'https://geteatinn.app'
+    }, 3000)
+}
+
+function showFatalError(msg) {
+    errorMessageEl.textContent = msg || 'The invitation may have expired or is invalid'
+    showState(errorState)
+}
+
+function showMessage(text, type) {
+    message.textContent = text
+    message.className = `message show ${type}`
+}
+
+function hideMessage() {
+    message.className = 'message'
+}
+
+function setLoading(loading) {
+    submitBtn.disabled = loading
+    btnText.textContent = loading ? 'Creating...' : 'Create Account'
+    btnSpinner.classList.toggle('hidden', !loading)
+}
+
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId)
+    if (input.type === 'password') {
+        input.type = 'text'
+        btn.textContent = '🙈'
+    } else {
+        input.type = 'password'
+        btn.textContent = '👁️'
+    }
+}
+
+function checkPasswordStrength(password) {
+    let strength = 0
+    if (password.length >= 6) strength++
+    if (password.length >= 8) strength++
+    if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++
+    if (/[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password)) strength++
+    return strength
+}
+
+function updateStrengthIndicator(password) {
+    const strength = checkPasswordStrength(password)
+    const bars = ['bar1', 'bar2', 'bar3', 'bar4']
+    const texts = ['Too weak', 'Weak', 'Good', 'Strong']
+    const classes = ['weak', 'weak', 'medium', 'strong']
     
-    // Check for error in URL params first
-    const params = new URLSearchParams(window.location.search)
-    const errorDescription = params.get('error_description')
-    if (errorDescription) {
-        showError(errorDescription)
+    bars.forEach((barId, index) => {
+        const bar = document.getElementById(barId)
+        bar.className = 'strength-bar'
+        if (index < strength) {
+            bar.classList.add(classes[strength - 1])
+        }
+    })
+    
+    const strengthText = document.getElementById('strengthText')
+    if (password.length === 0) {
+        strengthText.textContent = 'Use at least 6 characters'
+    } else if (strength === 0) {
+        strengthText.textContent = 'Too short'
+    } else {
+        strengthText.textContent = texts[strength - 1]
+    }
+}
+
+newPasswordInput.addEventListener('input', (e) => {
+    updateStrengthIndicator(e.target.value)
+    hideMessage()
+})
+
+confirmPasswordInput.addEventListener('input', () => {
+    hideMessage()
+})
+
+async function setPassword() {
+    const password = newPasswordInput.value
+    const confirmPassword = confirmPasswordInput.value
+    
+    hideMessage()
+    
+    if (!sessionReady) {
+        showMessage('Session expired. Please request a new invitation.', 'error')
         return
     }
     
-    if (hash && hash.includes('access_token')) {
-        const { data: { session }, error } = await supabase.auth.getSession()
+    if (!password || password.length < 6) {
+        showMessage('Password must be at least 6 characters', 'error')
+        newPasswordInput.classList.add('error')
+        return
+    }
+    
+    if (password !== confirmPassword) {
+        showMessage('Passwords do not match', 'error')
+        confirmPasswordInput.classList.add('error')
+        return
+    }
+    
+    newPasswordInput.classList.remove('error')
+    confirmPasswordInput.classList.remove('error')
+    
+    setLoading(true)
+    
+    try {
+        const { error } = await supabase.auth.updateUser({
+            password: password
+        })
         
         if (error) {
-            showError(error.message)
-            return
+            showMessage(error.message, 'error')
+            setLoading(false)
+        } else {
+            showSuccess()
         }
-        
-        if (session) {
-            sessionReady = true
-            showPasswordForm()
+    } catch (err) {
+        showMessage('An unexpected error occurred', 'error')
+        setLoading(false)
+    }
+}
+
+async function handleInvite() {
+    const params = new URLSearchParams(window.location.search)
+    const errorDescription = params.get('error_description')
+    if (errorDescription) {
+        showFatalError(errorDescription)
+        return
+    }
+
+    const hash = window.location.hash
+    
+    if (hash && hash.includes('access_token')) {
+        try {
+            const { data: { session }, error } = await supabase.auth.getSession()
+            
+            if (error) {
+                showFatalError(error.message)
+                return
+            }
+            
+            if (session) {
+                sessionReady = true
+                showForm()
+                return
+            }
+        } catch (err) {
+            showFatalError('An unexpected error occurred')
             return
         }
     }
@@ -48,60 +188,17 @@ async function handleInvite() {
 supabase.auth.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_IN' && session) {
         sessionReady = true
-        showPasswordForm()
+        showForm()
     }
 })
-
-async function setPassword() {
-    const password = document.getElementById('newPassword').value
-    const confirmPassword = document.getElementById('confirmPassword').value
-    const message = document.getElementById('message')
-    const submitBtn = document.getElementById('submitBtn')
-    
-    if (!sessionReady) {
-        message.innerText = 'Session expired. Please request a new invite.'
-        message.style.color = '#dc2626'
-        return
-    }
-    
-    if (!password || password.length < 6) {
-        message.innerText = 'Password must be at least 6 characters'
-        message.style.color = '#dc2626'
-        return
-    }
-    
-    if (password !== confirmPassword) {
-        message.innerText = 'Passwords do not match'
-        message.style.color = '#dc2626'
-        return
-    }
-    
-    submitBtn.disabled = true
-    submitBtn.innerText = 'Creating Account...'
-    
-    const { error } = await supabase.auth.updateUser({
-        password: password
-    })
-    
-    if (error) {
-        message.innerText = error.message
-        message.style.color = '#dc2626'
-        submitBtn.disabled = false
-        submitBtn.innerText = 'Create Account'
-    } else {
-        message.innerText = 'Account created! Redirecting...'
-        message.style.color = '#16a34a'
-        setTimeout(() => {
-            window.location.href = 'https://eatinn.org'
-        }, 2000)
-    }
-}
 
 handleInvite()
 
 setTimeout(() => {
-    const loading = document.getElementById('loading')
-    if (loading.style.display !== 'none' && loading.querySelector('h2').textContent.includes('Processing')) {
-        showError('Invitation processing timed out. The link may have expired.')
+    if (!loadingState.classList.contains('hidden')) {
+        showFatalError('Invitation processing timed out. The link may have expired.')
     }
-}, 10000)
+}, 15000)
+
+window.togglePassword = togglePassword
+window.setPassword = setPassword

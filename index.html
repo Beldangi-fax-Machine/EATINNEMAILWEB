@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eatinn - Support</title>
+    <title>Eat-Inn - Support Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,40 +15,75 @@
         }
 
         :root {
-            --primary: #FF6B35;
-            --primary-dark: #E55A2B;
-            --secondary: #2D3436;
-            --accent: #00B894;
-            --bg: #FFFBF7;
-            --card-bg: #FFFFFF;
-            --text: #2D3436;
-            --text-muted: #636E72;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --bg-card-hover: #222222;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --accent-orange: #FF6B35;
+            --accent-green: #00B894;
+            --accent-purple: #A855F7;
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.15);
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Decorative background */
-        .bg-pattern {
+        /* Gradient orbs background */
+        .bg-effects {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 184, 148, 0.08) 0%, transparent 40%);
             pointer-events: none;
             z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 184, 148, 0.2) 0%, transparent 70%);
+            bottom: -100px;
+            right: -100px;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 24px;
             position: relative;
@@ -57,10 +92,11 @@
 
         /* Header */
         header {
-            padding: 32px 0;
+            padding: 24px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
@@ -71,332 +107,581 @@
         }
 
         .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 14px;
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-orange), #ff8f65);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
+            font-size: 22px;
         }
 
         .logo-text {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
-            color: var(--secondary);
+            color: var(--text-primary);
             letter-spacing: -0.5px;
         }
 
-        .badge {
-            background: var(--accent);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 10px 20px;
+            border-radius: 8px;
             font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
         /* Hero */
         .hero {
             text-align: center;
-            padding: 60px 0 80px;
+            padding: 100px 0 80px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
         }
 
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-green));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
+            font-size: 1.125rem;
+            color: var(--text-secondary);
             max-width: 500px;
             margin: 0 auto;
+            line-height: 1.7;
         }
 
-        /* Support Cards */
+        /* Support Grid */
+        .support-section {
+            padding: 40px 0 80px;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--accent-orange);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 48px;
+            letter-spacing: -1px;
+        }
+
         .support-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .support-card {
-            background: var(--card-bg);
-            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 32px;
             text-decoration: none;
             color: inherit;
             transition: all 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-green));
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .support-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+
+        .support-card:hover::before {
+            opacity: 1;
         }
 
         .card-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 24px;
             margin-bottom: 20px;
+            background: rgba(255,255,255,0.05);
         }
 
-        .card-icon.orange { background: rgba(255, 107, 53, 0.12); }
-        .card-icon.green { background: rgba(0, 184, 148, 0.12); }
-        .card-icon.blue { background: rgba(9, 132, 227, 0.12); }
-
         .support-card h3 {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 600;
             margin-bottom: 8px;
         }
 
         .support-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .card-arrow {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .support-card:hover .card-arrow {
+            color: var(--accent-orange);
+            transform: translateX(4px);
         }
 
         /* FAQ Section */
         .faq-section {
-            margin-bottom: 80px;
+            padding: 60px 0 100px;
         }
 
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 32px;
-            text-align: center;
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .faq-item {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 24px 28px;
-            margin-bottom: 16px;
-            border: 1px solid rgba(0,0,0,0.05);
-            cursor: pointer;
-            transition: all 0.2s ease;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .faq-item:hover {
-            border-color: var(--primary);
+            border-color: var(--border-hover);
         }
 
         .faq-question {
+            padding: 20px 24px;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: var(--primary);
-            font-weight: 400;
+        .faq-question:hover {
+            background: rgba(255,255,255,0.02);
         }
 
-        .faq-item.open .faq-question::after {
-            content: '−';
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .faq-item.open .faq-icon {
+            background: var(--accent-orange);
+            color: white;
+            transform: rotate(45deg);
         }
 
         .faq-answer {
-            color: var(--text-muted);
-            margin-top: 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
             max-height: 0;
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         .faq-item.open .faq-answer {
-            margin-top: 16px;
             max-height: 200px;
+            padding: 0 24px 20px;
         }
 
         /* Contact CTA */
-        .contact-cta {
-            background: linear-gradient(135deg, var(--secondary) 0%, #1a1f20 100%);
+        .contact-section {
+            padding: 60px 0 100px;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255,107,53,0.05) 100%);
+            border: 1px solid var(--border);
             border-radius: 24px;
-            padding: 48px;
+            padding: 60px;
             text-align: center;
-            color: white;
-            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .contact-cta h2 {
-            font-size: 1.75rem;
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-orange), transparent);
+        }
+
+        .contact-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 12px;
+            letter-spacing: -1px;
         }
 
-        .contact-cta p {
-            opacity: 0.8;
-            margin-bottom: 28px;
+        .contact-card p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .contact-btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--accent-orange), #ff8f65);
             color: white;
-            padding: 14px 32px;
+            padding: 16px 32px;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
         }
 
         .contact-btn:hover {
-            background: var(--primary-dark);
-            transform: scale(1.02);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
         }
 
         /* Footer */
         footer {
-            text-align: center;
-            padding: 32px 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(0,0,0,0.06);
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
         }
 
-        footer a {
-            color: var(--primary);
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             text-decoration: none;
         }
 
-        footer a:hover {
+        .footer-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-orange), #ff8f65);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .footer-logo span {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer-text a {
+            color: var(--accent-orange);
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
             text-decoration: underline;
         }
 
-        @media (max-width: 600px) {
+        .footer-company {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
             .hero {
-                padding: 40px 0 60px;
+                padding: 60px 0 50px;
             }
-            .contact-cta {
-                padding: 32px 24px;
+            .contact-card {
+                padding: 40px 24px;
             }
-            header {
+            .footer-content {
                 flex-direction: column;
-                gap: 16px;
+                text-align: center;
+            }
+            .footer-left {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-pattern"></div>
+    <div class="bg-effects">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
     
     <div class="container">
         <header>
             <a href="/" class="logo">
                 <div class="logo-icon">🍽️</div>
-                <span class="logo-text">Eatinn</span>
+                <span class="logo-text">Eat-Inn</span>
             </a>
-            <span class="badge">Support Center</span>
+            <nav class="nav-links">
+                <a href="#support">Support</a>
+                <a href="#faq">FAQ</a>
+                <a href="https://geteatinn.app" class="btn-primary">Visit App</a>
+            </nav>
         </header>
 
         <section class="hero">
-            <h1>How can we <span>help you?</span></h1>
-            <p>Find answers to common questions or get in touch with our support team.</p>
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Support Center
+            </div>
+            <h1>How can we <span class="gradient-text">help you?</span></h1>
+            <p>Find answers to common questions or get in touch with our support team. We're here to help you get the most out of Eat-Inn.</p>
         </section>
 
-        <div class="support-grid">
-            <a href="mailto:support@eatinn.org" class="support-card">
-                <div class="card-icon orange">📧</div>
-                <h3>Email Support</h3>
-                <p>Send us a message and we'll get back to you within 24 hours.</p>
-            </a>
-            <a href="#faq" class="support-card">
-                <div class="card-icon green">❓</div>
-                <h3>FAQs</h3>
-                <p>Quick answers to the most common questions about Eatinn.</p>
-            </a>
-            <a href="#contact" class="support-card">
-                <div class="card-icon blue">💬</div>
-                <h3>Get in Touch</h3>
-                <p>Have feedback or suggestions? We'd love to hear from you.</p>
-            </a>
-        </div>
+        <section class="support-section" id="support">
+            <div class="section-label">Get Help</div>
+            <h2 class="section-title">Support Options</h2>
+            
+            <div class="support-grid">
+                <a href="mailto:support@eatinn.org" class="support-card">
+                    <div class="card-icon">📧</div>
+                    <h3>Email Support</h3>
+                    <p>Send us a message and we'll get back to you within 24 hours.</p>
+                    <span class="card-arrow">→</span>
+                </a>
+                <a href="#faq" class="support-card">
+                    <div class="card-icon">❓</div>
+                    <h3>FAQs</h3>
+                    <p>Quick answers to the most common questions about Eat-Inn.</p>
+                    <span class="card-arrow">→</span>
+                </a>
+                <a href="https://geteatinn.app" class="support-card">
+                    <div class="card-icon">🚀</div>
+                    <h3>Join Waitlist</h3>
+                    <p>Be the first to know when new features are available.</p>
+                    <span class="card-arrow">→</span>
+                </a>
+            </div>
+        </section>
 
         <section class="faq-section" id="faq">
+            <div class="section-label">FAQ's</div>
             <h2 class="section-title">Frequently Asked Questions</h2>
             
-            <div class="faq-item">
-                <div class="faq-question">What is Eatinn?</div>
-                <div class="faq-answer">Eatinn is your personal meal planning and food discovery companion. We help you find delicious meals, plan your week, and make eating well easier than ever.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">How do I reset my password?</div>
-                <div class="faq-answer">Go to the login screen and tap "Forgot Password". Enter your email address and we'll send you a link to reset your password. The link expires after 24 hours.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Is Eatinn free to use?</div>
-                <div class="faq-answer">Yes! Eatinn offers a free tier with core features. Premium features are available with our subscription plans for users who want an enhanced experience.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">How do I delete my account?</div>
-                <div class="faq-answer">You can delete your account from the app settings under "Account" → "Delete Account". Please note this action is permanent and cannot be undone.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">I didn't receive my verification email</div>
-                <div class="faq-answer">Check your spam/junk folder first. If it's not there, you can request a new verification email from the app. Make sure you entered the correct email address.</div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is Eat-Inn?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">Eat-Inn is your personal meal planning and food discovery companion. We help you find delicious meals from what's already in your kitchen, reducing food waste and making cooking effortless.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is Eat-Inn available on all devices?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">Eat-Inn is designed for mobile devices and works seamlessly on both iOS and Android. We're continuously working on expanding our platform availability.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I reset my password?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">Go to the login screen and tap "Forgot Password". Enter your email address and we'll send you a secure link to reset your password. The link expires after 24 hours for security.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is Eat-Inn free to use?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">Yes! Eat-Inn offers a free tier with core features. Premium features are available with our subscription plans for users who want an enhanced culinary experience.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What should I do if I encounter issues?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">If you experience any issues, please contact our support team at support@eatinn.org. Include details about the problem and your device, and we'll help resolve it as quickly as possible.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>I didn't receive my verification email</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">Check your spam/junk folder first. If it's not there, you can request a new verification email from the app. Make sure you entered the correct email address during signup.</div>
+                </div>
             </div>
         </section>
 
-        <section class="contact-cta" id="contact">
-            <h2>Still need help?</h2>
-            <p>Our support team is here for you. Reach out and we'll help you as soon as possible.</p>
-            <a href="mailto:support@eatinn.org" class="contact-btn">
-                <span>✉️</span>
-                Contact Support
-            </a>
+        <section class="contact-section" id="contact">
+            <div class="contact-card">
+                <h2>Still need help?</h2>
+                <p>Our support team is here for you. Reach out and we'll help you as soon as possible.</p>
+                <a href="mailto:support@eatinn.org" class="contact-btn">
+                    <span>✉️</span>
+                    Contact Support
+                </a>
+            </div>
         </section>
 
         <footer>
-            <p>© 2025 Eatinn. All rights reserved. · <a href="mailto:support@eatinn.org">support@eatinn.org</a></p>
+            <div class="footer-content">
+                <div class="footer-left">
+                    <a href="/" class="footer-logo">
+                        <div class="footer-logo-icon">🍽️</div>
+                        <span>Eat-Inn</span>
+                    </a>
+                    <span class="footer-text">
+                        <a href="mailto:support@eatinn.org">support@eatinn.org</a>
+                    </span>
+                </div>
+                <span class="footer-company">© 2025 POKHREL DEVELOPMENT LLC ®</span>
+            </div>
         </footer>
     </div>
 
     <script>
-        // FAQ Accordion
         document.querySelectorAll('.faq-item').forEach(item => {
-            item.addEventListener('click', () => {
-                // Close other open items
+            item.querySelector('.faq-question').addEventListener('click', () => {
                 document.querySelectorAll('.faq-item.open').forEach(openItem => {
                     if (openItem !== item) openItem.classList.remove('open');
                 });
-                // Toggle current item
                 item.classList.toggle('open');
             });
         });
 
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -409,4 +694,3 @@
     </script>
 </body>
 </html>
-

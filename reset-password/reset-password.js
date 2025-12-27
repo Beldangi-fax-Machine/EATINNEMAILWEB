@@ -5,101 +5,200 @@ const supabase = window.supabase.createClient(
 
 let sessionReady = false
 
-function showError(message) {
-    document.getElementById('message').innerText = message
-    document.getElementById('message').style.color = '#dc2626'
+const loadingState = document.getElementById('loadingState')
+const formState = document.getElementById('formState')
+const successState = document.getElementById('successState')
+const errorState = document.getElementById('errorState')
+const errorMessageEl = document.getElementById('errorMessage')
+const message = document.getElementById('message')
+const submitBtn = document.getElementById('submitBtn')
+const btnText = document.getElementById('btnText')
+const btnSpinner = document.getElementById('btnSpinner')
+const newPasswordInput = document.getElementById('newPassword')
+const confirmPasswordInput = document.getElementById('confirmPassword')
+
+function showState(state) {
+    loadingState.classList.add('hidden')
+    formState.classList.add('hidden')
+    successState.classList.add('hidden')
+    errorState.classList.add('hidden')
+    state.classList.remove('hidden')
 }
 
-// Check for error in URL params on load
-function checkForErrors() {
+function showForm() {
+    showState(formState)
+}
+
+function showSuccess() {
+    showState(successState)
+    setTimeout(() => {
+        window.location.href = 'https://geteatinn.app'
+    }, 3000)
+}
+
+function showFatalError(msg) {
+    errorMessageEl.textContent = msg || 'The link may have expired or is invalid'
+    showState(errorState)
+}
+
+function showMessage(text, type) {
+    message.textContent = text
+    message.className = `message show ${type}`
+}
+
+function hideMessage() {
+    message.className = 'message'
+}
+
+function setLoading(loading) {
+    submitBtn.disabled = loading
+    btnText.textContent = loading ? 'Updating...' : 'Update Password'
+    btnSpinner.classList.toggle('hidden', !loading)
+}
+
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId)
+    if (input.type === 'password') {
+        input.type = 'text'
+        btn.textContent = '🙈'
+    } else {
+        input.type = 'password'
+        btn.textContent = '👁️'
+    }
+}
+
+function checkPasswordStrength(password) {
+    let strength = 0
+    if (password.length >= 6) strength++
+    if (password.length >= 8) strength++
+    if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++
+    if (/[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password)) strength++
+    return strength
+}
+
+function updateStrengthIndicator(password) {
+    const strength = checkPasswordStrength(password)
+    const bars = ['bar1', 'bar2', 'bar3', 'bar4']
+    const texts = ['Too weak', 'Weak', 'Good', 'Strong']
+    const classes = ['weak', 'weak', 'medium', 'strong']
+    
+    bars.forEach((barId, index) => {
+        const bar = document.getElementById(barId)
+        bar.className = 'strength-bar'
+        if (index < strength) {
+            bar.classList.add(classes[strength - 1])
+        }
+    })
+    
+    const strengthText = document.getElementById('strengthText')
+    if (password.length === 0) {
+        strengthText.textContent = 'Use at least 6 characters'
+    } else if (strength === 0) {
+        strengthText.textContent = 'Too short'
+    } else {
+        strengthText.textContent = texts[strength - 1]
+    }
+}
+
+newPasswordInput.addEventListener('input', (e) => {
+    updateStrengthIndicator(e.target.value)
+    hideMessage()
+})
+
+confirmPasswordInput.addEventListener('input', () => {
+    hideMessage()
+})
+
+async function resetPassword() {
+    const newPassword = newPasswordInput.value
+    const confirmPassword = confirmPasswordInput.value
+    
+    hideMessage()
+    
+    if (!sessionReady) {
+        showMessage('Session expired. Please request a new reset link.', 'error')
+        return
+    }
+    
+    if (!newPassword || newPassword.length < 6) {
+        showMessage('Password must be at least 6 characters', 'error')
+        newPasswordInput.classList.add('error')
+        return
+    }
+    
+    if (newPassword !== confirmPassword) {
+        showMessage('Passwords do not match', 'error')
+        confirmPasswordInput.classList.add('error')
+        return
+    }
+    
+    newPasswordInput.classList.remove('error')
+    confirmPasswordInput.classList.remove('error')
+    
+    setLoading(true)
+    
+    try {
+        const { error } = await supabase.auth.updateUser({
+            password: newPassword
+        })
+        
+        if (error) {
+            showMessage(error.message, 'error')
+            setLoading(false)
+        } else {
+            showSuccess()
+        }
+    } catch (err) {
+        showMessage('An unexpected error occurred', 'error')
+        setLoading(false)
+    }
+}
+
+async function handlePasswordRecovery() {
     const params = new URLSearchParams(window.location.search)
     const errorDescription = params.get('error_description')
     if (errorDescription) {
-        showError(errorDescription)
-        document.querySelector('button').disabled = true
-        return true
+        showFatalError(errorDescription)
+        return
     }
-    return false
-}
 
-// Handle password recovery flow
-async function handlePasswordRecovery() {
-    if (checkForErrors()) return
-    
     const hash = window.location.hash
     
     if (hash && hash.includes('access_token')) {
-        const { data: { session }, error } = await supabase.auth.getSession()
-        
-        if (error) {
-            showError(error.message)
-            document.querySelector('button').disabled = true
+        try {
+            const { data: { session }, error } = await supabase.auth.getSession()
+            
+            if (error) {
+                showFatalError(error.message)
+                return
+            }
+            
+            if (session) {
+                sessionReady = true
+                showForm()
+                return
+            }
+        } catch (err) {
+            showFatalError('An unexpected error occurred')
             return
-        }
-        
-        if (session) {
-            sessionReady = true
-            document.getElementById('message').innerText = 'Enter your new password'
-            document.getElementById('message').style.color = '#666'
         }
     }
 }
 
 supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'PASSWORD_RECOVERY') {
+    if (event === 'PASSWORD_RECOVERY' && session) {
         sessionReady = true
-        document.getElementById('message').innerText = 'Enter your new password'
-        document.getElementById('message').style.color = '#666'
+        showForm()
     }
 })
 
-async function resetPassword() {
-    const newPassword = document.getElementById('newPassword').value
-    const message = document.getElementById('message')
-    const button = document.querySelector('button')
-    
-    if (!sessionReady) {
-        message.innerText = 'Session expired. Please request a new reset link.'
-        message.style.color = '#dc2626'
-        return
-    }
-    
-    if (!newPassword || newPassword.length < 6) {
-        message.innerText = 'Password must be at least 6 characters'
-        message.style.color = '#dc2626'
-        return
-    }
-    
-    button.disabled = true
-    button.innerText = 'Updating...'
-    
-    const { error } = await supabase.auth.updateUser({
-        password: newPassword
-    })
-    
-    if (error) {
-        message.innerText = error.message
-        message.style.color = '#dc2626'
-        button.disabled = false
-        button.innerText = 'Update Password'
-    } else {
-        message.innerText = 'Password updated! Redirecting...'
-        message.style.color = '#16a34a'
-        setTimeout(() => {
-            window.location.href = 'https://eatinn.org'
-        }, 2000)
-    }
-}
-
 handlePasswordRecovery()
 
-// Timeout for session
 setTimeout(() => {
-    if (!sessionReady) {
-        const message = document.getElementById('message')
-        if (!message.innerText.includes('expired') && !message.innerText.includes('Enter')) {
-            showError('Session timed out. Please request a new password reset link.')
-            document.querySelector('button').disabled = true
-        }
+    if (!loadingState.classList.contains('hidden')) {
+        showFatalError('Session timed out. Please request a new password reset link.')
     }
-}, 10000)
+}, 15000)
+
+window.togglePassword = togglePassword
+window.resetPassword = resetPassword
