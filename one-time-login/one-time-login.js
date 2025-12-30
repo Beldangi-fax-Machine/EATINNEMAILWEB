@@ -8,7 +8,11 @@ const successState = document.getElementById('successState')
 const errorState = document.getElementById('errorState')
 const errorMessage = document.getElementById('errorMessage')
 
+let authHandled = false
+
 function showSuccess() {
+    if (authHandled) return
+    authHandled = true
     loadingState.classList.add('hidden')
     errorState.classList.add('hidden')
     successState.classList.remove('hidden')
@@ -19,6 +23,8 @@ function showSuccess() {
 }
 
 function showError(message) {
+    if (authHandled) return
+    authHandled = true
     loadingState.classList.add('hidden')
     successState.classList.add('hidden')
     errorState.classList.remove('hidden')
@@ -26,6 +32,7 @@ function showError(message) {
 }
 
 async function handleMagicLinkLogin() {
+    // Check for error in query params first
     const params = new URLSearchParams(window.location.search)
     const errorDescription = params.get('error_description')
     if (errorDescription) {
@@ -33,38 +40,64 @@ async function handleMagicLinkLogin() {
         return
     }
 
+    // Check if we have auth tokens in the URL (hash or query params)
     const hash = window.location.hash
+    const hasTokenInHash = hash && (hash.includes('access_token') || hash.includes('error'))
+    const hasTokenInQuery = params.has('code') || params.has('token_hash')
     
-    if (hash && hash.includes('access_token')) {
+    if (!hasTokenInHash && !hasTokenInQuery) {
+        showError('No login token found. Please use the link from your email.')
+        return
+    }
+
+    try {
+        // Let Supabase handle the token exchange from the URL
+        const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href)
+        
+        if (error) {
+            // If exchange fails, try getting existing session
+            const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+            
+            if (sessionError || !sessionData.session) {
+                showError(error.message || sessionError?.message || 'Login failed')
+                return
+            }
+            
+            showSuccess()
+            return
+        }
+        
+        if (data.session) {
+            showSuccess()
+        }
+    } catch (err) {
+        // Fallback: try getting session in case tokens were already processed
         try {
             const { data: { session }, error } = await supabase.auth.getSession()
-            
-            if (error) {
-                showError(error.message)
-                return
-            }
-            
             if (session) {
                 showSuccess()
-                return
+            } else {
+                showError(error?.message || 'An unexpected error occurred')
             }
-        } catch (err) {
+        } catch (e) {
             showError('An unexpected error occurred')
-            return
         }
     }
 }
 
+// Listen for auth state changes (backup handler)
 supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN' && session) {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session) {
         showSuccess()
     }
 })
 
+// Start the magic link login flow
 handleMagicLinkLogin()
 
+// Timeout fallback
 setTimeout(() => {
-    if (!loadingState.classList.contains('hidden')) {
+    if (!loadingState.classList.contains('hidden') && !authHandled) {
         showError('Login timed out. Please request a new login link.')
     }
 }, 15000)

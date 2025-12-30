@@ -4,6 +4,7 @@ const supabase = window.supabase.createClient(
 )
 
 let sessionReady = false
+let authHandled = false
 
 const loadingState = document.getElementById('loadingState')
 const formState = document.getElementById('formState')
@@ -26,6 +27,8 @@ function showState(state) {
 }
 
 function showForm() {
+    if (authHandled) return
+    authHandled = true
     showState(formState)
 }
 
@@ -37,6 +40,8 @@ function showSuccess() {
 }
 
 function showFatalError(msg) {
+    if (authHandled) return
+    authHandled = true
     errorMessageEl.textContent = msg || 'The link may have expired or is invalid'
     showState(errorState)
 }
@@ -155,6 +160,7 @@ async function resetPassword() {
 }
 
 async function handlePasswordRecovery() {
+    // Check for error in query params first
     const params = new URLSearchParams(window.location.search)
     const errorDescription = params.get('error_description')
     if (errorDescription) {
@@ -162,40 +168,68 @@ async function handlePasswordRecovery() {
         return
     }
 
+    // Check if we have auth tokens in the URL (hash or query params)
     const hash = window.location.hash
+    const hasTokenInHash = hash && (hash.includes('access_token') || hash.includes('error'))
+    const hasTokenInQuery = params.has('code') || params.has('token_hash')
     
-    if (hash && hash.includes('access_token')) {
-        try {
-            const { data: { session }, error } = await supabase.auth.getSession()
+    if (!hasTokenInHash && !hasTokenInQuery) {
+        showFatalError('No reset token found. Please use the link from your email.')
+        return
+    }
+
+    try {
+        // Let Supabase handle the token exchange from the URL
+        const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href)
+        
+        if (error) {
+            // If exchange fails, try getting existing session
+            const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
             
-            if (error) {
-                showFatalError(error.message)
+            if (sessionError || !sessionData.session) {
+                showFatalError(error.message || sessionError?.message || 'Reset link is invalid or expired')
                 return
             }
             
+            sessionReady = true
+            showForm()
+            return
+        }
+        
+        if (data.session) {
+            sessionReady = true
+            showForm()
+        }
+    } catch (err) {
+        // Fallback: try getting session in case tokens were already processed
+        try {
+            const { data: { session }, error } = await supabase.auth.getSession()
             if (session) {
                 sessionReady = true
                 showForm()
-                return
+            } else {
+                showFatalError(error?.message || 'An unexpected error occurred')
             }
-        } catch (err) {
+        } catch (e) {
             showFatalError('An unexpected error occurred')
-            return
         }
     }
 }
 
+// Listen for auth state changes (backup handler)
 supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'PASSWORD_RECOVERY' && session) {
+    if ((event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') && session) {
         sessionReady = true
         showForm()
     }
 })
 
+// Start the password recovery flow
 handlePasswordRecovery()
 
+// Timeout fallback
 setTimeout(() => {
-    if (!loadingState.classList.contains('hidden')) {
+    if (!loadingState.classList.contains('hidden') && !authHandled) {
         showFatalError('Session timed out. Please request a new password reset link.')
     }
 }, 15000)
