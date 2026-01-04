@@ -510,6 +510,22 @@
             text-decoration: underline;
         }
 
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-orange);
+        }
+
         .footer-company {
             color: var(--text-muted);
             font-size: 12px;
@@ -532,6 +548,9 @@
             .footer-left {
                 flex-direction: column;
             }
+            .footer-links {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -551,6 +570,8 @@
             <nav class="nav-links">
                 <a href="#support">Support</a>
                 <a href="#faq">FAQ</a>
+                <a href="/terms/">Terms</a>
+                <a href="/privacy/">Privacy</a>
                 <a href="https://geteatinn.app" class="btn-primary">Visit App</a>
             </nav>
         </header>
@@ -663,11 +684,13 @@
                         <div class="footer-logo-icon">🍽️</div>
                         <span>Eat-Inn</span>
                     </a>
-                    <span class="footer-text">
-                        <a href="mailto:support@eatinn.org">support@eatinn.org</a>
-                    </span>
+                    <div class="footer-links">
+                        <a href="/terms/">Terms</a>
+                        <a href="/privacy/">Privacy</a>
+                        <a href="mailto:support@eatinn.org">Contact</a>
+                    </div>
                 </div>
-                <span class="footer-company">© 2025 POKHREL DEVELOPMENT LLC ®</span>
+                <span class="footer-company">© 2026 POKHREL DEVELOPMENT LLC ®</span>
             </div>
         </footer>
     </div>

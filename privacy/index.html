@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - EAT-INN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --bg-card-hover: #222222;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --accent-orange: #FF6B35;
+            --accent-green: #00B894;
+            --accent-purple: #A855F7;
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 184, 148, 0.3) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            padding: 24px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-orange), #ff8f65);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge .icon {
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .last-updated {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .content-section {
+            padding: 40px 0 80px;
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-purple));
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-green), #00d9a7);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .section ul {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .section ul li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .section ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+        }
+
+        .highlight-box {
+            background: rgba(0, 184, 148, 0.08);
+            border: 1px solid rgba(0, 184, 148, 0.2);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .highlight-box p {
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .highlight-box.warning {
+            background: rgba(168, 85, 247, 0.08);
+            border-color: rgba(168, 85, 247, 0.2);
+        }
+
+        .email-link {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .email-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .shield-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, rgba(0, 184, 148, 0.15), rgba(168, 85, 247, 0.15));
+            border-radius: 16px;
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+
+        .intro-text {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intro-text p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .footer-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-orange), #ff8f65);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .footer-logo span {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .footer-company {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero {
+                padding: 60px 0 40px;
+            }
+            .content-card {
+                padding: 32px 24px;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-left {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-effects">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <a href="/" class="logo">
+                <div class="logo-icon">🍽️</div>
+                <span class="logo-text">Eat-Inn</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/">Support</a>
+                <a href="/terms/">Terms</a>
+                <a href="https://geteatinn.app" class="btn-primary">Get App</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="icon">🔒</span>
+                Legal
+            </div>
+            <h1>Privacy <span class="gradient-text">Policy</span></h1>
+            <p class="last-updated">Last Updated: January 3, 2026</p>
+        </section>
+
+        <section class="content-section">
+            <div class="content-card">
+                <div class="intro-text">
+                    <div class="shield-icon">🛡️</div>
+                    <p>Your privacy is important to us. This policy explains how EAT-INN collects, uses, and protects your personal information.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">1</div>
+                    <h2>Information We Collect</h2>
+                    <ul>
+                        <li><strong>Account Information:</strong> Apple ID, email (if provided)</li>
+                        <li><strong>User Content:</strong> Recipes, inventory items, preferences</li>
+                        <li><strong>Usage Data:</strong> App interactions, features used</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">2</div>
+                    <h2>How We Use Information</h2>
+                    <ul>
+                        <li>Provide and improve app functionality</li>
+                        <li>Personalize recipe recommendations</li>
+                        <li>Sync data across your devices</li>
+                        <li>Send notifications (if enabled)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">3</div>
+                    <h2>Data Storage</h2>
+                    <p>Your data is stored securely using Supabase cloud services.</p>
+                    <div class="highlight-box">
+                        <p>We use industry-standard encryption and security practices to keep your data safe.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">4</div>
+                    <h2>Data Sharing</h2>
+                    <div class="highlight-box warning">
+                        <p>We do not sell your personal information.</p>
+                    </div>
+                    <p>Public recipes may be visible to other users if you choose to share them.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">5</div>
+                    <h2>Your Rights</h2>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access your data at any time</li>
+                        <li>Delete your account and all associated data</li>
+                        <li>Opt out of notifications</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">6</div>
+                    <h2>Security</h2>
+                    <p>We use industry-standard security measures to protect your data, including encryption in transit and at rest.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">7</div>
+                    <h2>Children's Privacy</h2>
+                    <p>Our service is not directed to children under 13. We do not knowingly collect personal information from children under 13.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">8</div>
+                    <h2>Contact</h2>
+                    <p>For privacy questions or concerns, please contact us at: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-left">
+                    <a href="/" class="footer-logo">
+                        <div class="footer-logo-icon">🍽️</div>
+                        <span>Eat-Inn</span>
+                    </a>
+                    <div class="footer-links">
+                        <a href="/terms/">Terms</a>
+                        <a href="/privacy/">Privacy</a>
+                        <a href="mailto:support@eatinn.org">Contact</a>
+                    </div>
+                </div>
+                <span class="footer-company">© 2026 POKHREL DEVELOPMENT LLC ®</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+
+
+
