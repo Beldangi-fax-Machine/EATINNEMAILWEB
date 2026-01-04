@@ -32,57 +32,92 @@ function showError(message) {
 }
 
 async function handleEmailUpdate() {
-    // Check for error in query params first
     const params = new URLSearchParams(window.location.search)
-    const errorDescription = params.get('error_description')
-    if (errorDescription) {
-        showError(errorDescription)
-        return
-    }
-
-    // Check if we have auth tokens in the URL (hash or query params)
-    const hash = window.location.hash
-    const hasTokenInHash = hash && (hash.includes('access_token') || hash.includes('error'))
-    const hasTokenInQuery = params.has('code') || params.has('token_hash')
+    const hash = window.location.hash.substring(1)
+    const hashParams = new URLSearchParams(hash)
     
-    if (!hasTokenInHash && !hasTokenInQuery) {
-        showError('No verification token found. Please use the link from your email.')
+    // Check for error in query params or hash
+    const errorDescription = params.get('error_description') || hashParams.get('error_description')
+    if (errorDescription) {
+        showError(decodeURIComponent(errorDescription))
         return
     }
 
-    try {
-        // Let Supabase handle the token exchange from the URL
-        const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href)
-        
-        if (error) {
-            // If exchange fails, try getting existing session
-            const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+    // Method 1: Token hash flow (email_change type)
+    const tokenHash = params.get('token_hash')
+    const type = params.get('type')
+    
+    if (tokenHash && type) {
+        try {
+            const { data, error } = await supabase.auth.verifyOtp({
+                token_hash: tokenHash,
+                type: type
+            })
             
-            if (sessionError || !sessionData.session) {
-                showError(error.message || sessionError?.message || 'Email update failed')
+            if (error) {
+                showError(error.message)
                 return
             }
             
-            showSuccess()
+            if (data.session || data.user) {
+                showSuccess()
+                return
+            }
+        } catch (err) {
+            showError('Email update failed. Please try again.')
             return
         }
-        
-        if (data.session) {
-            showSuccess()
-        }
-    } catch (err) {
-        // Fallback: try getting session in case tokens were already processed
+    }
+
+    // Method 2: PKCE code flow
+    const code = params.get('code')
+    if (code) {
         try {
-            const { data: { session }, error } = await supabase.auth.getSession()
-            if (session) {
-                showSuccess()
-            } else {
-                showError(error?.message || 'An unexpected error occurred')
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+            
+            if (error) {
+                showError(error.message)
+                return
             }
-        } catch (e) {
-            showError('An unexpected error occurred')
+            
+            if (data.session) {
+                showSuccess()
+                return
+            }
+        } catch (err) {
+            showError('Email update failed. Please try again.')
+            return
         }
     }
+
+    // Method 3: Hash fragment flow (implicit grant)
+    const accessToken = hashParams.get('access_token')
+    const refreshToken = hashParams.get('refresh_token')
+    
+    if (accessToken) {
+        try {
+            const { data, error } = await supabase.auth.setSession({
+                access_token: accessToken,
+                refresh_token: refreshToken || ''
+            })
+            
+            if (error) {
+                showError(error.message)
+                return
+            }
+            
+            if (data.session) {
+                showSuccess()
+                return
+            }
+        } catch (err) {
+            showError('Email update failed. Please try again.')
+            return
+        }
+    }
+
+    // No valid tokens found
+    showError('No verification token found. Please use the link from your email.')
 }
 
 // Listen for auth state changes (backup handler)

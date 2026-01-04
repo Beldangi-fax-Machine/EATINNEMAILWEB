@@ -160,60 +160,95 @@ async function resetPassword() {
 }
 
 async function handlePasswordRecovery() {
-    // Check for error in query params first
     const params = new URLSearchParams(window.location.search)
-    const errorDescription = params.get('error_description')
-    if (errorDescription) {
-        showFatalError(errorDescription)
-        return
-    }
-
-    // Check if we have auth tokens in the URL (hash or query params)
-    const hash = window.location.hash
-    const hasTokenInHash = hash && (hash.includes('access_token') || hash.includes('error'))
-    const hasTokenInQuery = params.has('code') || params.has('token_hash')
+    const hash = window.location.hash.substring(1)
+    const hashParams = new URLSearchParams(hash)
     
-    if (!hasTokenInHash && !hasTokenInQuery) {
-        showFatalError('No reset token found. Please use the link from your email.')
+    // Check for error in query params or hash
+    const errorDescription = params.get('error_description') || hashParams.get('error_description')
+    if (errorDescription) {
+        showFatalError(decodeURIComponent(errorDescription))
         return
     }
 
-    try {
-        // Let Supabase handle the token exchange from the URL
-        const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href)
-        
-        if (error) {
-            // If exchange fails, try getting existing session
-            const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+    // Method 1: Token hash flow (password reset links use type=recovery)
+    const tokenHash = params.get('token_hash')
+    const type = params.get('type')
+    
+    if (tokenHash && type) {
+        try {
+            const { data, error } = await supabase.auth.verifyOtp({
+                token_hash: tokenHash,
+                type: type
+            })
             
-            if (sessionError || !sessionData.session) {
-                showFatalError(error.message || sessionError?.message || 'Reset link is invalid or expired')
+            if (error) {
+                showFatalError(error.message)
                 return
             }
             
-            sessionReady = true
-            showForm()
-            return
-        }
-        
-        if (data.session) {
-            sessionReady = true
-            showForm()
-        }
-    } catch (err) {
-        // Fallback: try getting session in case tokens were already processed
-        try {
-            const { data: { session }, error } = await supabase.auth.getSession()
-            if (session) {
+            if (data.session || data.user) {
                 sessionReady = true
                 showForm()
-            } else {
-                showFatalError(error?.message || 'An unexpected error occurred')
+                return
             }
-        } catch (e) {
-            showFatalError('An unexpected error occurred')
+        } catch (err) {
+            showFatalError('Reset link is invalid or expired. Please request a new one.')
+            return
         }
     }
+
+    // Method 2: PKCE code flow
+    const code = params.get('code')
+    if (code) {
+        try {
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+            
+            if (error) {
+                showFatalError(error.message)
+                return
+            }
+            
+            if (data.session) {
+                sessionReady = true
+                showForm()
+                return
+            }
+        } catch (err) {
+            showFatalError('Reset link is invalid or expired. Please request a new one.')
+            return
+        }
+    }
+
+    // Method 3: Hash fragment flow (implicit grant - older method)
+    const accessToken = hashParams.get('access_token')
+    const refreshToken = hashParams.get('refresh_token')
+    
+    if (accessToken) {
+        try {
+            const { data, error } = await supabase.auth.setSession({
+                access_token: accessToken,
+                refresh_token: refreshToken || ''
+            })
+            
+            if (error) {
+                showFatalError(error.message)
+                return
+            }
+            
+            if (data.session) {
+                sessionReady = true
+                showForm()
+                return
+            }
+        } catch (err) {
+            showFatalError('Reset link is invalid or expired. Please request a new one.')
+            return
+        }
+    }
+
+    // No valid tokens found
+    showFatalError('No reset token found. Please use the link from your email.')
 }
 
 // Listen for auth state changes (backup handler)
