@@ -258,6 +258,13 @@
             color: var(--text-primary);
         }
 
+        .section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 20px 0 12px;
+            color: var(--text-primary);
+        }
+
         .section p {
             color: var(--text-secondary);
             font-size: 0.95rem;
@@ -324,18 +331,6 @@
             text-decoration: underline;
         }
 
-        .shield-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-            border-radius: 16px;
-            font-size: 32px;
-            margin-bottom: 24px;
-        }
-
         .intro-text {
             text-align: center;
             margin-bottom: 40px;
@@ -349,6 +344,19 @@
             line-height: 1.8;
             max-width: 600px;
             margin: 0 auto;
+        }
+
+        .company-info {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .company-info p {
+            margin: 4px 0;
+            color: var(--text-secondary);
         }
 
         footer {
@@ -552,7 +560,7 @@
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
-    
+
     <div class="container">
         <header>
             <a href="/" class="logo">
@@ -581,86 +589,151 @@
 
         <section class="hero">
             <div class="hero-badge">
-                <span class="icon">🔒</span>
                 Legal
             </div>
             <h1>Privacy <span class="gradient-text">Policy</span></h1>
-            <p class="last-updated">Last Updated: January 3, 2026</p>
+            <p class="last-updated">Last Updated: January 2026</p>
         </section>
 
         <section class="content-section">
             <div class="content-card">
                 <div class="intro-text">
-                    <div class="shield-icon">🛡️</div>
-                    <p>Your privacy is important to us. This policy explains how EAT-INN collects, uses, and protects your personal information.</p>
+                    <p>Pokhrel Development LLC ("we," "our," or "us") values your privacy. This Privacy Policy explains how EAT-INN ("the App") collects, uses, stores, and protects your information.</p>
                 </div>
 
                 <div class="section">
                     <div class="section-number">1</div>
                     <h2>Information We Collect</h2>
+                    <h3>Account Information</h3>
                     <ul>
-                        <li><strong>Account Information:</strong> Apple ID, email (if provided)</li>
-                        <li><strong>User Content:</strong> Recipes, inventory items, preferences</li>
-                        <li><strong>Usage Data:</strong> App interactions, features used</li>
+                        <li>Apple ID (via Sign in with Apple)</li>
+                        <li>Email address (if provided)</li>
                     </ul>
+                    <h3>User Content</h3>
+                    <ul>
+                        <li>Recipes you create or save</li>
+                        <li>Kitchen inventory items</li>
+                        <li>Preferences and settings</li>
+                    </ul>
+                    <h3>Usage Data</h3>
+                    <ul>
+                        <li>App interactions</li>
+                        <li>Features used</li>
+                        <li>App performance data</li>
+                    </ul>
+                    <p>We do not collect precise location data.</p>
                 </div>
 
                 <div class="section">
                     <div class="section-number">2</div>
-                    <h2>How We Use Information</h2>
+                    <h2>How We Use Your Information</h2>
+                    <p>We use your information to:</p>
                     <ul>
-                        <li>Provide and improve app functionality</li>
-                        <li>Personalize recipe recommendations</li>
+                        <li>Provide and maintain App functionality</li>
+                        <li>Personalize recipe and meal suggestions</li>
                         <li>Sync data across your devices</li>
-                        <li>Send notifications (if enabled)</li>
+                        <li>Improve app performance and user experience</li>
+                        <li>Send notifications (only if you enable them)</li>
                     </ul>
                 </div>
 
                 <div class="section">
                     <div class="section-number">3</div>
-                    <h2>Data Storage</h2>
-                    <p>Your data is stored securely using Supabase cloud services.</p>
-                    <div class="highlight-box">
-                        <p>We use industry-standard encryption and security practices to keep your data safe.</p>
-                    </div>
+                    <h2>AI & Image Processing</h2>
+                    <ul>
+                        <li>Photos of food are processed to generate recipe suggestions.</li>
+                        <li>Images are not sold or used for advertising.</li>
+                        <li>Images are not publicly shared unless you choose to share content.</li>
+                    </ul>
                 </div>
 
                 <div class="section">
                     <div class="section-number">4</div>
-                    <h2>Data Sharing</h2>
-                    <div class="highlight-box warning">
-                        <p>We do not sell your personal information.</p>
+                    <h2>Data Storage & Security</h2>
+                    <ul>
+                        <li>Data is stored securely using Supabase cloud services.</li>
+                        <li>We use encryption in transit and at rest.</li>
+                        <li>Access is restricted to authorized systems only.</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p>No system is 100% secure, but we follow industry-standard practices.</p>
                     </div>
-                    <p>Public recipes may be visible to other users if you choose to share them.</p>
                 </div>
 
                 <div class="section">
                     <div class="section-number">5</div>
-                    <h2>Your Rights</h2>
-                    <p>You have the right to:</p>
+                    <h2>Data Sharing</h2>
+                    <div class="highlight-box warning">
+                        <p>We do not sell your personal information.</p>
+                    </div>
+                    <p>We may share data only:</p>
                     <ul>
-                        <li>Access your data at any time</li>
-                        <li>Delete your account and all associated data</li>
-                        <li>Opt out of notifications</li>
+                        <li>With service providers necessary to operate the App (e.g., hosting, analytics)</li>
+                        <li>When required by law</li>
+                        <li>If you choose to share recipes publicly with other users</li>
                     </ul>
                 </div>
 
                 <div class="section">
                     <div class="section-number">6</div>
-                    <h2>Security</h2>
-                    <p>We use industry-standard security measures to protect your data, including encryption in transit and at rest.</p>
+                    <h2>Your Privacy Rights</h2>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access your personal data</li>
+                        <li>Update or correct your information</li>
+                        <li>Delete your account and associated data</li>
+                        <li>Opt out of notifications at any time</li>
+                    </ul>
+                    <p>To request deletion, contact <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a>.</p>
                 </div>
 
                 <div class="section">
                     <div class="section-number">7</div>
-                    <h2>Children's Privacy</h2>
-                    <p>Our service is not directed to children under 13. We do not knowingly collect personal information from children under 13.</p>
+                    <h2>Data Retention</h2>
+                    <ul>
+                        <li>Data is retained only as long as your account is active or as required for legal purposes.</li>
+                        <li>Deleted accounts result in permanent data removal within a reasonable timeframe.</li>
+                    </ul>
                 </div>
 
                 <div class="section">
                     <div class="section-number">8</div>
-                    <h2>Contact</h2>
-                    <p>For privacy questions or concerns, please contact us at: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></p>
+                    <h2>Children's Privacy</h2>
+                    <ul>
+                        <li>EAT-INN is not intended for children under 13.</li>
+                        <li>We do not knowingly collect personal information from children under 13.</li>
+                        <li>If such data is discovered, it will be deleted promptly.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">9</div>
+                    <h2>Third-Party Services</h2>
+                    <p>EAT-INN uses trusted third-party services for:</p>
+                    <ul>
+                        <li>Authentication</li>
+                        <li>Payments</li>
+                        <li>Cloud storage</li>
+                        <li>Error monitoring</li>
+                    </ul>
+                    <p>These services are bound by their own privacy policies and security obligations.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">10</div>
+                    <h2>Changes to This Policy</h2>
+                    <p>We may update this Privacy Policy periodically. Continued use of the App constitutes acceptance of the updated policy.</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-number">11</div>
+                    <h2>Contact Us</h2>
+                    <p>For privacy questions or requests:</p>
+                    <div class="company-info">
+                        <p>Email: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></p>
+                        <p><strong>Pokhrel Development LLC</strong></p>
+                        <p>Vermont, United States</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -678,7 +751,7 @@
                         <a href="mailto:support@eatinn.org">Contact</a>
                     </div>
                 </div>
-                <span class="footer-company">© 2026 POKHREL DEVELOPMENT LLC ®</span>
+                <span class="footer-company">© 2026 POKHREL DEVELOPMENT LLC</span>
             </div>
         </footer>
     </div>
@@ -709,6 +782,3 @@
     </script>
 </body>
 </html>
-
-
-
