@@ -1,1 +1,11 @@
 LINKS 
+  https://eatinn.org/                                                                                                                                                                               
+  https://eatinn.org/auth/callback.html                                                                                                                                                             
+  https://eatinn.org/reset-password/reset-password.html                                                                                                                                             
+  https://eatinn.org/update-email/update-email.html                                                                                                                                                 
+  https://eatinn.org/one-time-login/one-time-login.html                                                                                                                                             
+  https://eatinn.org/invite-user/invite-user.html                                                                                                                                                   
+  https://eatinn.org/reauth/reauth.html                                                                                                                                                             
+  https://eatinn.org/redirect/                                                                                                                                                                      
+  https://eatinn.org/terms/                                                                                                                                                                         
+  https://eatinn.org/privacy/        
