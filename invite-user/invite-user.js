@@ -1,16 +1,38 @@
-const supabase = window.supabase.createClient(
-    'https://juodevmrlwkkfjygmqzc.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
-)
-
-let sessionReady = false
-let authHandled = false
+// Check for URL errors immediately
+const params = new URLSearchParams(window.location.search)
+const hash = window.location.hash.substring(1)
+const hashParams = new URLSearchParams(hash)
+const urlError = params.get('error_description') || hashParams.get('error_description')
 
 const loadingState = document.getElementById('loadingState')
 const formState = document.getElementById('formState')
 const successState = document.getElementById('successState')
 const errorState = document.getElementById('errorState')
 const errorMessageEl = document.getElementById('errorMessage')
+
+// Show error immediately if present in URL
+if (urlError) {
+    loadingState.classList.add('hidden')
+    errorMessageEl.textContent = decodeURIComponent(urlError.replace(/\+/g, ' '))
+    errorState.classList.remove('hidden')
+    throw new Error('Auth error in URL')
+}
+
+// Check if Supabase loaded
+if (!window.supabase) {
+    loadingState.classList.add('hidden')
+    errorMessageEl.textContent = 'Failed to load. Please refresh the page.'
+    errorState.classList.remove('hidden')
+    throw new Error('Supabase not loaded')
+}
+
+const supabaseClient = window.supabase.createClient(
+    'https://juodevmrlwkkfjygmqzc.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
+)
+
+let sessionReady = false
+let authHandled = false
 const message = document.getElementById('message')
 const submitBtn = document.getElementById('submitBtn')
 const btnText = document.getElementById('btnText')
@@ -143,7 +165,7 @@ async function setPassword() {
     setLoading(true)
     
     try {
-        const { error } = await supabase.auth.updateUser({
+        const { error } = await supabaseClient.auth.updateUser({
             password: password
         })
         
@@ -177,7 +199,7 @@ async function handleInvite() {
     
     if (tokenHash && type) {
         try {
-            const { data, error } = await supabase.auth.verifyOtp({
+            const { data, error } = await supabaseClient.auth.verifyOtp({
                 token_hash: tokenHash,
                 type: type
             })
@@ -202,7 +224,7 @@ async function handleInvite() {
     const code = params.get('code')
     if (code) {
         try {
-            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+            const { data, error } = await supabaseClient.auth.exchangeCodeForSession(code)
             
             if (error) {
                 showFatalError(error.message)
@@ -226,7 +248,7 @@ async function handleInvite() {
     
     if (accessToken) {
         try {
-            const { data, error } = await supabase.auth.setSession({
+            const { data, error } = await supabaseClient.auth.setSession({
                 access_token: accessToken,
                 refresh_token: refreshToken || ''
             })
@@ -252,7 +274,7 @@ async function handleInvite() {
 }
 
 // Listen for auth state changes (backup handler)
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session) {
         sessionReady = true
         showForm()

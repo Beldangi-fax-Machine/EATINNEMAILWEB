@@ -1,4 +1,4 @@
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
     'https://juodevmrlwkkfjygmqzc.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
 )
@@ -49,7 +49,7 @@ async function handleReauth() {
     
     if (tokenHash && type) {
         try {
-            const { data, error } = await supabase.auth.verifyOtp({
+            const { data, error } = await supabaseClient.auth.verifyOtp({
                 token_hash: tokenHash,
                 type: type
             })
@@ -73,7 +73,7 @@ async function handleReauth() {
     const code = params.get('code')
     if (code) {
         try {
-            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+            const { data, error } = await supabaseClient.auth.exchangeCodeForSession(code)
             
             if (error) {
                 showError(error.message)
@@ -96,7 +96,7 @@ async function handleReauth() {
     
     if (accessToken) {
         try {
-            const { data, error } = await supabase.auth.setSession({
+            const { data, error } = await supabaseClient.auth.setSession({
                 access_token: accessToken,
                 refresh_token: refreshToken || ''
             })
@@ -121,7 +121,7 @@ async function handleReauth() {
 }
 
 // Listen for auth state changes (backup handler)
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     if ((event === 'USER_UPDATED' || event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session) {
         showSuccess()
     }

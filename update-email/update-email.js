@@ -1,12 +1,34 @@
-const supabase = window.supabase.createClient(
-    'https://juodevmrlwkkfjygmqzc.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
-)
+// Check for URL errors immediately
+const params = new URLSearchParams(window.location.search)
+const hash = window.location.hash.substring(1)
+const hashParams = new URLSearchParams(hash)
+const urlError = params.get('error_description') || hashParams.get('error_description')
 
 const loadingState = document.getElementById('loadingState')
 const successState = document.getElementById('successState')
 const errorState = document.getElementById('errorState')
 const errorMessage = document.getElementById('errorMessage')
+
+// Show error immediately if present in URL
+if (urlError) {
+    loadingState.classList.add('hidden')
+    errorMessage.textContent = decodeURIComponent(urlError.replace(/\+/g, ' '))
+    errorState.classList.remove('hidden')
+    throw new Error('Auth error in URL')
+}
+
+// Check if Supabase loaded
+if (!window.supabase) {
+    loadingState.classList.add('hidden')
+    errorMessage.textContent = 'Failed to load. Please refresh the page.'
+    errorState.classList.remove('hidden')
+    throw new Error('Supabase not loaded')
+}
+
+const supabaseClient = window.supabase.createClient(
+    'https://juodevmrlwkkfjygmqzc.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
+)
 
 let authHandled = false
 
@@ -49,7 +71,7 @@ async function handleEmailUpdate() {
     
     if (tokenHash && type) {
         try {
-            const { data, error } = await supabase.auth.verifyOtp({
+            const { data, error } = await supabaseClient.auth.verifyOtp({
                 token_hash: tokenHash,
                 type: type
             })
@@ -73,7 +95,7 @@ async function handleEmailUpdate() {
     const code = params.get('code')
     if (code) {
         try {
-            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+            const { data, error } = await supabaseClient.auth.exchangeCodeForSession(code)
             
             if (error) {
                 showError(error.message)
@@ -96,7 +118,7 @@ async function handleEmailUpdate() {
     
     if (accessToken) {
         try {
-            const { data, error } = await supabase.auth.setSession({
+            const { data, error } = await supabaseClient.auth.setSession({
                 access_token: accessToken,
                 refresh_token: refreshToken || ''
             })
@@ -121,7 +143,7 @@ async function handleEmailUpdate() {
 }
 
 // Listen for auth state changes (backup handler)
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     if ((event === 'USER_UPDATED' || event === 'SIGNED_IN') && session) {
         showSuccess()
     }
