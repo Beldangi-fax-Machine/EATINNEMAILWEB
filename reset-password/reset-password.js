@@ -27,7 +27,7 @@ if (!window.supabase) {
     throw new Error('Supabase not loaded')
 }
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
     'https://juodevmrlwkkfjygmqzc.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
 )
@@ -166,7 +166,7 @@ async function resetPassword() {
     setLoading(true)
     
     try {
-        const { error } = await supabase.auth.updateUser({
+        const { error } = await supabaseClient.auth.updateUser({
             password: newPassword
         })
         
@@ -200,7 +200,7 @@ async function handlePasswordRecovery() {
     
     if (tokenHash && type) {
         try {
-            const { data, error } = await supabase.auth.verifyOtp({
+            const { data, error } = await supabaseClient.auth.verifyOtp({
                 token_hash: tokenHash,
                 type: type
             })
@@ -226,7 +226,7 @@ async function handlePasswordRecovery() {
     if (code) {
         // First try verifyOtp with recovery type (most common for password reset)
         try {
-            const { data, error } = await supabase.auth.verifyOtp({
+            const { data, error } = await supabaseClient.auth.verifyOtp({
                 token_hash: code,
                 type: 'recovery'
             })
@@ -242,7 +242,7 @@ async function handlePasswordRecovery() {
 
         // Try as PKCE code if verifyOtp didn't work
         try {
-            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+            const { data, error } = await supabaseClient.auth.exchangeCodeForSession(code)
 
             if (!error && data.session) {
                 sessionReady = true
@@ -264,7 +264,7 @@ async function handlePasswordRecovery() {
     
     if (accessToken) {
         try {
-            const { data, error } = await supabase.auth.setSession({
+            const { data, error } = await supabaseClient.auth.setSession({
                 access_token: accessToken,
                 refresh_token: refreshToken || ''
             })
@@ -290,7 +290,7 @@ async function handlePasswordRecovery() {
 }
 
 // Listen for auth state changes (backup handler)
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     if ((event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') && session) {
         sessionReady = true
         showForm()
