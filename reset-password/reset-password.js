@@ -1,3 +1,32 @@
+// Check for URL errors immediately before anything else
+const params = new URLSearchParams(window.location.search)
+const hash = window.location.hash.substring(1)
+const hashParams = new URLSearchParams(hash)
+const urlError = params.get('error_description') || hashParams.get('error_description')
+
+const loadingState = document.getElementById('loadingState')
+const formState = document.getElementById('formState')
+const successState = document.getElementById('successState')
+const errorState = document.getElementById('errorState')
+const errorMessageEl = document.getElementById('errorMessage')
+
+// If there's an error in the URL, show it immediately without waiting for Supabase
+if (urlError) {
+    loadingState.classList.add('hidden')
+    errorMessageEl.textContent = decodeURIComponent(urlError.replace(/\+/g, ' '))
+    errorState.classList.remove('hidden')
+    // Stop execution - don't need Supabase for error display
+    throw new Error('Auth error in URL')
+}
+
+// Check if Supabase loaded
+if (!window.supabase) {
+    loadingState.classList.add('hidden')
+    errorMessageEl.textContent = 'Failed to load. Please refresh the page.'
+    errorState.classList.remove('hidden')
+    throw new Error('Supabase not loaded')
+}
+
 const supabase = window.supabase.createClient(
     'https://juodevmrlwkkfjygmqzc.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
@@ -5,12 +34,6 @@ const supabase = window.supabase.createClient(
 
 let sessionReady = false
 let authHandled = false
-
-const loadingState = document.getElementById('loadingState')
-const formState = document.getElementById('formState')
-const successState = document.getElementById('successState')
-const errorState = document.getElementById('errorState')
-const errorMessageEl = document.getElementById('errorMessage')
 const message = document.getElementById('message')
 const submitBtn = document.getElementById('submitBtn')
 const btnText = document.getElementById('btnText')
@@ -198,26 +221,41 @@ async function handlePasswordRecovery() {
         }
     }
 
-    // Method 2: PKCE code flow
+    // Method 2: Code parameter - could be PKCE code or recovery token
     const code = params.get('code')
     if (code) {
+        // First try verifyOtp with recovery type (most common for password reset)
         try {
-            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-            
-            if (error) {
-                showFatalError(error.message)
-                return
-            }
-            
-            if (data.session) {
+            const { data, error } = await supabase.auth.verifyOtp({
+                token_hash: code,
+                type: 'recovery'
+            })
+
+            if (!error && (data.session || data.user)) {
                 sessionReady = true
                 showForm()
                 return
             }
         } catch (err) {
-            showFatalError('Reset link is invalid or expired. Please request a new one.')
-            return
+            // Continue to try other methods
         }
+
+        // Try as PKCE code if verifyOtp didn't work
+        try {
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+
+            if (!error && data.session) {
+                sessionReady = true
+                showForm()
+                return
+            }
+        } catch (err) {
+            // Continue to next method
+        }
+
+        // If we have a code but neither method worked, show error
+        showFatalError('Reset link is invalid or expired. Please request a new one.')
+        return
     }
 
     // Method 3: Hash fragment flow (implicit grant - older method)
