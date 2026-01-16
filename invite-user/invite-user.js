@@ -1,8 +1,22 @@
-// Check for URL errors immediately
+// SECURITY: Extract all tokens immediately on page load
 const params = new URLSearchParams(window.location.search)
 const hash = window.location.hash.substring(1)
 const hashParams = new URLSearchParams(hash)
-const urlError = params.get('error_description') || hashParams.get('error_description')
+
+// Store tokens in memory (NOT localStorage for security)
+const storedTokens = {
+    tokenHash: params.get('token_hash'),
+    type: params.get('type'),
+    code: params.get('code'),
+    accessToken: hashParams.get('access_token'),
+    refreshToken: hashParams.get('refresh_token'),
+    errorDescription: params.get('error_description') || hashParams.get('error_description')
+}
+
+// SECURITY: Immediately clear URL to remove tokens from browser history
+if (storedTokens.tokenHash || storedTokens.code || storedTokens.accessToken || storedTokens.errorDescription) {
+    window.history.replaceState(null, '', window.location.pathname)
+}
 
 const loadingState = document.getElementById('loadingState')
 const formState = document.getElementById('formState')
@@ -11,9 +25,9 @@ const errorState = document.getElementById('errorState')
 const errorMessageEl = document.getElementById('errorMessage')
 
 // Show error immediately if present in URL
-if (urlError) {
+if (storedTokens.errorDescription) {
     loadingState.classList.add('hidden')
-    errorMessageEl.textContent = decodeURIComponent(urlError.replace(/\+/g, ' '))
+    errorMessageEl.textContent = decodeURIComponent(storedTokens.errorDescription.replace(/\+/g, ' '))
     errorState.classList.remove('hidden')
     throw new Error('Auth error in URL')
 }
@@ -108,7 +122,7 @@ function updateStrengthIndicator(password) {
     const bars = ['bar1', 'bar2', 'bar3', 'bar4']
     const texts = ['Too weak', 'Weak', 'Good', 'Strong']
     const classes = ['weak', 'weak', 'medium', 'strong']
-    
+
     bars.forEach((barId, index) => {
         const bar = document.getElementById(barId)
         bar.className = 'strength-bar'
@@ -116,7 +130,7 @@ function updateStrengthIndicator(password) {
             bar.classList.add(classes[strength - 1])
         }
     })
-    
+
     const strengthText = document.getElementById('strengthText')
     if (password.length === 0) {
         strengthText.textContent = 'Use at least 6 characters'
@@ -139,36 +153,36 @@ confirmPasswordInput.addEventListener('input', () => {
 async function setPassword() {
     const password = newPasswordInput.value
     const confirmPassword = confirmPasswordInput.value
-    
+
     hideMessage()
-    
+
     if (!sessionReady) {
         showMessage('Session expired. Please request a new invitation.', 'error')
         return
     }
-    
+
     if (!password || password.length < 6) {
         showMessage('Password must be at least 6 characters', 'error')
         newPasswordInput.classList.add('error')
         return
     }
-    
+
     if (password !== confirmPassword) {
         showMessage('Passwords do not match', 'error')
         confirmPasswordInput.classList.add('error')
         return
     }
-    
+
     newPasswordInput.classList.remove('error')
     confirmPasswordInput.classList.remove('error')
-    
+
     setLoading(true)
-    
+
     try {
         const { error } = await supabaseClient.auth.updateUser({
             password: password
         })
-        
+
         if (error) {
             showMessage(error.message, 'error')
             setLoading(false)
@@ -182,33 +196,28 @@ async function setPassword() {
 }
 
 async function handleInvite() {
-    const params = new URLSearchParams(window.location.search)
-    const hash = window.location.hash.substring(1)
-    const hashParams = new URLSearchParams(hash)
-    
-    // Check for error in query params or hash
-    const errorDescription = params.get('error_description') || hashParams.get('error_description')
+    // Use stored tokens from memory (already extracted and URL cleared)
+    const { tokenHash, type, code, accessToken, refreshToken, errorDescription } = storedTokens
+
+    // Check for error
     if (errorDescription) {
         showFatalError(decodeURIComponent(errorDescription))
         return
     }
 
     // Method 1: Token hash flow (invite type)
-    const tokenHash = params.get('token_hash')
-    const type = params.get('type')
-    
     if (tokenHash && type) {
         try {
             const { data, error } = await supabaseClient.auth.verifyOtp({
                 token_hash: tokenHash,
                 type: type
             })
-            
+
             if (error) {
                 showFatalError(error.message)
                 return
             }
-            
+
             if (data.session || data.user) {
                 sessionReady = true
                 showForm()
@@ -221,16 +230,15 @@ async function handleInvite() {
     }
 
     // Method 2: PKCE code flow
-    const code = params.get('code')
     if (code) {
         try {
             const { data, error } = await supabaseClient.auth.exchangeCodeForSession(code)
-            
+
             if (error) {
                 showFatalError(error.message)
                 return
             }
-            
+
             if (data.session) {
                 sessionReady = true
                 showForm()
@@ -243,21 +251,18 @@ async function handleInvite() {
     }
 
     // Method 3: Hash fragment flow (implicit grant)
-    const accessToken = hashParams.get('access_token')
-    const refreshToken = hashParams.get('refresh_token')
-    
     if (accessToken) {
         try {
             const { data, error } = await supabaseClient.auth.setSession({
                 access_token: accessToken,
                 refresh_token: refreshToken || ''
             })
-            
+
             if (error) {
                 showFatalError(error.message)
                 return
             }
-            
+
             if (data.session) {
                 sessionReady = true
                 showForm()
