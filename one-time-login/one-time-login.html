@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
     <title>Logging In - Eat-Inn</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/blackfavicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/blackfavicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/blackfavicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/icons/blackfavicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/whitefavicons/favicon-32x32.png" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/whitefavicons/favicon-16x16.png" media="(prefers-color-scheme: dark)">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,9 +25,9 @@
             --bg-card: #1a1a1a;
             --text-primary: #ffffff;
             --text-secondary: #a3a3a3;
-            --accent-orange: #FF6B35;
-            --accent-green: #00B894;
-            --error: #EF4444;
+            --accent-primary: #ffffff;
+            --accent-green: #22c55e;
+            --error: #ef4444;
             --border: rgba(255,255,255,0.08);
         }
 
@@ -33,117 +42,67 @@
             padding: 24px;
         }
 
-        .bg-effects {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
+        .bg-effects { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; }
+        .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%); top: -200px; left: -200px; }
+        .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%); bottom: -100px; right: -100px; }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.4;
-        }
-
-        .orb-1 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
-            top: -200px; left: -200px;
-        }
-
-        .orb-2 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(0, 184, 148, 0.2) 0%, transparent 70%);
-            bottom: -100px; right: -100px;
-        }
-
-        .container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 48px;
-            max-width: 420px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo {
-            width: 64px; height: 64px;
-            background: linear-gradient(135deg, var(--accent-orange), #ff8f65);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin: 0 auto 28px;
-            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
-        }
-
+        .container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 48px; max-width: 420px; width: 100%; text-align: center; position: relative; z-index: 1; }
+        .container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent-primary), var(--text-secondary)); border-radius: 24px 24px 0 0; }
+        .logo { width: 64px; height: 64px; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; }
+        .logo img { width: 100%; height: 100%; border-radius: 16px; object-fit: contain; }
         h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
         .subtitle { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 32px; line-height: 1.6; }
 
-        .spinner {
-            width: 48px; height: 48px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent-orange);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 24px;
-        }
-
+        .spinner { width: 48px; height: 48px; border: 3px solid var(--border); border-top-color: var(--accent-primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 24px; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-orange), var(--accent-green)); border-radius: 2px; animation: progress 2s ease-in-out infinite; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--text-secondary)); border-radius: 2px; animation: progress 2s ease-in-out infinite; }
         @keyframes progress { 0% { width: 0%; margin-left: 0; } 50% { width: 60%; margin-left: 20%; } 100% { width: 0%; margin-left: 100%; } }
 
         .status-icon { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; opacity: 0; transform: scale(0.5); animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        .status-icon.success { background: rgba(0, 184, 148, 0.15); }
+        .status-icon.success { background: rgba(34, 197, 94, 0.15); }
         .status-icon.error { background: rgba(239, 68, 68, 0.15); }
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
 
         .success-text { color: var(--accent-green); }
         .error-text { color: var(--error); }
 
-        .home-link { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent-orange), #ff8f65); color: white; text-decoration: none; font-weight: 600; margin-top: 24px; padding: 14px 28px; border-radius: 12px; font-size: 0.95rem; transition: all 0.2s ease; box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3); }
-        .home-link:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255, 107, 53, 0.4); }
-
+        .home-link { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-primary); color: var(--bg-primary); text-decoration: none; font-weight: 600; margin-top: 24px; padding: 14px 28px; border-radius: 12px; font-size: 0.95rem; transition: all 0.2s ease; box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1); }
+        .home-link:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255, 255, 255, 0.15); }
         .hidden { display: none; }
     </style>
 </head>
 <body>
     <div class="bg-effects"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
-    
+
     <div class="container">
-        <div class="logo">🍽️</div>
-        
+        <div class="logo"><img src="/icons/whiteicon.png" alt="Eat-Inn"></div>
+
         <div id="loadingState">
             <div class="spinner"></div>
             <h1>Logging you in...</h1>
             <p class="subtitle">Please wait a moment</p>
             <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        
+
         <div id="successState" class="hidden">
             <div class="status-icon success">✓</div>
             <h1 class="success-text">You're logged in!</h1>
             <p class="subtitle">Redirecting you to Eat-Inn...</p>
-            <a href="https://geteatinn.app" class="home-link"><span>→</span> Go to Eat-Inn</a>
+            <a href="https://geteatinn.app" class="home-link">Go to Eat-Inn →</a>
         </div>
-        
+
         <div id="errorState" class="hidden">
             <div class="status-icon error">✕</div>
             <h1 class="error-text">Login Failed</h1>
             <p class="subtitle" id="errorMessage">The link may have expired or is invalid</p>
-            <a href="https://geteatinn.app" class="home-link"><span>←</span> Return to Eat-Inn</a>
+            <a href="https://geteatinn.app" class="home-link">← Return to Eat-Inn</a>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="one-time-login.js?v=2"></script>
+    <script src="one-time-login.js?v=3"></script>
 </body>
 </html>

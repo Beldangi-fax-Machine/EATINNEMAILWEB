@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
     <title>Accept Invitation - Eat-Inn</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/blackfavicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/blackfavicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/blackfavicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/icons/blackfavicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/whitefavicons/favicon-32x32.png" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/whitefavicons/favicon-16x16.png" media="(prefers-color-scheme: dark)">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,10 +27,10 @@
             --text-primary: #ffffff;
             --text-secondary: #a3a3a3;
             --text-muted: #737373;
-            --accent-orange: #FF6B35;
-            --accent-green: #00B894;
-            --error: #EF4444;
-            --warning: #F59E0B;
+            --accent-primary: #ffffff;
+            --accent-green: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
             --border: rgba(255,255,255,0.08);
         }
 
@@ -31,57 +40,45 @@
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
+            flex-direction: column;
         }
 
-        .bg-effects { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; }
+        .bg-effects { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 0; overflow: hidden; }
         .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; }
-        .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%); top: -200px; left: -200px; }
-        .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(0, 184, 148, 0.2) 0%, transparent 70%); bottom: -100px; right: -100px; }
+        .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); top: -200px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%); bottom: -100px; right: -100px; }
 
-        .container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 48px; max-width: 420px; width: 100%; text-align: center; position: relative; z-index: 1; }
-        .logo { width: 64px; height: 64px; background: linear-gradient(135deg, var(--accent-orange), #ff8f65); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 28px; box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3); }
+        .page-container { max-width: 1000px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; width: 100%; }
+
+        header { padding: 24px 0; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 44px; height: 44px; border-radius: 12px; object-fit: contain; }
+        .logo-text { font-size: 22px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.5px; }
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .btn-nav { background: var(--text-primary); color: var(--bg-primary); padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all 0.2s; }
+        .btn-nav:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 24px; }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 48px; max-width: 420px; width: 100%; text-align: center; position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent-primary), var(--text-secondary)); }
+        .card-icon { width: 64px; height: 64px; margin: 0 auto 24px; }
+        .card-icon img { width: 100%; height: 100%; border-radius: 16px; object-fit: contain; }
+
+        .welcome-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: var(--accent-green); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; }
+
         h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
         .subtitle { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 32px; line-height: 1.6; }
 
-        .welcome-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 184, 148, 0.1);
-            border: 1px solid rgba(0, 184, 148, 0.2);
-            color: var(--accent-green);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        /* Form Styles */
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-secondary); }
         .input-wrapper { position: relative; }
-
-        input {
-            width: 100%;
-            padding: 14px 16px;
-            padding-right: 48px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: inherit;
-            background: var(--bg-input);
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-        }
-
-        input:focus { outline: none; border-color: var(--accent-orange); box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15); }
+        input { width: 100%; padding: 14px 16px; padding-right: 48px; border: 1px solid var(--border); border-radius: 12px; font-size: 1rem; font-family: inherit; background: var(--bg-input); color: var(--text-primary); transition: all 0.2s ease; }
+        input:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
         input.error { border-color: var(--error); }
         input::placeholder { color: var(--text-muted); }
-
         .toggle-password { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: opacity 0.2s; }
         .toggle-password:hover { opacity: 1; }
 
@@ -92,126 +89,158 @@
         .strength-bar.strong { background: var(--accent-green); }
         .strength-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; text-align: left; }
 
-        .btn {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-orange), #ff8f65);
-            color: white;
-            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
-        }
-
-        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255, 107, 53, 0.4); }
+        .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
+        .btn-primary { background: var(--accent-primary); color: var(--bg-primary); box-shadow: 0 4px 16px rgba(255,255,255,0.1); }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,255,255,0.15); }
         .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-        .btn-spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .btn-spinner { width: 20px; height: 20px; border: 2px solid rgba(0,0,0,0.2); border-top-color: var(--bg-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .message { padding: 12px 16px; border-radius: 10px; font-size: 0.85rem; margin-top: 16px; display: none; align-items: center; gap: 8px; text-align: left; }
         .message.show { display: flex; }
-        .message.error { background: rgba(239, 68, 68, 0.1); color: var(--error); border: 1px solid rgba(239, 68, 68, 0.2); }
-        .message.success { background: rgba(0, 184, 148, 0.1); color: var(--accent-green); border: 1px solid rgba(0, 184, 148, 0.2); }
+        .message.error { background: rgba(239,68,68,0.1); color: var(--error); border: 1px solid rgba(239,68,68,0.2); }
 
-        .spinner-large { width: 48px; height: 48px; border: 3px solid var(--border); border-top-color: var(--accent-orange); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px; }
+        .spinner-large { width: 48px; height: 48px; border: 3px solid var(--border); border-top-color: var(--accent-primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px; }
         .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 24px; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-orange), var(--accent-green)); border-radius: 2px; animation: progress 2s ease-in-out infinite; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--text-secondary)); border-radius: 2px; animation: progress 2s ease-in-out infinite; }
         @keyframes progress { 0% { width: 0%; margin-left: 0; } 50% { width: 60%; margin-left: 20%; } 100% { width: 0%; margin-left: 100%; } }
 
-        .status-icon { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; opacity: 0; transform: scale(0.5); animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        .status-icon.success { background: rgba(0, 184, 148, 0.15); }
-        .status-icon.error-icon { background: rgba(239, 68, 68, 0.15); }
+        .status-icon { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; opacity: 0; transform: scale(0.5); animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
+        .status-icon.success { background: rgba(34,197,94,0.15); }
+        .status-icon.error-icon { background: rgba(239,68,68,0.15); }
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
 
         .success-text { color: var(--accent-green); }
         .error-text { color: var(--error); }
 
-        .home-link { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent-orange), #ff8f65); color: white; text-decoration: none; font-weight: 600; margin-top: 24px; padding: 14px 28px; border-radius: 12px; font-size: 0.95rem; transition: all 0.2s ease; box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3); }
-        .home-link:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255, 107, 53, 0.4); }
+        .home-link { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-primary); color: var(--bg-primary); text-decoration: none; font-weight: 600; margin-top: 24px; padding: 14px 28px; border-radius: 12px; font-size: 0.95rem; transition: all 0.2s ease; box-shadow: 0 4px 16px rgba(255,255,255,0.1); }
+        .home-link:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,255,255,0.15); }
 
         .hidden { display: none !important; }
+
+        footer { border-top: 1px solid var(--border); padding: 24px 0; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .footer-left { display: flex; align-items: center; gap: 24px; }
+        .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+        .footer-logo-icon { width: 28px; height: 28px; border-radius: 8px; object-fit: contain; }
+        .footer-logo span { font-weight: 600; color: var(--text-primary); font-size: 14px; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent-primary); }
+        .footer-company { color: var(--text-muted); font-size: 12px; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .card { padding: 32px 24px; }
+            main { padding: 40px 16px; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .footer-left { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
     <div class="bg-effects"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
-    
-    <div class="container">
-        <div class="logo">🍽️</div>
-        
-        <div id="loadingState">
-            <div class="spinner-large"></div>
-            <h1>Processing invitation...</h1>
-            <p class="subtitle">Please wait while we set up your account</p>
-            <div class="progress-bar"><div class="progress-fill"></div></div>
+
+    <div class="page-container">
+        <header>
+            <a href="/" class="logo">
+                <img src="/icons/whiteicon.png" alt="Eat-Inn" class="logo-icon">
+                <span class="logo-text">Eat-Inn</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/">Support</a>
+                <a href="/terms/">Terms</a>
+                <a href="/privacy/">Privacy</a>
+                <a href="https://geteatinn.app" class="btn-nav">Get App</a>
+            </nav>
+        </header>
+    </div>
+
+    <main>
+        <div class="card">
+            <div id="loadingState">
+                <div class="card-icon"><img src="/icons/whiteicon.png" alt="Eat-Inn"></div>
+                <div class="spinner-large"></div>
+                <h1>Processing invitation...</h1>
+                <p class="subtitle">Please wait while we set up your account</p>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+            </div>
+
+            <div id="formState" class="hidden">
+                <div class="card-icon"><img src="/icons/whiteicon.png" alt="Eat-Inn"></div>
+                <div class="welcome-badge">You're invited!</div>
+                <h1>Complete Your Account</h1>
+                <p class="subtitle">Create a password to finish setting up</p>
+
+                <form id="inviteForm" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="newPassword">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="newPassword" placeholder="Create a password" autocomplete="new-password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('newPassword', this)">👁️</button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar" id="bar1"></div>
+                            <div class="strength-bar" id="bar2"></div>
+                            <div class="strength-bar" id="bar3"></div>
+                            <div class="strength-bar" id="bar4"></div>
+                        </div>
+                        <p class="strength-text" id="strengthText">Use at least 6 characters</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="confirmPassword" placeholder="Confirm password" autocomplete="new-password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword', this)">👁️</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submitBtn" onclick="setPassword()">
+                        <span id="btnText">Create Account</span>
+                        <div class="btn-spinner hidden" id="btnSpinner"></div>
+                    </button>
+
+                    <div class="message" id="message"></div>
+                </form>
+            </div>
+
+            <div id="successState" class="hidden">
+                <div class="status-icon success">✓</div>
+                <h1 class="success-text">Welcome to Eat-Inn!</h1>
+                <p class="subtitle">Your account is ready. Redirecting...</p>
+                <a href="https://geteatinn.app" class="home-link">Go to Eat-Inn →</a>
+            </div>
+
+            <div id="errorState" class="hidden">
+                <div class="status-icon error-icon">✕</div>
+                <h1 class="error-text">Invitation Failed</h1>
+                <p class="subtitle" id="errorMessage">The invitation may have expired or is invalid</p>
+                <a href="https://geteatinn.app" class="home-link">← Return to Eat-Inn</a>
+            </div>
         </div>
-        
-        <div id="formState" class="hidden">
-            <div class="welcome-badge">🎉 You're invited!</div>
-            <h1>Complete Your Account</h1>
-            <p class="subtitle">Create a password to finish setting up</p>
-            
-            <form id="inviteForm" onsubmit="return false;">
-                <div class="form-group">
-                    <label for="newPassword">Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" id="newPassword" placeholder="Create a password" required>
-                        <button type="button" class="toggle-password" onclick="togglePassword('newPassword', this)">👁️</button>
+    </main>
+
+    <div class="page-container">
+        <footer>
+            <div class="footer-content">
+                <div class="footer-left">
+                    <a href="/" class="footer-logo">
+                        <img src="/icons/whiteicon.png" alt="Eat-Inn" class="footer-logo-icon">
+                        <span>Eat-Inn</span>
+                    </a>
+                    <div class="footer-links">
+                        <a href="/terms/">Terms</a>
+                        <a href="/privacy/">Privacy</a>
+                        <a href="mailto:support@eatinn.org">Contact</a>
                     </div>
-                    <div class="password-strength">
-                        <div class="strength-bar" id="bar1"></div>
-                        <div class="strength-bar" id="bar2"></div>
-                        <div class="strength-bar" id="bar3"></div>
-                        <div class="strength-bar" id="bar4"></div>
-                    </div>
-                    <p class="strength-text" id="strengthText">Use at least 6 characters</p>
                 </div>
-                
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
-                        <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword', this)">👁️</button>
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary" id="submitBtn" onclick="setPassword()">
-                    <span id="btnText">Create Account</span>
-                    <div class="btn-spinner hidden" id="btnSpinner"></div>
-                </button>
-                
-                <div class="message" id="message"></div>
-            </form>
-        </div>
-        
-        <div id="successState" class="hidden">
-            <div class="status-icon success">✓</div>
-            <h1 class="success-text">Welcome to Eat-Inn!</h1>
-            <p class="subtitle">Your account is ready. Redirecting...</p>
-            <a href="https://geteatinn.app" class="home-link"><span>→</span> Go to Eat-Inn</a>
-        </div>
-        
-        <div id="errorState" class="hidden">
-            <div class="status-icon error-icon">✕</div>
-            <h1 class="error-text">Invitation Failed</h1>
-            <p class="subtitle" id="errorMessage">The invitation may have expired or is invalid</p>
-            <a href="https://geteatinn.app" class="home-link"><span>←</span> Return to Eat-Inn</a>
-        </div>
+                <span class="footer-company">© 2026 POKHREL DEVELOPMENT LLC</span>
+            </div>
+        </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="invite-user.js?v=2"></script>
+    <script src="invite-user.js?v=3"></script>
 </body>
 </html>
