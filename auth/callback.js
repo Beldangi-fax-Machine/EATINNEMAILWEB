@@ -58,7 +58,7 @@ function showSuccess() {
     successState.classList.remove('hidden')
 
     setTimeout(() => {
-        window.location.href = 'https://geteatinn.app'
+        window.location.href = 'https://apps.apple.com/us/app/eat-inn/id6760630503'
     }, 3000)
 }
 

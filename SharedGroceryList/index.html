@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Your Data - EAT-INN</title>
+    <title>Shared Grocery List - EAT-INN</title>
 
     <!-- Favicons - Light mode (black icon) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/blackfavicon/apple-touch-icon.png">
@@ -38,6 +38,7 @@
             --accent-muted: #a3a3a3;
             --border: rgba(255,255,255,0.08);
             --border-hover: rgba(255,255,255,0.15);
+            --success: #22c55e;
         }
 
         body {
@@ -181,10 +182,6 @@
             margin-bottom: 24px;
         }
 
-        .hero-badge .icon {
-            font-size: 14px;
-        }
-
         .hero h1 {
             font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 800;
@@ -200,9 +197,19 @@
             background-clip: text;
         }
 
-        .last-updated {
+        .list-meta {
             color: var(--text-muted);
             font-size: 0.9rem;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .list-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .content-section {
@@ -228,168 +235,145 @@
             background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
         }
 
-        .section {
-            margin-bottom: 40px;
+        .category {
+            margin-bottom: 32px;
         }
 
-        .section:last-child {
+        .category:last-of-type {
             margin-bottom: 0;
         }
 
-        .section-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: var(--accent-primary);
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--bg-primary);
-            margin-bottom: 12px;
-        }
-
-        .section h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-        }
-
-        .section h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 20px 0 12px;
-            color: var(--text-primary);
-        }
-
-        .section p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin-bottom: 12px;
-        }
-
-        .section p:last-child {
-            margin-bottom: 0;
-        }
-
-        .section ul {
-            list-style: none;
-            margin: 16px 0;
-        }
-
-        .section ul li {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            padding-left: 24px;
-            position: relative;
-            margin-bottom: 8px;
-        }
-
-        .section ul li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 10px;
-            width: 8px;
-            height: 8px;
-            background: var(--accent-primary);
-            border-radius: 50%;
-        }
-
-        .section ol {
-            list-style: none;
-            margin: 16px 0;
-            counter-reset: step-counter;
-        }
-
-        .section ol li {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            padding-left: 40px;
-            position: relative;
-            margin-bottom: 16px;
-        }
-
-        .section ol li::before {
-            counter-increment: step-counter;
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 28px;
-            height: 28px;
-            background: var(--accent-primary);
-            border-radius: 50%;
+        .category-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--bg-primary);
-        }
-
-        .highlight-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
-        }
-
-        .highlight-box p {
-            color: var(--text-primary);
-            margin: 0;
-        }
-
-        .highlight-box.warning {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .email-link {
-            color: var(--accent-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.2s;
-        }
-
-        .email-link:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        .intro-text {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 40px;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
         }
 
-        .intro-text p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto;
+        .category-icon {
+            font-size: 1.5rem;
         }
 
-        .company-info {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
-        .company-info p {
-            margin: 4px 0;
+        .category-count {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
             color: var(--text-secondary);
+        }
+
+        .grocery-list {
+            list-style: none;
+        }
+
+        .grocery-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: background 0.2s;
+        }
+
+        .grocery-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .grocery-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border-hover);
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkbox.checked {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: var(--bg-primary);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .item-name.checked {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .item-quantity {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .progress-section {
+            margin-bottom: 32px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
         }
 
         footer {
@@ -584,6 +568,10 @@
             .footer-left {
                 flex-direction: column;
             }
+            .list-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
     </style>
 </head>
@@ -602,7 +590,6 @@
             </a>
             <nav class="nav-links">
                 <a href="/">Support</a>
-                <a href="/privacy/">Privacy</a>
                 <a href="/terms/">Terms</a>
                 <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Get App</a>
             </nav>
@@ -617,85 +604,157 @@
         <div class="mobile-menu">
             <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
             <a href="/">Support</a>
-            <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
             <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Get App</a>
         </div>
 
         <section class="hero">
             <div class="hero-badge">
-                Account
+                Shared List
             </div>
-            <h1>Delete Your <span class="gradient-text">Data</span></h1>
-            <p class="last-updated">How to request data deletion</p>
+            <h1>Weekly <span class="gradient-text">Grocery List</span></h1>
+            <div class="list-meta">
+                <span>12 items</span>
+                <span>Shared by Austin</span>
+            </div>
         </section>
 
         <section class="content-section">
             <div class="content-card">
-                <div class="intro-text">
-                    <p>You have the right to delete your account and all associated data at any time. Follow the instructions below to permanently remove your data from EAT-INN.</p>
-                </div>
-
-                <div class="section">
-                    <div class="section-number">1</div>
-                    <h2>Delete Your Account via the App</h2>
-                    <p>The easiest way to delete your account and all associated data is directly within the EAT-INN app:</p>
-                    <ol>
-                        <li>Open the <strong>EAT-INN</strong> app on your device</li>
-                        <li>Navigate to <strong>Settings</strong> (tap the gear icon or your profile)</li>
-                        <li>Scroll down and tap <strong>"Delete Account"</strong></li>
-                        <li>Confirm your decision when prompted</li>
-                        <li>Your account and all data will be permanently deleted</li>
-                    </ol>
-                </div>
-
-                <div class="section">
-                    <div class="section-number">2</div>
-                    <h2>What Data Gets Deleted</h2>
-                    <p>When you delete your account, the following data is permanently removed:</p>
-                    <ul>
-                        <li>Your account information and profile</li>
-                        <li>All recipes you have created or saved</li>
-                        <li>Your kitchen inventory items</li>
-                        <li>Preferences and app settings</li>
-                        <li>Any usage history and analytics data</li>
-                    </ul>
-                    <div class="highlight-box warning">
-                        <p>This action is permanent and cannot be undone. Please make sure to export any recipes you want to keep before deleting your account.</p>
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%"></div>
                     </div>
+                    <p class="progress-text">3 of 12 items checked</p>
                 </div>
 
-                <div class="section">
-                    <div class="section-number">3</div>
-                    <h2>Alternative: Contact Support</h2>
-                    <p>If you are unable to access the app or need assistance with data deletion, you can contact us directly:</p>
-                    <div class="company-info">
-                        <p>Email: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></p>
-                        <p>Subject: Data Deletion Request</p>
+                <div class="category">
+                    <div class="category-header">
+                        <span class="category-icon">🥬</span>
+                        <span class="category-title">Produce</span>
+                        <span class="category-count">4 items</span>
                     </div>
-                    <p>Please include the email address associated with your account. We will process your request within 30 days.</p>
-                </div>
-
-                <div class="section">
-                    <div class="section-number">4</div>
-                    <h2>Data Retention</h2>
-                    <p>After account deletion:</p>
-                    <ul>
-                        <li>Your data is permanently removed from our active systems</li>
-                        <li>Backup data may be retained for up to 30 days before full deletion</li>
-                        <li>We may retain anonymized, aggregated data that cannot identify you</li>
-                        <li>Certain data may be kept if required by law</li>
+                    <ul class="grocery-list">
+                        <li class="grocery-item">
+                            <div class="checkbox checked"></div>
+                            <div class="item-details">
+                                <div class="item-name checked">Avocados</div>
+                                <div class="item-quantity">3 pieces</div>
+                            </div>
+                        </li>
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Cherry Tomatoes</div>
+                                <div class="item-quantity">1 pint</div>
+                            </div>
+                        </li>
+                        <li class="grocery-item">
+                            <div class="checkbox checked"></div>
+                            <div class="item-details">
+                                <div class="item-name checked">Fresh Basil</div>
+                                <div class="item-quantity">1 bunch</div>
+                            </div>
+                        </li>
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Lemons</div>
+                                <div class="item-quantity">4 pieces</div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
 
-                <div class="section">
-                    <div class="section-number">5</div>
-                    <h2>Questions?</h2>
-                    <p>If you have any questions about data deletion or your privacy rights, please review our <a href="/privacy/" class="email-link">Privacy Policy</a> or contact us:</p>
-                    <div class="company-info">
-                        <p>Email: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></p>
-                        <p>Vermont, United States</p>
+                <div class="category">
+                    <div class="category-header">
+                        <span class="category-icon">🥛</span>
+                        <span class="category-title">Dairy</span>
+                        <span class="category-count">3 items</span>
                     </div>
+                    <ul class="grocery-list">
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Greek Yogurt</div>
+                                <div class="item-quantity">32 oz container</div>
+                            </div>
+                        </li>
+                        <li class="grocery-item">
+                            <div class="checkbox checked"></div>
+                            <div class="item-details">
+                                <div class="item-name checked">Parmesan Cheese</div>
+                                <div class="item-quantity">8 oz block</div>
+                            </div>
+                        </li>
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Butter</div>
+                                <div class="item-quantity">1 lb</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">
+                        <span class="category-icon">🍖</span>
+                        <span class="category-title">Meat & Seafood</span>
+                        <span class="category-count">2 items</span>
+                    </div>
+                    <ul class="grocery-list">
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Chicken Breast</div>
+                                <div class="item-quantity">2 lbs</div>
+                            </div>
+                        </li>
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Salmon Fillets</div>
+                                <div class="item-quantity">1 lb</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">
+                        <span class="category-icon">🥫</span>
+                        <span class="category-title">Pantry</span>
+                        <span class="category-count">3 items</span>
+                    </div>
+                    <ul class="grocery-list">
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Olive Oil</div>
+                                <div class="item-quantity">500ml bottle</div>
+                            </div>
+                        </li>
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Spaghetti</div>
+                                <div class="item-quantity">1 lb box</div>
+                            </div>
+                        </li>
+                        <li class="grocery-item">
+                            <div class="checkbox"></div>
+                            <div class="item-details">
+                                <div class="item-name">Canned Tomatoes</div>
+                                <div class="item-quantity">2 cans</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="cta-section">
+                    <p>Create and share your own grocery lists with Eat-Inn</p>
+                    <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Download Eat-Inn</a>
                 </div>
             </div>
         </section>
@@ -741,6 +800,24 @@
                 }
             });
         });
+
+        // Checkbox toggle functionality
+        document.querySelectorAll('.checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const itemName = this.nextElementSibling.querySelector('.item-name');
+                itemName.classList.toggle('checked');
+                updateProgress();
+            });
+        });
+
+        function updateProgress() {
+            const total = document.querySelectorAll('.checkbox').length;
+            const checked = document.querySelectorAll('.checkbox.checked').length;
+            const percentage = (checked / total) * 100;
+            document.querySelector('.progress-fill').style.width = percentage + '%';
+            document.querySelector('.progress-text').textContent = `${checked} of ${total} items checked`;
+        }
     </script>
 </body>
 </html>
