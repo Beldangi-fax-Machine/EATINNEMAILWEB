@@ -962,23 +962,34 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', loadSharedRecipe);
 
-        // Save to app deep link
+        // Save to app deep link with improved detection
         document.getElementById('saveToAppBtn').addEventListener('click', function(e) {
             e.preventDefault();
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
             if (!id) return;
 
-            const deepLink = `eatinn://recipe?id=${id}`;
-            const appStoreLink = 'https://apps.apple.com/us/app/eat-inn/id6760630503';
+            const deepLink = `eatinn://shared-recipe?id=${id}`;
+            let appOpened = false;
+
+            // Detect if app opened (page becomes hidden)
+            const handleVisibilityChange = function() {
+                if (document.hidden) {
+                    appOpened = true;
+                }
+            };
+            document.addEventListener('visibilitychange', handleVisibilityChange);
 
             // Try to open the app
             window.location.href = deepLink;
 
-            // Show fallback after a delay if app doesn't open
+            // Only show fallback if user returns to page without app opening
             setTimeout(function() {
-                document.getElementById('appFallback').style.display = 'block';
-            }, 1500);
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                if (!appOpened) {
+                    document.getElementById('appFallback').style.display = 'block';
+                }
+            }, 2000);
         });
     </script>
 </body>
