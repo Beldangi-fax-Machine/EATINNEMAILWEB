@@ -659,14 +659,6 @@
 
         <!-- Recipe Content -->
         <main class="recipe-container" id="recipeContent">
-            <!-- Expiry Banner -->
-            <div class="expiry-banner">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>This link expires soon. Save the recipe below!</span>
-            </div>
-
             <!-- Recipe Image -->
             <div class="recipe-image-card" id="recipeImageCard">
                 <span class="recipe-image-placeholder">🍽️</span>
@@ -744,15 +736,18 @@
             <div class="save-card">
                 <h3 class="save-title">Save this recipe</h3>
                 <p class="save-subtitle">Keep it in your collection</p>
-                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="app-btn">
+                <a href="#" id="saveToAppBtn" class="app-btn">
                     <div class="app-btn-icon">
                         <img src="/icons/whiteicon.png" alt="Eat-Inn">
                     </div>
-                    <span class="app-btn-text">Open in Eat-Inn</span>
+                    <span class="app-btn-text">Save to Eat-Inn</span>
                     <svg class="app-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
+                <p class="app-fallback" id="appFallback" style="display:none;margin-top:var(--space-md);font-size:13px;color:var(--text-muted);">
+                    Don't have the app? <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" style="color:var(--text-secondary);text-decoration:underline;">Download Eat-Inn</a>
+                </p>
             </div>
 
         </main>
@@ -966,6 +961,25 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', loadSharedRecipe);
+
+        // Save to app deep link
+        document.getElementById('saveToAppBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (!id) return;
+
+            const deepLink = `eatinn://recipe?id=${id}`;
+            const appStoreLink = 'https://apps.apple.com/us/app/eat-inn/id6760630503';
+
+            // Try to open the app
+            window.location.href = deepLink;
+
+            // Show fallback after a delay if app doesn't open
+            setTimeout(function() {
+                document.getElementById('appFallback').style.display = 'block';
+            }, 1500);
+        });
     </script>
 </body>
 </html>
