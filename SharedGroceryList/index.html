@@ -4,820 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shared Grocery List - EAT-INN</title>
-
-    <!-- Favicons - Light mode (black icon) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/blackfavicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/blackfavicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/blackfavicon/favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="/icons/blackfavicon/favicon.ico">
-
-    <!-- Favicons - Dark mode (white icon) -->
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/whitefavicons/favicon-32x32.png" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/whitefavicons/favicon-16x16.png" media="(prefers-color-scheme: dark)">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #111111;
-            --bg-card: #1a1a1a;
-            --bg-card-hover: #222222;
-            --text-primary: #ffffff;
-            --text-secondary: #a3a3a3;
-            --text-muted: #737373;
-            --accent-primary: #ffffff;
-            --accent-secondary: #e5e5e5;
-            --accent-muted: #a3a3a3;
-            --border: rgba(255,255,255,0.08);
-            --border-hover: rgba(255,255,255,0.15);
-            --success: #22c55e;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .bg-effects {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.4;
-        }
-
-        .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-            top: -200px;
-            right: -200px;
-        }
-
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            bottom: -100px;
-            left: -100px;
-        }
-
-        .orb-3 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            padding: 24px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            object-fit: contain;
-        }
-
-        .logo-text {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .btn-primary {
-            background: var(--text-primary);
-            color: var(--bg-primary);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .hero {
-            text-align: center;
-            padding: 80px 0 60px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            letter-spacing: -1.5px;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .list-meta {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .list-meta span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .content-section {
-            padding: 40px 0 80px;
-        }
-
-        .content-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 48px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-        }
-
-        .category {
-            margin-bottom: 32px;
-        }
-
-        .category:last-of-type {
-            margin-bottom: 0;
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .category-icon {
-            font-size: 1.5rem;
-        }
-
-        .category-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .category-count {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .grocery-list {
-            list-style: none;
-        }
-
-        .grocery-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 10px;
-            margin-bottom: 8px;
-            transition: background 0.2s;
-        }
-
-        .grocery-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .grocery-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .checkbox {
-            width: 22px;
-            height: 22px;
-            border: 2px solid var(--border-hover);
-            border-radius: 6px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .checkbox.checked {
-            background: var(--success);
-            border-color: var(--success);
-        }
-
-        .checkbox.checked::after {
-            content: '✓';
-            color: var(--bg-primary);
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .item-details {
-            flex: 1;
-        }
-
-        .item-name {
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .item-name.checked {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        .item-quantity {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 2px;
-        }
-
-        .progress-section {
-            margin-bottom: 32px;
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--success);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-align: center;
-        }
-
-        .cta-section {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 1px solid var(--border);
-        }
-
-        .cta-section p {
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 0;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-left {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .footer-logo-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            object-fit: contain;
-        }
-
-        .footer-logo span {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        .footer-company {
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 44px;
-            height: 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            cursor: pointer;
-            gap: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-        }
-
-        .hamburger span {
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: var(--text-primary);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
-        /* Mobile Menu Overlay */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 10, 0.98);
-            z-index: 999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 24px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            padding: 12px 24px;
-            transition: color 0.2s;
-        }
-
-        .mobile-menu a:hover {
-            color: var(--accent-secondary);
-        }
-
-        .mobile-menu .btn-primary {
-            margin-top: 16px;
-            font-size: 1rem;
-            padding: 14px 28px;
-            color: var(--bg-primary);
-            background: var(--text-primary);
-        }
-
-        .mobile-menu-close {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            width: 44px;
-            height: 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 24px;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-close:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .mobile-menu {
-                display: flex;
-            }
-            .hero {
-                padding: 60px 0 40px;
-            }
-            .content-card {
-                padding: 32px 24px;
-            }
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            .footer-left {
-                flex-direction: column;
-            }
-            .list-meta {
-                flex-direction: column;
-                gap: 8px;
-            }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg-primary:#000;--bg-card:#0A0A0A;--bg-item-hover:rgba(255,255,255,0.05);--text-primary:#FFF;--text-secondary:#AAA;--text-muted:#666;--border-light:rgba(255,255,255,0.08);--success:#30D158;--error:#FF453A;--warning:#FF9F0A;--space-xs:4px;--space-sm:8px;--space-md:12px;--space-lg:16px;--space-xl:20px;--space-xxl:24px;--radius-sm:8px;--radius-md:12px}
+        body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(to bottom right,#1a1625,#0f0f15,#0d0d0d);color:var(--text-primary);min-height:100vh;line-height:1.5}
+        .container{max-width:600px;margin:0 auto;padding:0 var(--space-xl)}
+        header{padding:var(--space-lg) 0;display:flex;align-items:center;justify-content:space-between}
+        .logo{display:flex;align-items:center;gap:var(--space-sm);text-decoration:none}
+        .logo-icon{width:36px;height:36px;border-radius:var(--radius-sm);object-fit:contain}
+        .logo-text{font-size:18px;font-weight:700;color:var(--text-primary)}
+        .btn-get-app{background:var(--text-primary);color:var(--bg-primary);padding:10px 16px;border-radius:var(--radius-sm);font-weight:600;font-size:14px;text-decoration:none}
+        .loading-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px var(--space-xl);text-align:center}
+        .loading-spinner{width:48px;height:48px;border:3px solid var(--border-light);border-top-color:var(--text-primary);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:var(--space-xl)}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loading-text{font-size:16px;color:var(--text-secondary)}
+        .error-container{display:none;flex-direction:column;align-items:center;justify-content:center;padding:60px var(--space-xl);text-align:center}
+        .error-icon{width:64px;height:64px;background:rgba(255,69,58,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-xl)}
+        .error-icon svg{width:32px;height:32px;color:var(--error)}
+        .error-title{font-size:20px;font-weight:600;margin-bottom:var(--space-sm)}
+        .error-message{font-size:15px;color:var(--text-secondary);margin-bottom:var(--space-xl);max-width:300px}
+        .error-cta{display:inline-flex;align-items:center;gap:var(--space-sm);background:var(--text-primary);color:var(--bg-primary);padding:14px 24px;border-radius:var(--radius-sm);font-weight:600;font-size:15px;text-decoration:none}
+        .expiry-banner{background:rgba(255,159,10,0.1);border:1px solid rgba(255,159,10,0.3);border-radius:var(--radius-sm);padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-lg);display:flex;align-items:center;gap:var(--space-sm)}
+        .expiry-banner svg{width:18px;height:18px;color:var(--warning);flex-shrink:0}
+        .expiry-banner span{font-size:13px;color:var(--warning)}
+        .grocery-container{display:none;padding:var(--space-lg) 0 60px}
+        .list-title-card{background:var(--bg-card);border-radius:var(--radius-md);padding:var(--space-lg);margin-bottom:var(--space-md);border:1px solid var(--border-light)}
+        .list-title{font-size:24px;font-weight:700;margin-bottom:var(--space-sm)}
+        .list-subtitle{font-size:14px;color:var(--text-secondary)}
+        .progress-header{background:rgba(255,255,255,0.05);border-radius:var(--radius-sm);padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);display:flex;align-items:center;justify-content:space-between}
+        .progress-info{display:flex;align-items:center;gap:var(--space-sm);font-size:14px;font-weight:500}
+        .progress-info.completed{color:var(--success)}
+        .progress-info svg{width:18px;height:18px}
+        .progress-time{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary)}
+        .progress-time svg{width:14px;height:14px;opacity:0.7}
+        .items-card{background:var(--bg-card);border-radius:var(--radius-md);margin-bottom:var(--space-md);border:1px solid var(--border-light);overflow:hidden}
+        .grocery-item{display:flex;align-items:center;gap:var(--space-lg);padding:var(--space-lg) var(--space-xl);border-bottom:1px solid var(--border-light);cursor:pointer;transition:background 0.15s}
+        .grocery-item:last-child{border-bottom:none}
+        .grocery-item:hover{background:var(--bg-item-hover)}
+        .checkbox{width:24px;height:24px;border:2px solid var(--text-secondary);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+        .checkbox.checked{background:var(--success);border-color:var(--success)}
+        .checkbox svg{width:14px;height:14px;color:var(--bg-primary);opacity:0;transform:scale(0.5);transition:all 0.2s}
+        .checkbox.checked svg{opacity:1;transform:scale(1)}
+        .item-content{flex:1;display:flex;flex-direction:column;gap:2px}
+        .item-name{font-size:16px;font-weight:500;color:var(--text-primary);transition:all 0.2s}
+        .item-name.checked{text-decoration:line-through;color:var(--text-muted)}
+        .item-details{font-size:13px;color:var(--text-muted)}
+        .save-card{background:var(--bg-card);border-radius:var(--radius-md);padding:var(--space-xl);border:1px solid var(--border-light);text-align:center}
+        .save-title{font-size:17px;font-weight:600;margin-bottom:var(--space-xs)}
+        .save-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:var(--space-lg)}
+        .app-btn{display:flex;align-items:center;gap:var(--space-md);width:100%;padding:14px var(--space-lg);background:var(--text-primary);border-radius:var(--radius-sm);text-decoration:none;margin-bottom:var(--space-lg)}
+        .app-btn-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+        .app-btn-icon img{width:24px;height:24px;filter:invert(1)}
+        .app-btn-text{flex:1;font-size:16px;font-weight:600;color:var(--bg-primary);text-align:left}
+        .app-btn-arrow{width:20px;height:20px;color:rgba(0,0,0,0.3)}
+        .export-toggle{display:flex;align-items:center;justify-content:center;gap:var(--space-sm);padding:var(--space-md);color:var(--text-muted);font-size:13px;cursor:pointer}
+        .export-toggle svg{width:16px;height:16px;transition:transform 0.2s}
+        .export-toggle.open svg{transform:rotate(180deg)}
+        .export-options{display:none;flex-wrap:wrap;gap:var(--space-sm);padding-top:var(--space-md);border-top:1px solid var(--border-light)}
+        .export-options.show{display:flex}
+        .export-btn{flex:1;min-width:calc(50% - var(--space-sm));display:flex;align-items:center;gap:var(--space-sm);padding:var(--space-md);background:rgba(255,255,255,0.03);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:pointer;color:var(--text-secondary);font-size:13px}
+        .export-btn:hover{background:rgba(255,255,255,0.06);color:var(--text-primary)}
+        .export-btn svg{width:18px;height:18px;flex-shrink:0}
+        .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--success);color:var(--bg-primary);padding:var(--space-md) var(--space-xl);border-radius:50px;display:flex;align-items:center;gap:var(--space-sm);font-size:14px;font-weight:500;opacity:0;transition:all 0.3s;z-index:1000}
+        .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+        .toast svg{width:18px;height:18px}
+        footer{padding:var(--space-xxl) 0;text-align:center}
+        .footer-links{display:flex;justify-content:center;gap:var(--space-xl);margin-bottom:var(--space-md)}
+        .footer-links a{color:var(--text-secondary);text-decoration:none;font-size:13px}
+        .footer-company{color:var(--text-muted);font-size:12px}
+        @media(max-width:480px){.container{padding:0 var(--space-lg)}.list-title{font-size:20px}.grocery-item{padding:var(--space-md) var(--space-lg)}.save-card{padding:var(--space-lg)}}
     </style>
 </head>
 <body>
-    <div class="bg-effects">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-
     <div class="container">
         <header>
             <a href="/" class="logo">
                 <img src="/icons/whiteicon.png" alt="Eat-Inn" class="logo-icon">
                 <span class="logo-text">Eat-Inn</span>
             </a>
-            <nav class="nav-links">
-                <a href="/">Support</a>
-                <a href="/terms/">Terms</a>
-                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Get App</a>
-            </nav>
-            <button class="hamburger" aria-label="Open menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-get-app">Get App</a>
         </header>
-
-        <!-- Mobile Menu -->
-        <div class="mobile-menu">
-            <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
-            <a href="/">Support</a>
-            <a href="/terms/">Terms</a>
-            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Get App</a>
+        <div class="loading-container" id="loadingState">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Loading shared grocery list...</p>
         </div>
-
-        <section class="hero">
-            <div class="hero-badge">
-                Shared List
+        <div class="error-container" id="errorState">
+            <div class="error-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
-            <h1>Weekly <span class="gradient-text">Grocery List</span></h1>
-            <div class="list-meta">
-                <span>12 items</span>
-                <span>Shared by Austin</span>
+            <h2 class="error-title" id="errorTitle">List Not Found</h2>
+            <p class="error-message" id="errorMessage">This shared grocery list has expired or doesn't exist. Shared links are only valid for 3 minutes.</p>
+            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="error-cta">Get Eat-Inn App</a>
+        </div>
+        <main class="grocery-container" id="groceryContent">
+            <div class="expiry-banner">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>This link expires soon. Save the list below!</span>
             </div>
-        </section>
-
-        <section class="content-section">
-            <div class="content-card">
-                <div class="progress-section">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 25%"></div>
-                    </div>
-                    <p class="progress-text">3 of 12 items checked</p>
+            <div class="list-title-card">
+                <h1 class="list-title" id="listTitle">Loading...</h1>
+                <p class="list-subtitle" id="listSubtitle">Shared grocery list</p>
+            </div>
+            <div class="progress-header">
+                <div class="progress-info" id="progressInfo">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span id="progressText">0/0 items</span>
                 </div>
-
-                <div class="category">
-                    <div class="category-header">
-                        <span class="category-icon">🥬</span>
-                        <span class="category-title">Produce</span>
-                        <span class="category-count">4 items</span>
-                    </div>
-                    <ul class="grocery-list">
-                        <li class="grocery-item">
-                            <div class="checkbox checked"></div>
-                            <div class="item-details">
-                                <div class="item-name checked">Avocados</div>
-                                <div class="item-quantity">3 pieces</div>
-                            </div>
-                        </li>
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Cherry Tomatoes</div>
-                                <div class="item-quantity">1 pint</div>
-                            </div>
-                        </li>
-                        <li class="grocery-item">
-                            <div class="checkbox checked"></div>
-                            <div class="item-details">
-                                <div class="item-name checked">Fresh Basil</div>
-                                <div class="item-quantity">1 bunch</div>
-                            </div>
-                        </li>
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Lemons</div>
-                                <div class="item-quantity">4 pieces</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="category">
-                    <div class="category-header">
-                        <span class="category-icon">🥛</span>
-                        <span class="category-title">Dairy</span>
-                        <span class="category-count">3 items</span>
-                    </div>
-                    <ul class="grocery-list">
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Greek Yogurt</div>
-                                <div class="item-quantity">32 oz container</div>
-                            </div>
-                        </li>
-                        <li class="grocery-item">
-                            <div class="checkbox checked"></div>
-                            <div class="item-details">
-                                <div class="item-name checked">Parmesan Cheese</div>
-                                <div class="item-quantity">8 oz block</div>
-                            </div>
-                        </li>
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Butter</div>
-                                <div class="item-quantity">1 lb</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="category">
-                    <div class="category-header">
-                        <span class="category-icon">🍖</span>
-                        <span class="category-title">Meat & Seafood</span>
-                        <span class="category-count">2 items</span>
-                    </div>
-                    <ul class="grocery-list">
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Chicken Breast</div>
-                                <div class="item-quantity">2 lbs</div>
-                            </div>
-                        </li>
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Salmon Fillets</div>
-                                <div class="item-quantity">1 lb</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="category">
-                    <div class="category-header">
-                        <span class="category-icon">🥫</span>
-                        <span class="category-title">Pantry</span>
-                        <span class="category-count">3 items</span>
-                    </div>
-                    <ul class="grocery-list">
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Olive Oil</div>
-                                <div class="item-quantity">500ml bottle</div>
-                            </div>
-                        </li>
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Spaghetti</div>
-                                <div class="item-quantity">1 lb box</div>
-                            </div>
-                        </li>
-                        <li class="grocery-item">
-                            <div class="checkbox"></div>
-                            <div class="item-details">
-                                <div class="item-name">Canned Tomatoes</div>
-                                <div class="item-quantity">2 cans</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="cta-section">
-                    <p>Create and share your own grocery lists with Eat-Inn</p>
-                    <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Download Eat-Inn</a>
+                <div class="progress-time">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-width="2" stroke-linecap="round" d="M12 6v6l4 2"/></svg>
+                    <span>Shared just now</span>
                 </div>
             </div>
-        </section>
-
+            <div class="items-card" id="itemsCard"></div>
+            <div class="save-card">
+                <h3 class="save-title">Save this list</h3>
+                <p class="save-subtitle">Keep it synced across your devices</p>
+                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="app-btn">
+                    <div class="app-btn-icon"><img src="/icons/whiteicon.png" alt="Eat-Inn"></div>
+                    <span class="app-btn-text">Open in Eat-Inn</span>
+                    <svg class="app-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+                <div class="export-toggle" id="exportToggle">
+                    <span>Other export options</span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+                <div class="export-options" id="exportOptions">
+                    <button class="export-btn" id="copyTextBtn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg><span>Copy list</span></button>
+                    <button class="export-btn" id="copyNotesBtn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><span>Copy for Notes</span></button>
+                    <button class="export-btn" id="copyRemindersBtn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg><span>Copy for Reminders</span></button>
+                    <button class="export-btn" id="copyJsonBtn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg><span>Copy JSON</span></button>
+                </div>
+            </div>
+            <div class="toast" id="toast"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span id="toastText">Copied</span></div>
+        </main>
         <footer>
-            <div class="footer-content">
-                <div class="footer-left">
-                    <a href="/" class="footer-logo">
-                        <img src="/icons/whiteicon.png" alt="Eat-Inn" class="footer-logo-icon">
-                        <span>Eat-Inn</span>
-                    </a>
-                    <div class="footer-links">
-                        <a href="/terms/">Terms</a>
-                        <a href="/privacy/">Privacy</a>
-                        <a href="mailto:support@eatinn.org">Contact</a>
-                    </div>
-                </div>
-                <span class="footer-company">&copy; 2026 POKHREL DEVELOPMENT LLC</span>
-            </div>
+            <div class="footer-links"><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a><a href="mailto:support@eatinn.org">Contact</a></div>
+            <span class="footer-company">&copy; 2026 POKHREL DEVELOPMENT LLC</span>
         </footer>
     </div>
-
     <script>
-        // Mobile menu toggle
-        const hamburger = document.querySelector('.hamburger');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileLinks = document.querySelectorAll('.mobile-menu a');
-
-        function toggleMobileMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        }
-
-        hamburger.addEventListener('click', toggleMobileMenu);
-        mobileMenuClose.addEventListener('click', toggleMobileMenu);
-
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (mobileMenu.classList.contains('active')) {
-                    toggleMobileMenu();
-                }
-            });
-        });
-
-        // Checkbox toggle functionality
-        document.querySelectorAll('.checkbox').forEach(checkbox => {
-            checkbox.addEventListener('click', function() {
-                this.classList.toggle('checked');
-                const itemName = this.nextElementSibling.querySelector('.item-name');
-                itemName.classList.toggle('checked');
-                updateProgress();
-            });
-        });
-
-        function updateProgress() {
-            const total = document.querySelectorAll('.checkbox').length;
-            const checked = document.querySelectorAll('.checkbox.checked').length;
-            const percentage = (checked / total) * 100;
-            document.querySelector('.progress-fill').style.width = percentage + '%';
-            document.querySelector('.progress-text').textContent = `${checked} of ${total} items checked`;
-        }
+        const SUPABASE_URL='https://juodevmrlwkkfjygmqzc.supabase.co';
+        const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs';
+        let listData=null;
+        const loadingState=document.getElementById('loadingState');
+        const errorState=document.getElementById('errorState');
+        const groceryContent=document.getElementById('groceryContent');
+        function showError(title,message){loadingState.style.display='none';groceryContent.style.display='none';errorState.style.display='flex';document.getElementById('errorTitle').textContent=title;document.getElementById('errorMessage').textContent=message}
+        function showGroceryList(){loadingState.style.display='none';errorState.style.display='none';groceryContent.style.display='block'}
+        function formatItem(item){if(typeof item==='string')return{name:item,checked:false,quantity:null,unit:null,category:null};return{name:item.name||'Unknown item',checked:item.checked||false,quantity:item.quantity,unit:item.unit,category:item.category}}
+        function getItemDetails(item){const parts=[];if(item.quantity)parts.push(item.unit?`${item.quantity} ${item.unit}`:`${item.quantity}`);if(item.category)parts.push(item.category);return parts.join(' • ')}
+        function renderGroceryList(data){listData=data;document.getElementById('listTitle').textContent=data.name||'Shared Grocery List';document.title=`${data.name||'Shared Grocery List'} - EAT-INN`;const itemsCard=document.getElementById('itemsCard');const items=Array.isArray(data.items)?data.items.map(formatItem):[];if(items.length===0){itemsCard.innerHTML='<div style="padding:24px;text-align:center;color:var(--text-muted)">No items in this list</div>'}else{itemsCard.innerHTML=items.map((item,index)=>{const details=getItemDetails(item);return`<div class="grocery-item" data-index="${index}" data-checked="${item.checked}"><div class="checkbox ${item.checked?'checked':''}"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><div class="item-content"><span class="item-name ${item.checked?'checked':''}">${item.name}</span>${details?`<span class="item-details">${details}</span>`:''}</div></div>`}).join('');document.querySelectorAll('.grocery-item').forEach(item=>{item.addEventListener('click',function(){const index=parseInt(this.dataset.index);const isChecked=this.dataset.checked==='true';this.dataset.checked=(!isChecked).toString();this.querySelector('.checkbox').classList.toggle('checked');this.querySelector('.item-name').classList.toggle('checked');if(listData.items[index]){if(typeof listData.items[index]==='string')listData.items[index]={name:listData.items[index],checked:!isChecked};else listData.items[index].checked=!isChecked}updateProgress()})})}updateProgress();showGroceryList()}
+        function updateProgress(){const items=document.querySelectorAll('.grocery-item');const total=items.length;const checked=document.querySelectorAll('.grocery-item[data-checked="true"]').length;document.getElementById('progressText').textContent=`${checked}/${total} items`;if(checked===total&&total>0)document.getElementById('progressInfo').classList.add('completed');else document.getElementById('progressInfo').classList.remove('completed')}
+        async function loadSharedGroceryList(){const params=new URLSearchParams(window.location.search);const id=params.get('id');if(!id){showError('No List ID','Please use a valid shared grocery list link.');return}const uuidRegex=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;if(!uuidRegex.test(id)){showError('Invalid Link',"This doesn't appear to be a valid grocery list link.");return}try{const response=await fetch(`${SUPABASE_URL}/rest/v1/shared_grocery_lists?id=eq.${encodeURIComponent(id)}&select=*`,{headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':`Bearer ${SUPABASE_ANON_KEY}`,'Content-Type':'application/json'}});if(!response.ok)throw new Error(`HTTP ${response.status}`);const data=await response.json();if(!data||data.length===0){showError('List Expired','This shared grocery list has expired. Shared links are only valid for 3 minutes.');return}renderGroceryList(data[0])}catch(error){console.error('Failed to load grocery list:',error);showError('Connection Error','Unable to load the grocery list. Please check your internet connection and try again.')}}
+        function showToast(message){const toast=document.getElementById('toast');document.getElementById('toastText').textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2500)}
+        function getCurrentItems(){if(!listData||!listData.items)return[];return listData.items.map(formatItem)}
+        document.getElementById('exportToggle').addEventListener('click',function(){this.classList.toggle('open');document.getElementById('exportOptions').classList.toggle('show')});
+        document.getElementById('copyTextBtn').addEventListener('click',()=>{if(!listData)return;const items=getCurrentItems();const unchecked=items.filter(i=>!i.checked).map(i=>`• ${i.name}`);const checked=items.filter(i=>i.checked).map(i=>`✓ ${i.name}`);let text=`${listData.name||'Grocery List'}\n\n`;if(unchecked.length)text+=unchecked.join('\n');if(checked.length)text+='\n\n— Completed —\n'+checked.join('\n');text+='\n\nShared via Eat-Inn';navigator.clipboard.writeText(text).then(()=>showToast('Copied to clipboard'))});
+        document.getElementById('copyNotesBtn').addEventListener('click',()=>{if(!listData)return;const items=getCurrentItems();let text=`📝 ${listData.name||'Grocery List'}\n━━━━━━━━━━━━━━━━━━━━\n\n`;items.forEach(item=>{text+=`${item.checked?'☑️':'☐'} ${item.name}\n`});text+=`\n━━━━━━━━━━━━━━━━━━━━\nShared via Eat-Inn`;navigator.clipboard.writeText(text).then(()=>showToast('Copied for Notes'))});
+        document.getElementById('copyRemindersBtn').addEventListener('click',()=>{if(!listData)return;const items=getCurrentItems().filter(i=>!i.checked);navigator.clipboard.writeText(items.map(i=>i.name).join('\n')).then(()=>showToast('Copied for Reminders'))});
+        document.getElementById('copyJsonBtn').addEventListener('click',()=>{if(!listData)return;navigator.clipboard.writeText(JSON.stringify({name:listData.name,items:getCurrentItems()},null,2)).then(()=>showToast('JSON copied'))});
+        document.addEventListener('DOMContentLoaded',loadSharedGroceryList);
     </script>
 </body>
 </html>

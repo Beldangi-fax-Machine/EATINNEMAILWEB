@@ -26,383 +26,561 @@
         }
 
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #111111;
-            --bg-card: #1a1a1a;
-            --bg-card-hover: #222222;
-            --text-primary: #ffffff;
-            --text-secondary: #a3a3a3;
-            --text-muted: #737373;
-            --accent-primary: #ffffff;
-            --accent-secondary: #e5e5e5;
-            --accent-muted: #a3a3a3;
-            --border: rgba(255,255,255,0.08);
-            --border-hover: rgba(255,255,255,0.15);
+            /* Dark mode colors matching the app */
+            --bg-primary: #000000;
+            --bg-card: #0A0A0A;
+            --bg-surface: #111111;
+            --bg-item: rgba(255, 255, 255, 0.03);
+            --bg-item-hover: rgba(255, 255, 255, 0.05);
+            --text-primary: #FFFFFF;
+            --text-secondary: #AAAAAA;
+            --text-muted: #666666;
+            --accent-primary: #FFFFFF;
+            --border: #333333;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --success: #30D158;
+            --error: #FF453A;
+            --warning: #FF9F0A;
+
+            /* Spacing system (4pt base) */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 12px;
+            --space-lg: 16px;
+            --space-xl: 20px;
+            --space-xxl: 24px;
+
+            /* Border radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: linear-gradient(to bottom right, #1a1625, #0f0f15, #0d0d0d);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.5;
             overflow-x: hidden;
         }
 
-        .bg-effects {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.4;
-        }
-
-        .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-            top: -200px;
-            right: -200px;
-        }
-
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            bottom: -100px;
-            left: -100px;
-        }
-
-        .orb-3 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 var(--space-xl);
             position: relative;
             z-index: 1;
         }
 
+        /* Header */
         header {
-            padding: 24px 0;
+            padding: var(--space-lg) 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: var(--space-sm);
             text-decoration: none;
         }
 
         .logo-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
             object-fit: contain;
         }
 
         .logo-text {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--text-primary);
-            letter-spacing: -0.5px;
+            letter-spacing: -0.3px;
         }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .btn-primary {
+        .btn-get-app {
             background: var(--text-primary);
             color: var(--bg-primary);
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
             font-weight: 600;
             font-size: 14px;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: opacity 0.2s;
         }
 
-        .btn-primary:hover {
+        .btn-get-app:hover {
             opacity: 0.9;
-            transform: translateY(-1px);
         }
 
-        .hero {
+        /* Loading State */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px var(--space-xl);
             text-align: center;
-            padding: 80px 0 60px;
         }
 
-        .hero-badge {
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border-light);
+            border-top-color: var(--text-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--space-xl);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Error State */
+        .error-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px var(--space-xl);
+            text-align: center;
+        }
+
+        .error-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 69, 58, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .error-icon svg {
+            width: 32px;
+            height: 32px;
+            color: var(--error);
+        }
+
+        .error-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .error-message {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            max-width: 300px;
+        }
+
+        .error-cta {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 50px;
+            gap: var(--space-sm);
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 14px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .error-cta:hover {
+            opacity: 0.9;
+        }
+
+        /* Expiry Banner */
+        .expiry-banner {
+            background: rgba(255, 159, 10, 0.1);
+            border: 1px solid rgba(255, 159, 10, 0.3);
+            border-radius: var(--radius-sm);
+            padding: var(--space-md) var(--space-lg);
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .expiry-banner svg {
+            width: 18px;
+            height: 18px;
+            color: var(--warning);
+            flex-shrink: 0;
+        }
+
+        .expiry-banner span {
             font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
+            color: var(--warning);
         }
 
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            letter-spacing: -1.5px;
+        /* Recipe Content */
+        .recipe-container {
+            display: none;
+            padding: var(--space-lg) 0 60px;
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* Recipe Image Card */
+        .recipe-image-card {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .recipe-image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .recipe-image-placeholder {
+            font-size: 64px;
+            opacity: 0.5;
+        }
+
+        /* Title & Meta Card */
+        .recipe-title-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+            border: 1px solid var(--border-light);
+        }
+
+        .recipe-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: var(--space-md);
+            line-height: 1.2;
         }
 
         .recipe-meta {
-            color: var(--text-muted);
-            font-size: 0.9rem;
             display: flex;
-            justify-content: center;
-            gap: 24px;
+            align-items: center;
+            gap: var(--space-lg);
             flex-wrap: wrap;
         }
 
-        .recipe-meta span {
+        .meta-item {
             display: flex;
             align-items: center;
             gap: 6px;
-        }
-
-        .content-section {
-            padding: 40px 0 80px;
-        }
-
-        .content-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 48px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-        }
-
-        .recipe-image {
-            width: 100%;
-            height: 300px;
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border);
-            font-size: 48px;
-        }
-
-        .section {
-            margin-bottom: 40px;
-        }
-
-        .section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .section h2 .icon {
-            font-size: 1.25rem;
-        }
-
-        .section p {
+            font-size: 14px;
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin-bottom: 12px;
         }
 
+        .meta-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+            border: 1px solid var(--border-light);
+        }
+
+        .section-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--space-lg);
+            color: var(--text-primary);
+        }
+
+        /* Ingredients List */
         .ingredients-list {
             list-style: none;
-            margin: 16px 0;
         }
 
-        .ingredients-list li {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            padding: 12px 16px;
-            position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
-            margin-bottom: 8px;
+        .ingredient-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: var(--space-md);
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .ingredients-list li::before {
-            content: '';
+        .ingredient-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .ingredient-item:first-child {
+            padding-top: 0;
+        }
+
+        .ingredient-dot {
             width: 8px;
             height: 8px;
-            background: var(--accent-primary);
+            background: var(--text-secondary);
             border-radius: 50%;
             flex-shrink: 0;
         }
 
+        .ingredient-text {
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        /* Instructions List */
         .instructions-list {
             list-style: none;
             counter-reset: step;
         }
 
-        .instructions-list li {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            padding: 16px;
-            position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            padding-left: 60px;
+        .instruction-item {
+            display: flex;
+            gap: var(--space-md);
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .instructions-list li::before {
-            counter-increment: step;
-            content: counter(step);
-            position: absolute;
-            left: 16px;
-            top: 16px;
+        .instruction-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .instruction-item:first-child {
+            padding-top: 0;
+        }
+
+        .step-number {
             width: 28px;
             height: 28px;
             background: var(--accent-primary);
             border-radius: 50%;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--bg-primary);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--bg-primary);
+            flex-shrink: 0;
         }
 
-        .cta-section {
+        .instruction-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding-top: 4px;
+        }
+
+        /* Nutrition Card */
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-sm);
+        }
+
+        .nutrition-item {
+            background: var(--bg-item);
+            border-radius: var(--radius-sm);
+            padding: var(--space-md);
             text-align: center;
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 1px solid var(--border);
         }
 
-        .cta-section p {
-            margin-bottom: 20px;
-        }
-
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 0;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-left {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .footer-logo-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            object-fit: contain;
-        }
-
-        .footer-logo span {
+        .nutrition-value {
+            font-size: 18px;
             font-weight: 600;
             color: var(--text-primary);
         }
 
+        .nutrition-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Source Card */
+        .source-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-lg);
+            margin-bottom: var(--space-md);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .source-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .source-icon svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+        }
+
+        .source-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .source-label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .source-url {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .source-url:hover {
+            color: var(--text-primary);
+        }
+
+        .source-visit {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .source-visit:hover {
+            color: var(--text-primary);
+        }
+
+        .source-visit svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Save Card */
+        .save-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: var(--space-xl);
+            border: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .save-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .save-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            width: 100%;
+            padding: 14px var(--space-lg);
+            background: var(--text-primary);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+
+        .app-btn:active {
+            opacity: 0.9;
+        }
+
+        .app-btn-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .app-btn-icon img {
+            width: 24px;
+            height: 24px;
+            filter: invert(1);
+        }
+
+        .app-btn-text {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--bg-primary);
+            text-align: left;
+        }
+
+        .app-btn-arrow {
+            width: 20px;
+            height: 20px;
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            padding: var(--space-xxl) 0;
+            text-align: center;
+        }
+
         .footer-links {
             display: flex;
-            gap: 24px;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-md);
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 13px;
             transition: color 0.2s;
         }
 
         .footer-links a:hover {
-            color: var(--accent-primary);
+            color: var(--text-primary);
         }
 
         .footer-company {
@@ -410,272 +588,384 @@
             font-size: 12px;
         }
 
-        /* Hamburger Menu */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 44px;
-            height: 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            cursor: pointer;
-            gap: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-        }
-
-        .hamburger span {
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: var(--text-primary);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
-        /* Mobile Menu Overlay */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 10, 0.98);
-            z-index: 999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 24px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            padding: 12px 24px;
-            transition: color 0.2s;
-        }
-
-        .mobile-menu a:hover {
-            color: var(--accent-secondary);
-        }
-
-        .mobile-menu .btn-primary {
-            margin-top: 16px;
-            font-size: 1rem;
-            padding: 14px 28px;
-            color: var(--bg-primary);
-            background: var(--text-primary);
-        }
-
-        .mobile-menu-close {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            width: 44px;
-            height: 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 24px;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-close:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 var(--space-lg);
             }
-            .hamburger {
-                display: flex;
+
+            .recipe-title {
+                font-size: 20px;
             }
-            .mobile-menu {
-                display: flex;
-            }
-            .hero {
-                padding: 60px 0 40px;
-            }
-            .content-card {
-                padding: 32px 24px;
-            }
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            .footer-left {
-                flex-direction: column;
-            }
+
             .recipe-meta {
-                flex-direction: column;
-                gap: 8px;
+                gap: var(--space-md);
+            }
+
+            .section-card {
+                padding: var(--space-md);
+            }
+
+            .save-card {
+                padding: var(--space-lg);
+            }
+
+            .nutrition-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .source-card {
+                padding: var(--space-md);
+            }
+
+            .source-url {
+                font-size: 13px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-effects">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-
     <div class="container">
         <header>
             <a href="/" class="logo">
                 <img src="/icons/whiteicon.png" alt="Eat-Inn" class="logo-icon">
                 <span class="logo-text">Eat-Inn</span>
             </a>
-            <nav class="nav-links">
-                <a href="/">Support</a>
-                <a href="/terms/">Terms</a>
-                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Get App</a>
-            </nav>
-            <button class="hamburger" aria-label="Open menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-get-app">Get App</a>
         </header>
 
-        <!-- Mobile Menu -->
-        <div class="mobile-menu">
-            <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
-            <a href="/">Support</a>
-            <a href="/terms/">Terms</a>
-            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Get App</a>
+        <!-- Loading State -->
+        <div class="loading-container" id="loadingState">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Loading shared recipe...</p>
         </div>
 
-        <section class="hero">
-            <div class="hero-badge">
-                Shared Recipe
+        <!-- Error State -->
+        <div class="error-container" id="errorState">
+            <div class="error-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
             </div>
-            <h1>Classic <span class="gradient-text">Spaghetti Carbonara</span></h1>
-            <div class="recipe-meta">
-                <span>30 mins</span>
-                <span>4 servings</span>
-                <span>Italian</span>
+            <h2 class="error-title" id="errorTitle">Recipe Not Found</h2>
+            <p class="error-message" id="errorMessage">This shared recipe has expired or doesn't exist. Shared links are only valid for 3 minutes.</p>
+            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="error-cta">
+                Get Eat-Inn App
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Recipe Content -->
+        <main class="recipe-container" id="recipeContent">
+            <!-- Expiry Banner -->
+            <div class="expiry-banner">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>This link expires soon. Save the recipe below!</span>
             </div>
-        </section>
 
-        <section class="content-section">
-            <div class="content-card">
-                <div class="recipe-image">
-                    🍝
-                </div>
-
-                <div class="section">
-                    <h2><span class="icon">📝</span> Ingredients</h2>
-                    <ul class="ingredients-list">
-                        <li>400g spaghetti</li>
-                        <li>200g pancetta or guanciale, diced</li>
-                        <li>4 large egg yolks</li>
-                        <li>1 whole egg</li>
-                        <li>100g Pecorino Romano, finely grated</li>
-                        <li>50g Parmesan, finely grated</li>
-                        <li>Freshly ground black pepper</li>
-                        <li>Salt for pasta water</li>
-                    </ul>
-                </div>
-
-                <div class="section">
-                    <h2><span class="icon">👨‍🍳</span> Instructions</h2>
-                    <ol class="instructions-list">
-                        <li>Bring a large pot of salted water to boil. Cook spaghetti according to package directions until al dente.</li>
-                        <li>While pasta cooks, heat a large skillet over medium heat. Add pancetta and cook until crispy, about 5-7 minutes.</li>
-                        <li>In a bowl, whisk together egg yolks, whole egg, Pecorino, Parmesan, and plenty of black pepper.</li>
-                        <li>Reserve 1 cup of pasta water, then drain the spaghetti.</li>
-                        <li>Remove skillet from heat. Add hot pasta to the pancetta and toss well.</li>
-                        <li>Quickly pour egg mixture over pasta, tossing constantly. Add pasta water as needed to create a creamy sauce.</li>
-                        <li>Serve immediately with extra cheese and black pepper on top.</li>
-                    </ol>
-                </div>
-
-                <div class="cta-section">
-                    <p>Want to save this recipe and discover more?</p>
-                    <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Download Eat-Inn</a>
-                </div>
+            <!-- Recipe Image -->
+            <div class="recipe-image-card" id="recipeImageCard">
+                <span class="recipe-image-placeholder">🍽️</span>
             </div>
-        </section>
 
-        <footer>
-            <div class="footer-content">
-                <div class="footer-left">
-                    <a href="/" class="footer-logo">
-                        <img src="/icons/whiteicon.png" alt="Eat-Inn" class="footer-logo-icon">
-                        <span>Eat-Inn</span>
-                    </a>
-                    <div class="footer-links">
-                        <a href="/terms/">Terms</a>
-                        <a href="/privacy/">Privacy</a>
-                        <a href="mailto:support@eatinn.org">Contact</a>
+            <!-- Title & Meta -->
+            <div class="recipe-title-card">
+                <h1 class="recipe-title" id="recipeTitle">Loading...</h1>
+                <div class="recipe-meta">
+                    <div class="meta-item" id="metaTime">
+                        <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path stroke-width="2" stroke-linecap="round" d="M12 6v6l4 2"/>
+                        </svg>
+                        <span id="cookingTimeText">--</span>
+                    </div>
+                    <div class="meta-item" id="metaDifficulty">
+                        <svg class="meta-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <span id="difficultyText">--</span>
+                    </div>
+                    <div class="meta-item" id="metaServings">
+                        <svg class="meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        <span id="servingsText">--</span>
                     </div>
                 </div>
-                <span class="footer-company">&copy; 2026 POKHREL DEVELOPMENT LLC</span>
             </div>
+
+            <!-- Nutrition (if available) -->
+            <div class="section-card" id="nutritionCard" style="display: none;">
+                <h2 class="section-header">Nutrition per Serving</h2>
+                <div class="nutrition-grid" id="nutritionGrid">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="section-card">
+                <h2 class="section-header">Ingredients</h2>
+                <ul class="ingredients-list" id="ingredientsList">
+                    <!-- Populated dynamically -->
+                </ul>
+            </div>
+
+            <!-- Instructions -->
+            <div class="section-card">
+                <h2 class="section-header">Instructions</h2>
+                <ol class="instructions-list" id="instructionsList">
+                    <!-- Populated dynamically -->
+                </ol>
+            </div>
+
+            <!-- Source Link -->
+            <div class="source-card" id="sourceCard" style="display: none;">
+                <div class="source-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                    </svg>
+                </div>
+                <div class="source-content">
+                    <span class="source-label">Imported from</span>
+                    <a href="#" class="source-url" id="sourceUrl" target="_blank" rel="noopener">—</a>
+                </div>
+                <a href="#" class="source-visit" id="sourceVisit" target="_blank" rel="noopener">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Save Section -->
+            <div class="save-card">
+                <h3 class="save-title">Save this recipe</h3>
+                <p class="save-subtitle">Keep it in your collection</p>
+                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="app-btn">
+                    <div class="app-btn-icon">
+                        <img src="/icons/whiteicon.png" alt="Eat-Inn">
+                    </div>
+                    <span class="app-btn-text">Open in Eat-Inn</span>
+                    <svg class="app-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="/terms/">Terms</a>
+                <a href="/privacy/">Privacy</a>
+                <a href="mailto:support@eatinn.org">Contact</a>
+            </div>
+            <span class="footer-company">&copy; 2026 POKHREL DEVELOPMENT LLC</span>
         </footer>
     </div>
 
     <script>
-        // Mobile menu toggle
-        const hamburger = document.querySelector('.hamburger');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+        // Supabase configuration
+        const SUPABASE_URL = 'https://juodevmrlwkkfjygmqzc.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs';
 
-        function toggleMobileMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        // Global recipe data
+        let recipeData = null;
+
+        // DOM Elements
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const recipeContent = document.getElementById('recipeContent');
+        const errorTitle = document.getElementById('errorTitle');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Show error state
+        function showError(title, message) {
+            loadingState.style.display = 'none';
+            recipeContent.style.display = 'none';
+            errorState.style.display = 'flex';
+            errorTitle.textContent = title;
+            errorMessage.textContent = message;
         }
 
-        hamburger.addEventListener('click', toggleMobileMenu);
-        mobileMenuClose.addEventListener('click', toggleMobileMenu);
+        // Show recipe content
+        function showRecipe() {
+            loadingState.style.display = 'none';
+            errorState.style.display = 'none';
+            recipeContent.style.display = 'block';
+        }
 
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (mobileMenu.classList.contains('active')) {
-                    toggleMobileMenu();
+        // Format ingredient for display
+        function formatIngredient(ingredient) {
+            if (typeof ingredient === 'string') {
+                return ingredient;
+            }
+            // Handle object format: {name, amount, unit}
+            let text = '';
+            if (ingredient.amount) text += ingredient.amount;
+            if (ingredient.unit) text += ' ' + ingredient.unit;
+            if (ingredient.name) text += (text ? ' ' : '') + ingredient.name;
+            return text.trim() || 'Unknown ingredient';
+        }
+
+        // Format instruction for display
+        function formatInstruction(instruction) {
+            if (typeof instruction === 'string') {
+                return instruction;
+            }
+            // Handle object format if needed
+            return instruction.text || instruction.step || String(instruction);
+        }
+
+        // Render recipe data to DOM
+        function renderRecipe(data) {
+            recipeData = data;
+
+            // Title
+            document.getElementById('recipeTitle').textContent = data.title || 'Untitled Recipe';
+            document.title = `${data.title || 'Shared Recipe'} - EAT-INN`;
+
+            // Image
+            const imageCard = document.getElementById('recipeImageCard');
+            if (data.image_url) {
+                imageCard.innerHTML = `<img src="${data.image_url}" alt="${data.title}" onerror="this.parentElement.innerHTML='<span class=\\'recipe-image-placeholder\\'>🍽️</span>'">`;
+            }
+
+            // Meta info
+            if (data.cooking_time) {
+                document.getElementById('cookingTimeText').textContent = `${data.cooking_time} mins`;
+            } else {
+                document.getElementById('metaTime').style.display = 'none';
+            }
+
+            if (data.difficulty_level) {
+                document.getElementById('difficultyText').textContent = data.difficulty_level;
+            } else {
+                document.getElementById('metaDifficulty').style.display = 'none';
+            }
+
+            if (data.servings) {
+                document.getElementById('servingsText').textContent = `${data.servings} serving${data.servings > 1 ? 's' : ''}`;
+            } else {
+                document.getElementById('metaServings').style.display = 'none';
+            }
+
+            // Nutrition
+            const hasNutrition = data.calories || data.protein || data.carbs || data.fat;
+            if (hasNutrition) {
+                const nutritionCard = document.getElementById('nutritionCard');
+                const nutritionGrid = document.getElementById('nutritionGrid');
+                nutritionCard.style.display = 'block';
+
+                let nutritionHTML = '';
+                if (data.calories) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.calories}</div><div class="nutrition-label">Calories</div></div>`;
                 }
-            });
-        });
+                if (data.protein) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.protein}</div><div class="nutrition-label">Protein</div></div>`;
+                }
+                if (data.carbs) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.carbs}</div><div class="nutrition-label">Carbs</div></div>`;
+                }
+                if (data.fat) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.fat}</div><div class="nutrition-label">Fat</div></div>`;
+                }
+                nutritionGrid.innerHTML = nutritionHTML;
+            }
+
+            // Ingredients
+            const ingredientsList = document.getElementById('ingredientsList');
+            const ingredients = Array.isArray(data.ingredients) ? data.ingredients : [];
+            ingredientsList.innerHTML = ingredients.map(ing => `
+                <li class="ingredient-item">
+                    <span class="ingredient-dot"></span>
+                    <span class="ingredient-text">${formatIngredient(ing)}</span>
+                </li>
+            `).join('');
+
+            // Instructions
+            const instructionsList = document.getElementById('instructionsList');
+            const instructions = Array.isArray(data.instructions) ? data.instructions : [];
+            instructionsList.innerHTML = instructions.map((inst, i) => `
+                <li class="instruction-item">
+                    <span class="step-number">${i + 1}</span>
+                    <span class="instruction-text">${formatInstruction(inst)}</span>
+                </li>
+            `).join('');
+
+            // Source URL
+            if (data.source_url) {
+                const sourceCard = document.getElementById('sourceCard');
+                const sourceUrl = document.getElementById('sourceUrl');
+                const sourceVisit = document.getElementById('sourceVisit');
+
+                try {
+                    const url = new URL(data.source_url);
+                    sourceUrl.textContent = url.hostname.replace('www.', '') + url.pathname;
+                    sourceUrl.href = data.source_url;
+                    sourceVisit.href = data.source_url;
+                    sourceCard.style.display = 'flex';
+                } catch (e) {
+                    // Invalid URL, don't show
+                }
+            }
+
+            showRecipe();
+        }
+
+        // Fetch recipe from Supabase
+        async function loadSharedRecipe() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+
+            if (!id) {
+                showError('No Recipe ID', 'Please use a valid shared recipe link.');
+                return;
+            }
+
+            // Validate UUID format
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+            if (!uuidRegex.test(id)) {
+                showError('Invalid Link', 'This doesn\'t appear to be a valid recipe link.');
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `${SUPABASE_URL}/rest/v1/shared_recipes?id=eq.${encodeURIComponent(id)}&select=*`,
+                    {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (!data || data.length === 0) {
+                    showError('Recipe Expired', 'This shared recipe has expired. Shared links are only valid for 3 minutes.');
+                    return;
+                }
+
+                renderRecipe(data[0]);
+
+            } catch (error) {
+                console.error('Failed to load recipe:', error);
+                showError('Connection Error', 'Unable to load the recipe. Please check your internet connection and try again.');
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadSharedRecipe);
     </script>
 </body>
 </html>
