@@ -395,27 +395,29 @@
         /* Nutrition Card */
         .nutrition-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-sm);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
         }
 
         .nutrition-item {
             background: var(--bg-item);
-            border-radius: var(--radius-sm);
-            padding: var(--space-md);
+            border-radius: 6px;
+            padding: 8px 4px;
             text-align: center;
         }
 
         .nutrition-value {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-primary);
+            line-height: 1.2;
         }
 
         .nutrition-label {
-            font-size: 12px;
+            font-size: 10px;
             color: var(--text-muted);
             margin-top: 2px;
+            line-height: 1.2;
         }
 
         /* Source Card Link */
@@ -625,7 +627,20 @@
             }
 
             .nutrition-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+
+            .nutrition-item {
+                padding: 6px 2px;
+            }
+
+            .nutrition-value {
+                font-size: 13px;
+            }
+
+            .nutrition-label {
+                font-size: 9px;
             }
 
             .source-card {
