@@ -418,77 +418,91 @@
             margin-top: 2px;
         }
 
-        /* Source Card */
-        .source-card {
+        /* Source Card Link */
+        .source-card-link {
             background: var(--bg-card);
             border-radius: var(--radius-md);
-            padding: var(--space-md) var(--space-lg);
             margin-bottom: var(--space-md);
             border: 1px solid var(--border-light);
             display: flex;
             align-items: center;
             gap: var(--space-md);
+            text-decoration: none;
+            overflow: hidden;
+            transition: border-color 0.2s, background 0.2s;
         }
 
-        .source-icon {
-            width: 36px;
-            height: 36px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-sm);
+        .source-card-link:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .source-card-image {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-surface);
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            overflow: hidden;
         }
 
-        .source-icon svg {
-            width: 18px;
-            height: 18px;
-            color: var(--text-secondary);
+        .source-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .source-content {
+        .source-placeholder {
+            font-size: 28px;
+            opacity: 0.4;
+        }
+
+        .source-card-content {
             flex: 1;
             min-width: 0;
+            padding: var(--space-md) 0;
         }
 
-        .source-label {
+        .source-card-label {
             display: block;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .source-url {
+        .source-card-title {
             display: block;
             font-size: 14px;
-            color: var(--text-secondary);
-            text-decoration: none;
+            font-weight: 600;
+            color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin-bottom: 2px;
         }
 
-        .source-url:hover {
-            color: var(--text-primary);
+        .source-card-domain {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
         }
 
-        .source-visit {
-            width: 36px;
-            height: 36px;
+        .source-card-arrow {
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
             flex-shrink: 0;
+            margin-right: var(--space-sm);
         }
 
-        .source-visit:hover {
-            color: var(--text-primary);
-        }
-
-        .source-visit svg {
+        .source-card-arrow svg {
             width: 18px;
             height: 18px;
         }
@@ -648,7 +662,7 @@
                 </svg>
             </div>
             <h2 class="error-title" id="errorTitle">Recipe Not Found</h2>
-            <p class="error-message" id="errorMessage">This shared recipe has expired or doesn't exist. Shared links are only valid for 3 minutes.</p>
+            <p class="error-message" id="errorMessage">This shared recipe has expired or doesn't exist. Shared links are only valid for 5 minutes.</p>
             <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="error-cta">
                 Get Eat-Inn App
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -714,23 +728,22 @@
                 </ol>
             </div>
 
-            <!-- Source Link -->
-            <div class="source-card" id="sourceCard" style="display: none;">
-                <div class="source-icon">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-                    </svg>
+            <!-- Source Link Card with Image -->
+            <a href="#" id="sourceCard" class="source-card-link" style="display: none;" target="_blank" rel="noopener">
+                <div class="source-card-image" id="sourceCardImage">
+                    <span class="source-placeholder">🔗</span>
                 </div>
-                <div class="source-content">
-                    <span class="source-label">Imported from</span>
-                    <a href="#" class="source-url" id="sourceUrl" target="_blank" rel="noopener">—</a>
+                <div class="source-card-content">
+                    <span class="source-card-label">View Original Recipe</span>
+                    <span class="source-card-title" id="sourceCardTitle">—</span>
+                    <span class="source-card-domain" id="sourceCardDomain">—</span>
                 </div>
-                <a href="#" class="source-visit" id="sourceVisit" target="_blank" rel="noopener">
+                <div class="source-card-arrow">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                     </svg>
-                </a>
-            </div>
+                </div>
+            </a>
 
             <!-- Save Section -->
             <div class="save-card">
@@ -891,17 +904,30 @@
                 </li>
             `).join('');
 
-            // Source URL
+            // Source URL - Rich card with image and title
             if (data.source_url) {
                 const sourceCard = document.getElementById('sourceCard');
-                const sourceUrl = document.getElementById('sourceUrl');
-                const sourceVisit = document.getElementById('sourceVisit');
+                const sourceCardImage = document.getElementById('sourceCardImage');
+                const sourceCardTitle = document.getElementById('sourceCardTitle');
+                const sourceCardDomain = document.getElementById('sourceCardDomain');
 
                 try {
                     const url = new URL(data.source_url);
-                    sourceUrl.textContent = url.hostname.replace('www.', '') + url.pathname;
-                    sourceUrl.href = data.source_url;
-                    sourceVisit.href = data.source_url;
+
+                    // Set the link href
+                    sourceCard.href = data.source_url;
+
+                    // Set image (use recipe image)
+                    if (data.image_url) {
+                        sourceCardImage.innerHTML = `<img src="${data.image_url}" alt="${data.title}" onerror="this.parentElement.innerHTML='<span class=source-placeholder>🔗</span>'">`;
+                    }
+
+                    // Set title
+                    sourceCardTitle.textContent = data.title || 'View Recipe';
+
+                    // Set domain
+                    sourceCardDomain.textContent = url.hostname.replace('www.', '');
+
                     sourceCard.style.display = 'flex';
                 } catch (e) {
                     // Invalid URL, don't show
@@ -947,7 +973,7 @@
                 const data = await response.json();
 
                 if (!data || data.length === 0) {
-                    showError('Recipe Expired', 'This shared recipe has expired. Shared links are only valid for 3 minutes.');
+                    showError('Recipe Expired', 'This shared recipe has expired. Shared links are only valid for 5 minutes.');
                     return;
                 }
 
