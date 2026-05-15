@@ -861,14 +861,15 @@
                 document.getElementById('metaServings').style.display = 'none';
             }
 
-            // Nutrition
-            const hasNutrition = data.calories || data.protein || data.carbs || data.fat;
+            // Nutrition (including extended macros)
+            const hasNutrition = data.calories || data.protein || data.carbs || data.fat || data.fiber || data.sodium || data.sugar || data.saturated_fat || data.cholesterol;
             if (hasNutrition) {
                 const nutritionCard = document.getElementById('nutritionCard');
                 const nutritionGrid = document.getElementById('nutritionGrid');
                 nutritionCard.style.display = 'block';
 
                 let nutritionHTML = '';
+                // Primary macros
                 if (data.calories) {
                     nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.calories}</div><div class="nutrition-label">Calories</div></div>`;
                 }
@@ -880,6 +881,22 @@
                 }
                 if (data.fat) {
                     nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.fat}</div><div class="nutrition-label">Fat</div></div>`;
+                }
+                // Extended macros
+                if (data.fiber) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.fiber}</div><div class="nutrition-label">Fiber</div></div>`;
+                }
+                if (data.sugar) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.sugar}</div><div class="nutrition-label">Sugar</div></div>`;
+                }
+                if (data.saturated_fat) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.saturated_fat}</div><div class="nutrition-label">Sat. Fat</div></div>`;
+                }
+                if (data.sodium) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.sodium}</div><div class="nutrition-label">Sodium</div></div>`;
+                }
+                if (data.cholesterol) {
+                    nutritionHTML += `<div class="nutrition-item"><div class="nutrition-value">${data.cholesterol}</div><div class="nutrition-label">Cholesterol</div></div>`;
                 }
                 nutritionGrid.innerHTML = nutritionHTML;
             }
