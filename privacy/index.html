@@ -592,147 +592,301 @@
                 Legal
             </div>
             <h1>Privacy <span class="gradient-text">Policy</span></h1>
-            <p class="last-updated">Last Updated: January 2026</p>
+            <p class="last-updated">Last Updated: May 2026 | Version 2.0</p>
         </section>
 
         <section class="content-section">
             <div class="content-card">
                 <div class="intro-text">
-                    <p>We value your privacy. This Privacy Policy explains how EAT-INN ("the App") collects, uses, stores, and protects your information.</p>
+                    <p>We value your privacy. This Privacy Policy explains how EAT-INN ("the App"), operated by Pokhrel Development LLC ("we," "us," or "our"), collects, uses, stores, and protects your information.</p>
                 </div>
 
+                <!-- Section 1: Information We Collect -->
                 <div class="section">
                     <div class="section-number">1</div>
                     <h2>Information We Collect</h2>
-                    <h3>Account Information</h3>
+                    <h3>Account Information (Identifiers)</h3>
                     <ul>
-                        <li>Apple ID (via Sign in with Apple)</li>
-                        <li>Email address (if provided)</li>
+                        <li>Apple ID identifier (via Sign in with Apple)</li>
+                        <li>Email address (if provided during sign-up or via Apple relay)</li>
+                        <li>Display name (optional)</li>
                     </ul>
-                    <h3>User Content</h3>
+                    <h3>User-Generated Content</h3>
                     <ul>
-                        <li>Recipes you create or save</li>
-                        <li>Kitchen inventory items</li>
-                        <li>Preferences and settings</li>
+                        <li>Recipes you create, import, or save</li>
+                        <li>Kitchen inventory items and grocery lists</li>
+                        <li>Meal plans and nutrition tracking data</li>
+                        <li>Dietary preferences, allergies, and restrictions</li>
+                        <li>Photos of food you upload for AI analysis</li>
                     </ul>
-                    <h3>Usage Data</h3>
+                    <h3>Commercial Information</h3>
                     <ul>
-                        <li>App interactions</li>
-                        <li>Features used</li>
-                        <li>App performance data</li>
+                        <li>Subscription status and purchase history (managed by Apple)</li>
+                        <li>Token balance for ad-based rewards</li>
                     </ul>
-                    <p>We do not collect precise location data.</p>
+                    <h3>Internet/Electronic Activity</h3>
+                    <ul>
+                        <li>App usage patterns and feature interactions</li>
+                        <li>Device type, operating system version</li>
+                        <li>Error logs and crash reports</li>
+                        <li>IP address (for security and rate limiting)</li>
+                    </ul>
+                    <h3>Inferences</h3>
+                    <ul>
+                        <li>Food preferences based on saved recipes</li>
+                        <li>Dietary patterns from meal tracking</li>
+                    </ul>
+                    <p>We do not collect precise geolocation data, biometric data, or sensitive personal information beyond dietary preferences.</p>
                 </div>
 
+                <!-- Section 2: Sources of Information -->
                 <div class="section">
                     <div class="section-number">2</div>
+                    <h2>Sources of Information</h2>
+                    <p>We collect information from the following sources:</p>
+                    <ul>
+                        <li><strong>Directly from you:</strong> When you create an account, add recipes, upload photos, or configure preferences</li>
+                        <li><strong>Automatically:</strong> When you use the App, we collect usage data and device information</li>
+                        <li><strong>Apple Sign-In:</strong> Basic account identifiers when you authenticate</li>
+                        <li><strong>Third-party services:</strong> Subscription status from Apple/RevenueCat; error data from crash reporting</li>
+                    </ul>
+                </div>
+
+                <!-- Section 3: How We Use Your Information -->
+                <div class="section">
+                    <div class="section-number">3</div>
                     <h2>How We Use Your Information</h2>
                     <p>We use your information to:</p>
                     <ul>
                         <li>Provide and maintain App functionality</li>
-                        <li>Personalize recipe and meal suggestions</li>
+                        <li>Generate personalized recipe and meal suggestions using AI</li>
+                        <li>Analyze food photos to identify ingredients and suggest recipes</li>
                         <li>Sync data across your devices</li>
+                        <li>Process subscriptions and manage your account</li>
                         <li>Improve app performance and user experience</li>
                         <li>Send notifications (only if you enable them)</li>
+                        <li>Prevent fraud and ensure security</li>
+                        <li>Comply with legal obligations</li>
                     </ul>
                 </div>
 
-                <div class="section">
-                    <div class="section-number">3</div>
-                    <h2>AI & Image Processing</h2>
-                    <ul>
-                        <li>Photos of food are processed to generate recipe suggestions.</li>
-                        <li>Images are not sold or used for advertising.</li>
-                        <li>Images are not publicly shared unless you choose to share content.</li>
-                    </ul>
-                </div>
-
+                <!-- Section 4: AI & Image Processing -->
                 <div class="section">
                     <div class="section-number">4</div>
-                    <h2>Data Storage & Security</h2>
+                    <h2>AI & Image Processing</h2>
+                    <p>EAT-INN uses artificial intelligence to enhance your experience:</p>
                     <ul>
-                        <li>Data is stored securely using Supabase cloud services.</li>
-                        <li>We use encryption in transit and at rest.</li>
-                        <li>Access is restricted to authorized systems only.</li>
+                        <li><strong>AI Provider:</strong> We use OpenAI's GPT-4o-mini model for recipe generation, ingredient analysis, and food photo recognition</li>
+                        <li><strong>How it works:</strong> When you upload a food photo or request recipe suggestions, the image or text is sent to OpenAI's servers for processing</li>
+                        <li><strong>Data handling:</strong> OpenAI processes data according to their API data usage policy. As of our implementation, OpenAI does not use API data for training</li>
+                        <li><strong>No advertising use:</strong> Your images are never sold or used for advertising purposes</li>
+                        <li><strong>No public sharing:</strong> Images are not publicly shared unless you explicitly choose to share content</li>
                     </ul>
                     <div class="highlight-box">
-                        <p>No system is 100% secure, but we follow industry-standard practices.</p>
+                        <p><strong>Automated Decision-Making:</strong> AI suggestions are recommendations only. You always have final control over recipes, meal plans, and dietary choices. No automated decisions with legal or significant effects are made without human involvement.</p>
                     </div>
                 </div>
 
+                <!-- Section 5: Data Storage & Security -->
                 <div class="section">
                     <div class="section-number">5</div>
-                    <h2>Data Sharing</h2>
-                    <div class="highlight-box warning">
-                        <p>We do not sell your personal information.</p>
-                    </div>
-                    <p>We may share data only:</p>
+                    <h2>Data Storage & Security</h2>
                     <ul>
-                        <li>With service providers necessary to operate the App (e.g., hosting, analytics)</li>
-                        <li>When required by law</li>
-                        <li>If you choose to share recipes publicly with other users</li>
+                        <li><strong>Primary storage:</strong> Your data is stored securely using Supabase cloud infrastructure (servers located in the United States)</li>
+                        <li><strong>Encryption:</strong> We use encryption in transit (TLS 1.2+) and at rest (AES-256)</li>
+                        <li><strong>Access controls:</strong> Data access is restricted to authorized systems using role-based permissions</li>
+                        <li><strong>Security monitoring:</strong> We use Sentry for error monitoring to quickly identify and fix issues</li>
                     </ul>
+                    <div class="highlight-box">
+                        <p>No system is 100% secure. We follow industry-standard security practices and will notify affected users within 72 hours of discovering any data breach affecting personal information.</p>
+                    </div>
                 </div>
 
+                <!-- Section 6: Third-Party Services -->
                 <div class="section">
                     <div class="section-number">6</div>
-                    <h2>Your Privacy Rights</h2>
-                    <p>You have the right to:</p>
+                    <h2>Third-Party Services</h2>
+                    <p>EAT-INN uses the following third-party services:</p>
                     <ul>
-                        <li>Access your personal data</li>
-                        <li>Update or correct your information</li>
-                        <li>Delete your account and associated data</li>
-                        <li>Opt out of notifications at any time</li>
+                        <li><strong>Supabase</strong> (supabase.com) - Database hosting and authentication infrastructure</li>
+                        <li><strong>Apple</strong> - Sign in with Apple authentication, App Store payments, StoreKit subscriptions</li>
+                        <li><strong>RevenueCat</strong> (revenuecat.com) - Subscription management and purchase validation</li>
+                        <li><strong>OpenAI</strong> (openai.com) - AI-powered recipe generation and food image analysis</li>
+                        <li><strong>Google AdMob</strong> (admob.google.com) - Rewarded video ads for earning tokens (free tier users)</li>
+                        <li><strong>Sentry</strong> (sentry.io) - Error monitoring and crash reporting</li>
                     </ul>
-                    <p>To request deletion, contact <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a>.</p>
+                    <p>Each service operates under its own privacy policy. We encourage you to review their policies.</p>
                 </div>
 
+                <!-- Section 7: Data Sharing -->
                 <div class="section">
                     <div class="section-number">7</div>
-                    <h2>Data Retention</h2>
+                    <h2>Data Sharing</h2>
+                    <div class="highlight-box warning">
+                        <p><strong>We do not sell your personal information.</strong> We have not sold personal information in the preceding 12 months.</p>
+                    </div>
+                    <p>We may share data only in these circumstances:</p>
                     <ul>
-                        <li>Data is retained only as long as your account is active or as required for legal purposes.</li>
-                        <li>Deleted accounts result in permanent data removal within a reasonable timeframe.</li>
+                        <li><strong>Service providers:</strong> With the third-party services listed above, solely to operate the App</li>
+                        <li><strong>Legal requirements:</strong> When required by law, court order, or government request</li>
+                        <li><strong>Safety:</strong> To protect the rights, safety, or property of users or the public</li>
+                        <li><strong>Your choice:</strong> If you choose to share recipes publicly with other users</li>
+                        <li><strong>Business transfers:</strong> In connection with a merger, acquisition, or sale of assets (you will be notified)</li>
+                    </ul>
+                    <h3>Categories of Third Parties</h3>
+                    <p>In the past 12 months, we have disclosed personal information to:</p>
+                    <ul>
+                        <li>Cloud infrastructure providers (Supabase)</li>
+                        <li>Payment processors (Apple)</li>
+                        <li>AI service providers (OpenAI)</li>
+                        <li>Advertising networks (Google AdMob - for users who watch rewarded ads)</li>
+                        <li>Analytics and error monitoring services (Sentry)</li>
                     </ul>
                 </div>
 
+                <!-- Section 8: Your Privacy Rights -->
                 <div class="section">
                     <div class="section-number">8</div>
-                    <h2>Children's Privacy</h2>
+                    <h2>Your Privacy Rights</h2>
+                    <p>Depending on your location, you may have the following rights:</p>
                     <ul>
-                        <li>EAT-INN is not intended for children under 13.</li>
-                        <li>We do not knowingly collect personal information from children under 13.</li>
-                        <li>If such data is discovered, it will be deleted promptly.</li>
+                        <li><strong>Access:</strong> Request a copy of your personal data</li>
+                        <li><strong>Correction:</strong> Update or correct inaccurate information</li>
+                        <li><strong>Deletion:</strong> Request deletion of your account and data</li>
+                        <li><strong>Portability:</strong> Receive your data in a portable format</li>
+                        <li><strong>Opt-out:</strong> Opt out of notifications at any time in Settings</li>
                     </ul>
+                    <h3>Account Deletion</h3>
+                    <p>You can delete your account directly in the App:</p>
+                    <ul>
+                        <li>Go to <strong>Settings > Account > Delete Account</strong></li>
+                        <li>Confirm deletion when prompted</li>
+                        <li>Your account and associated data will be permanently deleted</li>
+                    </ul>
+                    <p>You may also request deletion by emailing <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a>.</p>
                 </div>
 
+                <!-- Section 9: California Privacy Rights (CCPA/CPRA) -->
                 <div class="section">
                     <div class="section-number">9</div>
-                    <h2>Third-Party Services</h2>
-                    <p>EAT-INN uses trusted third-party services for:</p>
+                    <h2>California Privacy Rights (CCPA/CPRA)</h2>
+                    <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA):</p>
+                    <h3>Your Rights</h3>
                     <ul>
-                        <li>Authentication</li>
-                        <li>Payments</li>
-                        <li>Cloud storage</li>
-                        <li>Error monitoring</li>
+                        <li><strong>Right to Know:</strong> Request disclosure of personal information collected, used, and disclosed in the past 12 months</li>
+                        <li><strong>Right to Delete:</strong> Request deletion of your personal information</li>
+                        <li><strong>Right to Correct:</strong> Request correction of inaccurate personal information</li>
+                        <li><strong>Right to Opt-Out of Sale/Sharing:</strong> We do not sell or share your personal information for cross-context behavioral advertising</li>
+                        <li><strong>Right to Limit Use of Sensitive Information:</strong> We only use sensitive information (dietary preferences) as necessary to provide the App</li>
+                        <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your rights</li>
                     </ul>
-                    <p>These services are bound by their own privacy policies and security obligations.</p>
+                    <h3>Do Not Sell or Share My Personal Information</h3>
+                    <div class="highlight-box">
+                        <p>We do not sell your personal information. We do not share your personal information for cross-context behavioral advertising purposes.</p>
+                    </div>
+                    <h3>How to Exercise Your Rights</h3>
+                    <p>To submit a request, email <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a> with subject line "CCPA Request." We will verify your identity and respond within 45 days.</p>
+                    <h3>12-Month Lookback</h3>
+                    <p>See Section 1 (Information We Collect) and Section 7 (Data Sharing) for categories of personal information collected and disclosed in the preceding 12 months.</p>
                 </div>
 
+                <!-- Section 10: European Privacy Rights (GDPR) -->
                 <div class="section">
                     <div class="section-number">10</div>
-                    <h2>Changes to This Policy</h2>
-                    <p>We may update this Privacy Policy periodically. Continued use of the App constitutes acceptance of the updated policy.</p>
+                    <h2>European Privacy Rights (GDPR)</h2>
+                    <p>If you are in the European Economic Area (EEA), United Kingdom, or Switzerland, you have rights under the General Data Protection Regulation (GDPR):</p>
+                    <h3>Lawful Basis for Processing</h3>
+                    <ul>
+                        <li><strong>Contract:</strong> Processing necessary to provide the App services you requested</li>
+                        <li><strong>Consent:</strong> For optional features like notifications and marketing (you can withdraw consent anytime)</li>
+                        <li><strong>Legitimate interests:</strong> For security, fraud prevention, and service improvement</li>
+                        <li><strong>Legal obligation:</strong> When required by law</li>
+                    </ul>
+                    <h3>Your GDPR Rights</h3>
+                    <ul>
+                        <li><strong>Access:</strong> Obtain confirmation and a copy of your personal data</li>
+                        <li><strong>Rectification:</strong> Correct inaccurate or incomplete data</li>
+                        <li><strong>Erasure:</strong> Request deletion ("right to be forgotten")</li>
+                        <li><strong>Restriction:</strong> Limit how we use your data</li>
+                        <li><strong>Portability:</strong> Receive your data in a structured, machine-readable format</li>
+                        <li><strong>Objection:</strong> Object to processing based on legitimate interests</li>
+                        <li><strong>Automated decisions:</strong> Not be subject to solely automated decisions with legal effects</li>
+                    </ul>
+                    <h3>International Data Transfers</h3>
+                    <p>Your data is transferred to and processed in the United States. We protect international transfers using:</p>
+                    <ul>
+                        <li>Standard Contractual Clauses (SCCs) approved by the European Commission</li>
+                        <li>Data processing agreements with our service providers</li>
+                    </ul>
+                    <h3>Data Protection Authority</h3>
+                    <p>You have the right to lodge a complaint with your local data protection authority if you believe your rights have been violated.</p>
+                    <h3>Contact for EU Inquiries</h3>
+                    <p>Email: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a> with subject line "GDPR Request"</p>
                 </div>
 
+                <!-- Section 11: Data Retention -->
                 <div class="section">
                     <div class="section-number">11</div>
+                    <h2>Data Retention</h2>
+                    <ul>
+                        <li><strong>Active accounts:</strong> Data is retained while your account is active</li>
+                        <li><strong>Account deletion:</strong> Upon deletion request, account data is permanently removed within 30 days</li>
+                        <li><strong>Backup purge:</strong> Backups containing deleted data are purged within 90 days</li>
+                        <li><strong>Legal retention:</strong> Some data may be retained longer if required by law or for legitimate business purposes (e.g., fraud prevention)</li>
+                        <li><strong>Anonymized data:</strong> We may retain anonymized, aggregated data indefinitely for analytics</li>
+                    </ul>
+                </div>
+
+                <!-- Section 12: Children's Privacy (COPPA) -->
+                <div class="section">
+                    <div class="section-number">12</div>
+                    <h2>Children's Privacy (COPPA)</h2>
+                    <ul>
+                        <li>EAT-INN is not intended for children under 13 years of age</li>
+                        <li>We do not knowingly collect personal information from children under 13</li>
+                        <li>If we discover that a child under 13 has provided personal information, we will delete it promptly</li>
+                        <li>If you believe a child under 13 has provided us with personal information, please contact <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></li>
+                    </ul>
+                </div>
+
+                <!-- Section 13: Teen Users (Ages 13-17) -->
+                <div class="section">
+                    <div class="section-number">13</div>
+                    <h2>Teen Users (Ages 13-17)</h2>
+                    <p>If you are between 13 and 17 years old:</p>
+                    <ul>
+                        <li>You may use EAT-INN with permission from a parent or legal guardian</li>
+                        <li>We recommend parents review this Privacy Policy with their teens</li>
+                        <li>Parents can request access to or deletion of their teen's data by contacting us</li>
+                        <li>We do not knowingly sell or share personal information of users under 16 for targeted advertising</li>
+                    </ul>
+                    <p>Additional protections apply under state laws including California (CCPA), Connecticut, Virginia, and Vermont.</p>
+                </div>
+
+                <!-- Section 14: Changes to This Policy -->
+                <div class="section">
+                    <div class="section-number">14</div>
+                    <h2>Changes to This Policy</h2>
+                    <p>We may update this Privacy Policy periodically. When we make material changes:</p>
+                    <ul>
+                        <li>We will update the "Last Updated" date at the top</li>
+                        <li>For significant changes, we may notify you via the App or email</li>
+                        <li>Continued use of the App after changes constitutes acceptance</li>
+                    </ul>
+                    <p>Previous versions of this policy are available upon request.</p>
+                </div>
+
+                <!-- Section 15: Contact Us -->
+                <div class="section">
+                    <div class="section-number">15</div>
                     <h2>Contact Us</h2>
-                    <p>For privacy questions or requests:</p>
+                    <p>For privacy questions, data requests, or concerns:</p>
                     <div class="company-info">
+                        <p><strong>Pokhrel Development LLC</strong></p>
                         <p>Email: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></p>
-                        <p>Vermont, United States</p>
+                        <p>Location: Vermont, United States</p>
                     </div>
+                    <p>We aim to respond to all privacy requests within 30 days (45 days for CCPA requests).</p>
                 </div>
             </div>
         </section>
