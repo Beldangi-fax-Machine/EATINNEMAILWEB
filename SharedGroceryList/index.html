@@ -13,6 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js"></script>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         :root{--bg-primary:#000;--bg-card:#0A0A0A;--bg-item-hover:rgba(255,255,255,0.05);--text-primary:#FFF;--text-secondary:#AAA;--text-muted:#666;--border-light:rgba(255,255,255,0.08);--success:#30D158;--error:#FF453A;--warning:#FF9F0A;--space-xs:4px;--space-sm:8px;--space-md:12px;--space-lg:16px;--space-xl:20px;--space-xxl:24px;--radius-sm:8px;--radius-md:12px}
@@ -86,24 +88,24 @@
                 <img src="/icons/whiteicon.png" alt="Eat-Inn" class="logo-icon">
                 <span class="logo-text">Eat-Inn</span>
             </a>
-            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-get-app">Get App</a>
+            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-get-app" data-i18n="getApp">Get App</a>
         </header>
         <div class="loading-container" id="loadingState">
             <div class="loading-spinner"></div>
-            <p class="loading-text">Loading shared grocery list...</p>
+            <p class="loading-text" data-i18n="loadingSharedGroceryList">Loading shared grocery list...</p>
         </div>
         <div class="error-container" id="errorState">
             <div class="error-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
-            <h2 class="error-title" id="errorTitle">List Not Found</h2>
-            <p class="error-message" id="errorMessage">This shared grocery list has expired or doesn't exist. Shared links are only valid for 5 minutes.</p>
-            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="error-cta">Get Eat-Inn App</a>
+            <h2 class="error-title" id="errorTitle" data-i18n="listNotFound">List Not Found</h2>
+            <p class="error-message" id="errorMessage" data-i18n="listExpired">This shared grocery list has expired or doesn't exist. Shared links are only valid for 5 minutes.</p>
+            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="error-cta" data-i18n="getApp">Get Eat-Inn App</a>
         </div>
         <main class="grocery-container" id="groceryContent">
             <div class="list-title-card">
                 <h1 class="list-title" id="listTitle">Loading...</h1>
-                <p class="list-subtitle" id="listSubtitle">Shared grocery list</p>
+                <p class="list-subtitle" id="listSubtitle" data-i18n="sharedGroceryList">Shared grocery list</p>
             </div>
             <div class="progress-header">
                 <div class="progress-info" id="progressInfo">
@@ -117,16 +119,16 @@
             </div>
             <div class="items-card" id="itemsCard"></div>
             <div class="save-card">
-                <h3 class="save-title">Save this list</h3>
-                <p class="save-subtitle">Keep it synced across your devices</p>
+                <h3 class="save-title" data-i18n="saveThisList">Save this list</h3>
+                <p class="save-subtitle" data-i18n="keepSyncedAcrossDevices">Keep it synced across your devices</p>
                 <a href="#" id="saveToAppBtn" class="app-btn">
                     <div class="app-btn-icon"><img src="/icons/whiteicon.png" alt="Eat-Inn"></div>
-                    <span class="app-btn-text">Save to Eat-Inn</span>
+                    <span class="app-btn-text" data-i18n="saveToEatInn">Save to Eat-Inn</span>
                     <svg class="app-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
                 <button class="notes-btn" id="shareToNotesBtn">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    <span>Copy for Notes</span>
+                    <span data-i18n="copyForNotes">Copy for Notes</span>
                 </button>
                 <p class="app-fallback" id="appFallback" style="display:none;margin-top:var(--space-md);font-size:13px;color:var(--text-muted);">
                     Don't have the app? <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" style="color:var(--text-secondary);text-decoration:underline;">Download Eat-Inn</a>
@@ -135,8 +137,8 @@
             <div class="toast" id="toast"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span id="toastText">Copied</span></div>
         </main>
         <footer>
-            <div class="footer-links"><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a><a href="mailto:support@eatinn.org">Contact</a></div>
-            <span class="footer-company">&copy; 2026 POKHREL DEVELOPMENT LLC</span>
+            <div class="footer-links"><a href="/terms/" data-i18n="terms">Terms</a><a href="/privacy/" data-i18n="privacy">Privacy</a><a href="mailto:support@eatinn.org" data-i18n="contact">Contact</a></div>
+            <span class="footer-company">&copy; 2026 <span data-i18n="copyright">POKHREL DEVELOPMENT LLC</span></span>
         </footer>
     </div>
     <script>

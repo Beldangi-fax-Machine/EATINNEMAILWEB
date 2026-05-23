@@ -18,6 +18,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js"></script>
     <style>
         * {
             margin: 0;
@@ -660,13 +662,13 @@
                 <img src="/icons/whiteicon.png" alt="Eat-Inn" class="logo-icon">
                 <span class="logo-text">Eat-Inn</span>
             </a>
-            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-get-app">Get App</a>
+            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-get-app" data-i18n="getApp">Get App</a>
         </header>
 
         <!-- Loading State -->
         <div class="loading-container" id="loadingState">
             <div class="loading-spinner"></div>
-            <p class="loading-text">Loading shared recipe...</p>
+            <p class="loading-text" data-i18n="loadingSharedRecipe">Loading shared recipe...</p>
         </div>
 
         <!-- Error State -->
@@ -676,10 +678,10 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
             </div>
-            <h2 class="error-title" id="errorTitle">Recipe Not Found</h2>
-            <p class="error-message" id="errorMessage">This shared recipe has expired or doesn't exist. Shared links are only valid for 5 minutes.</p>
+            <h2 class="error-title" id="errorTitle" data-i18n="recipeNotFound">Recipe Not Found</h2>
+            <p class="error-message" id="errorMessage" data-i18n="recipeExpired">This shared recipe has expired or doesn't exist. Shared links are only valid for 5 minutes.</p>
             <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="error-cta">
-                Get Eat-Inn App
+                <span data-i18n="getApp">Get Eat-Inn App</span>
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                 </svg>
@@ -721,7 +723,7 @@
 
             <!-- Nutrition (if available) -->
             <div class="section-card" id="nutritionCard" style="display: none;">
-                <h2 class="section-header">Nutrition per Serving</h2>
+                <h2 class="section-header" data-i18n="nutritionPerServing">Nutrition per Serving</h2>
                 <div class="nutrition-grid" id="nutritionGrid">
                     <!-- Populated dynamically -->
                 </div>
@@ -729,7 +731,7 @@
 
             <!-- Ingredients -->
             <div class="section-card">
-                <h2 class="section-header">Ingredients</h2>
+                <h2 class="section-header" data-i18n="ingredients">Ingredients</h2>
                 <ul class="ingredients-list" id="ingredientsList">
                     <!-- Populated dynamically -->
                 </ul>
@@ -737,7 +739,7 @@
 
             <!-- Instructions -->
             <div class="section-card">
-                <h2 class="section-header">Instructions</h2>
+                <h2 class="section-header" data-i18n="instructions">Instructions</h2>
                 <ol class="instructions-list" id="instructionsList">
                     <!-- Populated dynamically -->
                 </ol>
@@ -749,7 +751,7 @@
                     <span class="source-placeholder">🔗</span>
                 </div>
                 <div class="source-card-content">
-                    <span class="source-card-label">View Original Recipe</span>
+                    <span class="source-card-label" data-i18n="viewOriginalRecipe">View Original Recipe</span>
                     <span class="source-card-title" id="sourceCardTitle">—</span>
                     <span class="source-card-domain" id="sourceCardDomain">—</span>
                 </div>
@@ -762,19 +764,19 @@
 
             <!-- Save Section -->
             <div class="save-card">
-                <h3 class="save-title">Save this recipe</h3>
-                <p class="save-subtitle">Keep it in your collection</p>
+                <h3 class="save-title" data-i18n="saveThisRecipe">Save this recipe</h3>
+                <p class="save-subtitle" data-i18n="keepInCollection">Keep it in your collection</p>
                 <a href="#" id="saveToAppBtn" class="app-btn">
                     <div class="app-btn-icon">
                         <img src="/icons/whiteicon.png" alt="Eat-Inn">
                     </div>
-                    <span class="app-btn-text">Save to Eat-Inn</span>
+                    <span class="app-btn-text" data-i18n="saveToEatInn">Save to Eat-Inn</span>
                     <svg class="app-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
                 <p class="app-fallback" id="appFallback" style="display:none;margin-top:var(--space-md);font-size:13px;color:var(--text-muted);">
-                    Don't have the app? <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" style="color:var(--text-secondary);text-decoration:underline;">Download Eat-Inn</a>
+                    <span data-i18n="dontHaveApp">Don't have the app?</span> <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" style="color:var(--text-secondary);text-decoration:underline;" data-i18n="downloadEatInn">Download Eat-Inn</a>
                 </p>
             </div>
 
@@ -782,11 +784,11 @@
 
         <footer>
             <div class="footer-links">
-                <a href="/terms/">Terms</a>
-                <a href="/privacy/">Privacy</a>
-                <a href="mailto:support@eatinn.org">Contact</a>
+                <a href="/terms/" data-i18n="terms">Terms</a>
+                <a href="/privacy/" data-i18n="privacy">Privacy</a>
+                <a href="mailto:support@eatinn.org" data-i18n="contact">Contact</a>
             </div>
-            <span class="footer-company">&copy; 2026 POKHREL DEVELOPMENT LLC</span>
+            <span class="footer-company">&copy; 2026 <span data-i18n="copyright">POKHREL DEVELOPMENT LLC</span></span>
         </footer>
     </div>
 
