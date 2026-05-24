@@ -1332,6 +1332,19 @@ const translations = {
       tr: "Önce spam/gereksiz posta klasörünüzü kontrol edin. Orada yoksa, uygulamadan yeni bir doğrulama e-postası talep edebilirsiniz. Kayıt sırasında doğru e-posta adresini girdiğinizden emin olun.",
       uk: "Спочатку перевірте папку спаму/небажаної пошти. Якщо його там немає, ви можете запросити новий лист підтвердження з додатку. Переконайтеся, що ви ввели правильну адресу електронної пошти під час реєстрації.",
       vi: "Kiểm tra thư mục spam/rác trước. Nếu không có ở đó, bạn có thể yêu cầu email xác minh mới từ ứng dụng. Đảm bảo bạn đã nhập đúng địa chỉ email khi đăng ký."
+    },
+    redirectingToAppStore: {
+      en: "Redirecting to App Store...", ar: "جاري التحويل إلى متجر التطبيقات...", ca: "Redirigint a l'App Store...",
+      "zh-Hans": "正在跳转到App Store...", "zh-Hant": "正在跳轉到App Store...", hr: "Preusmjeravanje na App Store...",
+      cs: "Přesměrování do App Store...", da: "Omdirigerer til App Store...", nl: "Doorverwijzen naar App Store...",
+      fi: "Ohjataan App Storeen...", fr: "Redirection vers l'App Store...", de: "Weiterleitung zum App Store...",
+      el: "Ανακατεύθυνση στο App Store...", he: "מפנה ל-App Store...", hi: "App Store पर रीडायरेक्ट हो रहा है...",
+      hu: "Átirányítás az App Store-ba...", id: "Mengalihkan ke App Store...", it: "Reindirizzamento all'App Store...",
+      ja: "App Storeにリダイレクト中...", ko: "App Store로 이동 중...", ms: "Mengalihkan ke App Store...",
+      nb: "Omdirigerer til App Store...", pl: "Przekierowanie do App Store...", pt: "Redirecionando para a App Store...",
+      ro: "Redirecționare către App Store...", ru: "Перенаправление в App Store...", sk: "Presmerovanie do App Store...",
+      es: "Redirigiendo a App Store...", sv: "Omdirigerar till App Store...", th: "กำลังเปลี่ยนเส้นทางไปยัง App Store...",
+      tr: "App Store'a yönlendiriliyor...", uk: "Перенаправлення до App Store...", vi: "Đang chuyển hướng đến App Store..."
     }
   }
 };
