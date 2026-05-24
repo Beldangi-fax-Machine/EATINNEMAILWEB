@@ -3,965 +3,344 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - EAT-INN</title>
+    <title>Privacy Policy - Eat-Inn</title>
 
-    <!-- Favicons - Light mode (black icon) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/blackfavicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/blackfavicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/blackfavicon/favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="/icons/blackfavicon/favicon.ico">
-
-    <!-- Favicons - Dark mode (white icon) -->
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/whitefavicons/favicon-32x32.png" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/whitefavicons/favicon-16x16.png" media="(prefers-color-scheme: dark)">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="/i18n/translations.js"></script>
     <script src="/i18n/i18n.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #111111;
-            --bg-card: #1a1a1a;
-            --bg-card-hover: #222222;
-            --text-primary: #ffffff;
-            --text-secondary: #a3a3a3;
-            --text-muted: #737373;
-            --accent-primary: #ffffff;
-            --accent-secondary: #e5e5e5;
-            --accent-muted: #a3a3a3;
-            --border: rgba(255,255,255,0.08);
-            --border-hover: rgba(255,255,255,0.15);
+            --bg: #000;
+            --bg-elevated: #111;
+            --text: #fff;
+            --text-secondary: #888;
+            --border: #222;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .bg-effects {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.4;
-        }
-
-        .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-            top: -200px;
-            right: -200px;
-        }
-
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            bottom: -100px;
-            left: -100px;
-        }
-
-        .orb-3 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
             padding: 0 24px;
-            position: relative;
-            z-index: 1;
         }
 
         header {
-            padding: 24px 0;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .container {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
+            color: var(--text);
         }
 
-        .logo-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            object-fit: contain;
-        }
+        .logo img { width: 36px; height: 36px; border-radius: 8px; }
+        .logo span { font-weight: 600; font-size: 18px; }
 
-        .logo-text {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.5px;
-        }
+        nav { display: flex; align-items: center; gap: 28px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; }
+        nav a:hover { color: var(--text); }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .btn-primary {
-            background: var(--text-primary);
-            color: var(--bg-primary);
-            padding: 10px 20px;
-            border-radius: 8px;
+        .btn {
+            background: var(--text);
+            color: var(--bg);
+            padding: 8px 16px;
+            border-radius: 6px;
             font-weight: 600;
             font-size: 14px;
             text-decoration: none;
-            transition: all 0.2s;
         }
 
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
+        .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .hamburger span { display: block; width: 20px; height: 2px; background: var(--text); margin: 4px 0; }
 
         .hero {
-            text-align: center;
-            padding: 80px 0 60px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .hero-badge .icon {
-            font-size: 14px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            letter-spacing: -1.5px;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .last-updated {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .content-section {
-            padding: 40px 0 80px;
-        }
-
-        .content-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 48px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-        }
-
-        .section {
-            margin-bottom: 40px;
-        }
-
-        .section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: var(--accent-primary);
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--bg-primary);
-            margin-bottom: 12px;
-        }
-
-        .section h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-        }
-
-        .section h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 20px 0 12px;
-            color: var(--text-primary);
-        }
-
-        .section p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin-bottom: 12px;
-        }
-
-        .section p:last-child {
-            margin-bottom: 0;
-        }
-
-        .section ul {
-            list-style: none;
-            margin: 16px 0;
-        }
-
-        .section ul li {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            padding-left: 24px;
-            position: relative;
-            margin-bottom: 8px;
-        }
-
-        .section ul li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 10px;
-            width: 8px;
-            height: 8px;
-            background: var(--accent-primary);
-            border-radius: 50%;
-        }
-
-        .highlight-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
-        }
-
-        .highlight-box p {
-            color: var(--text-primary);
-            margin: 0;
-        }
-
-        .highlight-box.warning {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .email-link {
-            color: var(--accent-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.2s;
-        }
-
-        .email-link:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        .intro-text {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 40px;
+            padding: 60px 0 40px;
             border-bottom: 1px solid var(--border);
         }
 
-        .intro-text p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -1px; margin-bottom: 8px; }
+        .hero p { color: var(--text-secondary); font-size: 14px; }
 
-        .company-info {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
-        }
+        .intro { padding: 32px 0 0; color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
 
-        .company-info p {
-            margin: 4px 0;
+        .content { padding: 40px 0 80px; }
+
+        .section { margin-bottom: 40px; }
+        .section:last-child { margin-bottom: 0; }
+
+        .section h2 { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+        .section h3 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+        .section p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; margin-bottom: 12px; }
+
+        .section ul { list-style: none; margin: 12px 0; }
+        .section ul li {
             color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+            padding-left: 16px;
+            position: relative;
+            margin-bottom: 6px;
         }
+        .section ul li::before { content: '•'; position: absolute; left: 0; color: var(--text-secondary); }
+
+        .highlight {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 12px 0;
+        }
+        .highlight p { color: var(--text); margin: 0; }
+
+        a.link { color: var(--text); text-decoration: underline; }
+        a.link:hover { opacity: 0.8; }
 
         footer {
             border-top: 1px solid var(--border);
-            padding: 40px 0;
+            padding: 24px 0;
         }
 
-        .footer-content {
+        footer .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
         }
 
-        .footer-left {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; }
+        .footer-links a:hover { color: var(--text); }
+        .copyright { color: var(--text-secondary); font-size: 12px; }
 
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .footer-logo-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            object-fit: contain;
-        }
-
-        .footer-logo span {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        .footer-company {
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 44px;
-            height: 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            cursor: pointer;
-            gap: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-        }
-
-        .hamburger span {
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: var(--text-primary);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
-        /* Mobile Menu Overlay */
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 10, 0.98);
-            z-index: 999;
+            inset: 0;
+            background: var(--bg);
+            z-index: 100;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 24px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
         }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: var(--text); text-decoration: none; font-size: 20px; font-weight: 600; }
+        .mobile-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--text); font-size: 28px; cursor: pointer; }
 
-        .mobile-menu.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            padding: 12px 24px;
-            transition: color 0.2s;
-        }
-
-        .mobile-menu a:hover {
-            color: var(--accent-secondary);
-        }
-
-        .mobile-menu .btn-primary {
-            margin-top: 16px;
-            font-size: 1rem;
-            padding: 14px 28px;
-            color: var(--bg-primary);
-            background: var(--text-primary);
-        }
-
-        .mobile-menu-close {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            width: 44px;
-            height: 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 24px;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-close:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .mobile-menu {
-                display: flex;
-            }
-            .hero {
-                padding: 60px 0 40px;
-            }
-            .content-card {
-                padding: 32px 24px;
-            }
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            .footer-left {
-                flex-direction: column;
-            }
+        @media (max-width: 640px) {
+            nav { display: none; }
+            .hamburger { display: block; }
+            .hero h1 { font-size: 26px; }
+            footer .container { flex-direction: column; gap: 12px; text-align: center; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-effects">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-
-    <div class="container">
-        <header>
+    <header>
+        <div class="container">
             <a href="/" class="logo">
-                <img src="/icons/whiteicon.png" alt="Eat-Inn" class="logo-icon">
-                <span class="logo-text">Eat-Inn</span>
+                <img src="/icons/whiteicon.png" alt="Eat-Inn">
+                <span>Eat-Inn</span>
             </a>
-            <nav class="nav-links">
-                <a href="/">Support</a>
-                <a href="/terms/">Terms</a>
-                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Get App</a>
+            <nav>
+                <a href="/" data-i18n="support">Support</a>
+                <a href="/terms/" data-i18n="terms">Terms</a>
+                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn" data-i18n="getApp">Get App</a>
             </nav>
-            <button class="hamburger" aria-label="Open menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </header>
-
-        <!-- Mobile Menu -->
-        <div class="mobile-menu">
-            <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
-            <a href="/">Support</a>
-            <a href="/terms/">Terms</a>
-            <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn-primary">Get App</a>
+            <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
+    </header>
 
-        <section class="hero">
-            <div class="hero-badge">
-                Legal
-            </div>
-            <h1>Privacy <span class="gradient-text">Policy</span></h1>
-            <p class="last-updated">Last Updated: May 2026 | Version 2.0</p>
-        </section>
-
-        <section class="content-section">
-            <div class="content-card">
-                <div class="intro-text">
-                    <p>We value your privacy. This Privacy Policy explains how EAT-INN ("the App"), operated by Beldangi Fax Machine LC ("we," "us," or "our"), collects, uses, stores, and protects your information.</p>
-                </div>
-
-                <!-- Section 1: Information We Collect -->
-                <div class="section">
-                    <div class="section-number">1</div>
-                    <h2>Information We Collect</h2>
-                    <h3>Account Information (Identifiers)</h3>
-                    <ul>
-                        <li>Apple ID identifier (via Sign in with Apple)</li>
-                        <li>Email address (if provided during sign-up or via Apple relay)</li>
-                        <li>Display name (optional)</li>
-                    </ul>
-                    <h3>User-Generated Content</h3>
-                    <ul>
-                        <li>Recipes you create, import, or save</li>
-                        <li>Kitchen inventory items and grocery lists</li>
-                        <li>Meal plans and nutrition tracking data</li>
-                        <li>Dietary preferences, allergies, and restrictions</li>
-                        <li>Photos of food you upload for AI analysis</li>
-                    </ul>
-                    <h3>Commercial Information</h3>
-                    <ul>
-                        <li>Subscription status and purchase history (managed by Apple)</li>
-                        <li>Token balance for ad-based rewards</li>
-                    </ul>
-                    <h3>Internet/Electronic Activity</h3>
-                    <ul>
-                        <li>App usage patterns and feature interactions</li>
-                        <li>Device type, operating system version</li>
-                        <li>Error logs and crash reports</li>
-                        <li>IP address (for security and rate limiting)</li>
-                    </ul>
-                    <h3>Inferences</h3>
-                    <ul>
-                        <li>Food preferences based on saved recipes</li>
-                        <li>Dietary patterns from meal tracking</li>
-                    </ul>
-                    <p>We do not collect precise geolocation data, biometric data, or sensitive personal information beyond dietary preferences.</p>
-                </div>
-
-                <!-- Section 2: Sources of Information -->
-                <div class="section">
-                    <div class="section-number">2</div>
-                    <h2>Sources of Information</h2>
-                    <p>We collect information from the following sources:</p>
-                    <ul>
-                        <li><strong>Directly from you:</strong> When you create an account, add recipes, upload photos, or configure preferences</li>
-                        <li><strong>Automatically:</strong> When you use the App, we collect usage data and device information</li>
-                        <li><strong>Apple Sign-In:</strong> Basic account identifiers when you authenticate</li>
-                        <li><strong>Third-party services:</strong> Subscription status from Apple/RevenueCat; error data from crash reporting</li>
-                    </ul>
-                </div>
-
-                <!-- Section 3: How We Use Your Information -->
-                <div class="section">
-                    <div class="section-number">3</div>
-                    <h2>How We Use Your Information</h2>
-                    <p>We use your information to:</p>
-                    <ul>
-                        <li>Provide and maintain App functionality</li>
-                        <li>Generate personalized recipe and meal suggestions using AI</li>
-                        <li>Analyze food photos to identify ingredients and suggest recipes</li>
-                        <li>Sync data across your devices</li>
-                        <li>Process subscriptions and manage your account</li>
-                        <li>Improve app performance and user experience</li>
-                        <li>Send notifications (only if you enable them)</li>
-                        <li>Prevent fraud and ensure security</li>
-                        <li>Comply with legal obligations</li>
-                    </ul>
-                </div>
-
-                <!-- Section 4: AI & Image Processing -->
-                <div class="section">
-                    <div class="section-number">4</div>
-                    <h2>AI & Image Processing</h2>
-                    <p>EAT-INN uses artificial intelligence to enhance your experience:</p>
-                    <ul>
-                        <li><strong>AI Provider:</strong> We use OpenAI's GPT-4o-mini model for recipe generation, ingredient analysis, and food photo recognition</li>
-                        <li><strong>How it works:</strong> When you upload a food photo or request recipe suggestions, the image or text is sent to OpenAI's servers for processing</li>
-                        <li><strong>Data handling:</strong> OpenAI processes data according to their API data usage policy. As of our implementation, OpenAI does not use API data for training</li>
-                        <li><strong>No advertising use:</strong> Your images are never sold or used for advertising purposes</li>
-                        <li><strong>No public sharing:</strong> Images are not publicly shared unless you explicitly choose to share content</li>
-                    </ul>
-                    <div class="highlight-box">
-                        <p><strong>Automated Decision-Making:</strong> AI suggestions are recommendations only. You always have final control over recipes, meal plans, and dietary choices. No automated decisions with legal or significant effects are made without human involvement.</p>
-                    </div>
-                </div>
-
-                <!-- Section 5: Data Storage & Security -->
-                <div class="section">
-                    <div class="section-number">5</div>
-                    <h2>Data Storage & Security</h2>
-                    <ul>
-                        <li><strong>Primary storage:</strong> Your data is stored securely using Supabase cloud infrastructure (servers located in the United States)</li>
-                        <li><strong>Encryption:</strong> We use encryption in transit (TLS 1.2+) and at rest (AES-256)</li>
-                        <li><strong>Access controls:</strong> Data access is restricted to authorized systems using role-based permissions</li>
-                        <li><strong>Security monitoring:</strong> We use Sentry for error monitoring to quickly identify and fix issues</li>
-                    </ul>
-                    <div class="highlight-box">
-                        <p>No system is 100% secure. We follow industry-standard security practices and will notify affected users within 72 hours of discovering any data breach affecting personal information.</p>
-                    </div>
-                </div>
-
-                <!-- Section 6: Third-Party Services -->
-                <div class="section">
-                    <div class="section-number">6</div>
-                    <h2>Third-Party Services</h2>
-                    <p>EAT-INN uses the following third-party services:</p>
-                    <ul>
-                        <li><strong>Supabase</strong> (supabase.com) - Database hosting and authentication infrastructure</li>
-                        <li><strong>Apple</strong> - Sign in with Apple authentication, App Store payments, StoreKit subscriptions</li>
-                        <li><strong>RevenueCat</strong> (revenuecat.com) - Subscription management and purchase validation</li>
-                        <li><strong>OpenAI</strong> (openai.com) - AI-powered recipe generation and food image analysis</li>
-                        <li><strong>Google AdMob</strong> (admob.google.com) - Advertising services (see Advertising section below)</li>
-                        <li><strong>Sentry</strong> (sentry.io) - Error monitoring and crash reporting</li>
-                    </ul>
-                    <p>Each service operates under its own privacy policy. We encourage you to review their policies.</p>
-
-                    <h3>Advertising (Google AdMob)</h3>
-                    <p>For free tier users, EAT-INN displays rewarded video advertisements through Google AdMob. <strong>Google AdMob has its own tracking and data collection practices.</strong></p>
-                    <p>Google AdMob may collect the following information for advertising purposes:</p>
-                    <ul>
-                        <li><strong>Device identifiers:</strong> Advertising ID (IDFA on iOS), device ID</li>
-                        <li><strong>Device information:</strong> Device model, operating system version, screen size, language settings</li>
-                        <li><strong>Network information:</strong> IP address, mobile carrier, connection type (WiFi/cellular)</li>
-                        <li><strong>Ad interaction data:</strong> Ads viewed, ads clicked, time spent viewing ads</li>
-                        <li><strong>App usage data:</strong> App name, app version, session duration</li>
-                        <li><strong>Location data:</strong> Approximate location based on IP address (not precise GPS)</li>
-                    </ul>
-                    <p>This data is used by Google to:</p>
-                    <ul>
-                        <li>Serve personalized advertisements based on your interests</li>
-                        <li>Measure ad performance and effectiveness</li>
-                        <li>Prevent fraud and ensure ad quality</li>
-                        <li>Improve Google's advertising services</li>
-                    </ul>
-                    <div class="highlight-box">
-                        <p><strong>Opt-Out Options:</strong> You can limit ad tracking on iOS by going to <strong>Settings > Privacy & Security > Tracking</strong> and disabling "Allow Apps to Request to Track." You can also reset your Advertising Identifier in <strong>Settings > Privacy & Security > Apple Advertising</strong>.</p>
-                    </div>
-                    <p>For more information about Google's data practices, please review:</p>
-                    <ul>
-                        <li><a href="https://policies.google.com/privacy" class="email-link">Google Privacy Policy</a></li>
-                        <li><a href="https://policies.google.com/technologies/ads" class="email-link">Google Advertising Policies</a></li>
-                    </ul>
-                    <p><strong>Premium subscribers do not see advertisements</strong> and are not subject to AdMob tracking within our App.</p>
-                </div>
-
-                <!-- Section 7: Data Sharing -->
-                <div class="section">
-                    <div class="section-number">7</div>
-                    <h2>Data Sharing</h2>
-                    <div class="highlight-box warning">
-                        <p><strong>We do not sell your personal information.</strong> We have not sold personal information in the preceding 12 months.</p>
-                    </div>
-                    <p>We may share data only in these circumstances:</p>
-                    <ul>
-                        <li><strong>Service providers:</strong> With the third-party services listed above, solely to operate the App</li>
-                        <li><strong>Legal requirements:</strong> When required by law, court order, or government request</li>
-                        <li><strong>Safety:</strong> To protect the rights, safety, or property of users or the public</li>
-                        <li><strong>Your choice:</strong> If you choose to share recipes publicly with other users</li>
-                        <li><strong>Business transfers:</strong> In connection with a merger, acquisition, or sale of assets (you will be notified)</li>
-                    </ul>
-                    <h3>Categories of Third Parties</h3>
-                    <p>In the past 12 months, we have disclosed personal information to:</p>
-                    <ul>
-                        <li>Cloud infrastructure providers (Supabase)</li>
-                        <li>Payment processors (Apple)</li>
-                        <li>AI service providers (OpenAI)</li>
-                        <li>Advertising networks (Google AdMob - for users who watch rewarded ads)</li>
-                        <li>Analytics and error monitoring services (Sentry)</li>
-                    </ul>
-                </div>
-
-                <!-- Section 8: Your Privacy Rights -->
-                <div class="section">
-                    <div class="section-number">8</div>
-                    <h2>Your Privacy Rights</h2>
-                    <p>Depending on your location, you may have the following rights:</p>
-                    <ul>
-                        <li><strong>Access:</strong> Request a copy of your personal data</li>
-                        <li><strong>Correction:</strong> Update or correct inaccurate information</li>
-                        <li><strong>Deletion:</strong> Request deletion of your account and data</li>
-                        <li><strong>Portability:</strong> Receive your data in a portable format</li>
-                        <li><strong>Opt-out:</strong> Opt out of notifications at any time in Settings</li>
-                    </ul>
-                    <h3>Account Deletion</h3>
-                    <p>You can delete your account directly in the App:</p>
-                    <ul>
-                        <li>Go to <strong>Settings > Account > Delete Account</strong></li>
-                        <li>Confirm deletion when prompted</li>
-                        <li>Your account and associated data will be permanently deleted</li>
-                    </ul>
-                    <p>You may also request deletion by emailing <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a>.</p>
-                </div>
-
-                <!-- Section 9: California Privacy Rights (CCPA/CPRA) -->
-                <div class="section">
-                    <div class="section-number">9</div>
-                    <h2>California Privacy Rights (CCPA/CPRA)</h2>
-                    <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA):</p>
-                    <h3>Your Rights</h3>
-                    <ul>
-                        <li><strong>Right to Know:</strong> Request disclosure of personal information collected, used, and disclosed in the past 12 months</li>
-                        <li><strong>Right to Delete:</strong> Request deletion of your personal information</li>
-                        <li><strong>Right to Correct:</strong> Request correction of inaccurate personal information</li>
-                        <li><strong>Right to Opt-Out of Sale/Sharing:</strong> We do not sell or share your personal information for cross-context behavioral advertising</li>
-                        <li><strong>Right to Limit Use of Sensitive Information:</strong> We only use sensitive information (dietary preferences) as necessary to provide the App</li>
-                        <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your rights</li>
-                    </ul>
-                    <h3>Do Not Sell or Share My Personal Information</h3>
-                    <div class="highlight-box">
-                        <p>We do not sell your personal information. We do not share your personal information for cross-context behavioral advertising purposes.</p>
-                    </div>
-                    <h3>How to Exercise Your Rights</h3>
-                    <p>To submit a request, email <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a> with subject line "CCPA Request." We will verify your identity and respond within 45 days.</p>
-                    <h3>12-Month Lookback</h3>
-                    <p>See Section 1 (Information We Collect) and Section 7 (Data Sharing) for categories of personal information collected and disclosed in the preceding 12 months.</p>
-                </div>
-
-                <!-- Section 10: European Privacy Rights (GDPR) -->
-                <div class="section">
-                    <div class="section-number">10</div>
-                    <h2>European Privacy Rights (GDPR)</h2>
-                    <p>If you are in the European Economic Area (EEA), United Kingdom, or Switzerland, you have rights under the General Data Protection Regulation (GDPR):</p>
-                    <h3>Lawful Basis for Processing</h3>
-                    <ul>
-                        <li><strong>Contract:</strong> Processing necessary to provide the App services you requested</li>
-                        <li><strong>Consent:</strong> For optional features like notifications and marketing (you can withdraw consent anytime)</li>
-                        <li><strong>Legitimate interests:</strong> For security, fraud prevention, and service improvement</li>
-                        <li><strong>Legal obligation:</strong> When required by law</li>
-                    </ul>
-                    <h3>Your GDPR Rights</h3>
-                    <ul>
-                        <li><strong>Access:</strong> Obtain confirmation and a copy of your personal data</li>
-                        <li><strong>Rectification:</strong> Correct inaccurate or incomplete data</li>
-                        <li><strong>Erasure:</strong> Request deletion ("right to be forgotten")</li>
-                        <li><strong>Restriction:</strong> Limit how we use your data</li>
-                        <li><strong>Portability:</strong> Receive your data in a structured, machine-readable format</li>
-                        <li><strong>Objection:</strong> Object to processing based on legitimate interests</li>
-                        <li><strong>Automated decisions:</strong> Not be subject to solely automated decisions with legal effects</li>
-                    </ul>
-                    <h3>International Data Transfers</h3>
-                    <p>Your data is transferred to and processed in the United States. We protect international transfers using:</p>
-                    <ul>
-                        <li>Standard Contractual Clauses (SCCs) approved by the European Commission</li>
-                        <li>Data processing agreements with our service providers</li>
-                    </ul>
-                    <h3>Data Protection Authority</h3>
-                    <p>You have the right to lodge a complaint with your local data protection authority if you believe your rights have been violated.</p>
-                    <h3>Contact for EU Inquiries</h3>
-                    <p>Email: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a> with subject line "GDPR Request"</p>
-                </div>
-
-                <!-- Section 11: Data Retention -->
-                <div class="section">
-                    <div class="section-number">11</div>
-                    <h2>Data Retention</h2>
-                    <ul>
-                        <li><strong>Active accounts:</strong> Data is retained while your account is active</li>
-                        <li><strong>Account deletion:</strong> Upon deletion request, account data is permanently removed within 30 days</li>
-                        <li><strong>Backup purge:</strong> Backups containing deleted data are purged within 90 days</li>
-                        <li><strong>Legal retention:</strong> Some data may be retained longer if required by law or for legitimate business purposes (e.g., fraud prevention)</li>
-                        <li><strong>Anonymized data:</strong> We may retain anonymized, aggregated data indefinitely for analytics</li>
-                    </ul>
-                </div>
-
-                <!-- Section 12: Children's Privacy (COPPA) -->
-                <div class="section">
-                    <div class="section-number">12</div>
-                    <h2>Children's Privacy (COPPA)</h2>
-                    <ul>
-                        <li>EAT-INN is not intended for children under 13 years of age</li>
-                        <li>We do not knowingly collect personal information from children under 13</li>
-                        <li>If we discover that a child under 13 has provided personal information, we will delete it promptly</li>
-                        <li>If you believe a child under 13 has provided us with personal information, please contact <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></li>
-                    </ul>
-                </div>
-
-                <!-- Section 13: Teen Users (Ages 13-17) -->
-                <div class="section">
-                    <div class="section-number">13</div>
-                    <h2>Teen Users (Ages 13-17)</h2>
-                    <p>If you are between 13 and 17 years old:</p>
-                    <ul>
-                        <li>You may use EAT-INN with permission from a parent or legal guardian</li>
-                        <li>We recommend parents review this Privacy Policy with their teens</li>
-                        <li>Parents can request access to or deletion of their teen's data by contacting us</li>
-                        <li>We do not knowingly sell or share personal information of users under 16 for targeted advertising</li>
-                    </ul>
-                    <p>Additional protections apply under state laws including California (CCPA), Connecticut, Virginia, and Vermont.</p>
-                </div>
-
-                <!-- Section 14: Changes to This Policy -->
-                <div class="section">
-                    <div class="section-number">14</div>
-                    <h2>Changes to This Policy</h2>
-                    <p>We may update this Privacy Policy periodically. When we make material changes:</p>
-                    <ul>
-                        <li>We will update the "Last Updated" date at the top</li>
-                        <li>For significant changes, we may notify you via the App or email</li>
-                        <li>Continued use of the App after changes constitutes acceptance</li>
-                    </ul>
-                    <p>Previous versions of this policy are available upon request.</p>
-                </div>
-
-                <!-- Section 15: Contact Us -->
-                <div class="section">
-                    <div class="section-number">15</div>
-                    <h2>Contact Us</h2>
-                    <p>For privacy questions, data requests, or concerns:</p>
-                    <div class="company-info">
-                        <p><strong>Beldangi Fax Machine LC</strong></p>
-                        <p>Email: <a href="mailto:support@eatinn.org" class="email-link">support@eatinn.org</a></p>
-                        <p>Location: Vermont, United States</p>
-                    </div>
-                    <p>We aim to respond to all privacy requests within 30 days (45 days for CCPA requests).</p>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <div class="footer-content">
-                <div class="footer-left">
-                    <a href="/" class="footer-logo">
-                        <img src="/icons/whiteicon.png" alt="Eat-Inn" class="footer-logo-icon">
-                        <span>Eat-Inn</span>
-                    </a>
-                    <div class="footer-links">
-                        <a href="/terms/">Terms</a>
-                        <a href="/privacy/">Privacy</a>
-                        <a href="mailto:support@eatinn.org">Contact</a>
-                    </div>
-                </div>
-                <span class="footer-company">© 2026 BELDANGI FAX MACHINE LC</span>
-            </div>
-        </footer>
+    <div class="mobile-menu">
+        <button class="mobile-close">&times;</button>
+        <a href="/" data-i18n="support">Support</a>
+        <a href="/terms/" data-i18n="terms">Terms</a>
+        <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn" data-i18n="getApp">Get App</a>
     </div>
+
+    <main class="container">
+        <section class="hero">
+            <h1 data-i18n="privacyPolicy">Privacy Policy</h1>
+            <p>Last Updated: May 2026</p>
+        </section>
+
+        <p class="intro">We value your privacy. This policy explains how EAT-INN, operated by Beldangi Fax Machine LC, collects, uses, stores, and protects your information.</p>
+
+        <section class="content">
+            <div class="section">
+                <h2>1. Information We Collect</h2>
+                <h3>Account Information</h3>
+                <ul>
+                    <li>Apple ID identifier (via Sign in with Apple)</li>
+                    <li>Email address (if provided)</li>
+                    <li>Display name (optional)</li>
+                </ul>
+                <h3>User-Generated Content</h3>
+                <ul>
+                    <li>Recipes, inventory, and grocery lists</li>
+                    <li>Meal plans and nutrition data</li>
+                    <li>Dietary preferences and allergies</li>
+                    <li>Photos uploaded for AI analysis</li>
+                </ul>
+                <h3>Usage Data</h3>
+                <ul>
+                    <li>App usage patterns</li>
+                    <li>Device type and OS version</li>
+                    <li>Error logs and crash reports</li>
+                    <li>IP address (for security)</li>
+                </ul>
+                <p>We do not collect precise location, biometric data, or sensitive information beyond dietary preferences.</p>
+            </div>
+
+            <div class="section">
+                <h2>2. How We Use Your Information</h2>
+                <ul>
+                    <li>Provide and maintain App functionality</li>
+                    <li>Generate personalized recipe suggestions using AI</li>
+                    <li>Analyze food photos to identify ingredients</li>
+                    <li>Sync data across your devices</li>
+                    <li>Process subscriptions and manage your account</li>
+                    <li>Improve app performance</li>
+                    <li>Prevent fraud and ensure security</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>3. AI & Image Processing</h2>
+                <p>We use OpenAI's GPT-4o-mini for recipe generation and food photo analysis. Images sent to OpenAI are processed according to their API policy. OpenAI does not use API data for training.</p>
+                <div class="highlight">
+                    <p>AI suggestions are recommendations only. You always have final control. No automated decisions with legal effects are made.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>4. Data Storage & Security</h2>
+                <ul>
+                    <li>Data stored using Supabase (US servers)</li>
+                    <li>Encryption in transit (TLS 1.2+) and at rest (AES-256)</li>
+                    <li>Role-based access controls</li>
+                </ul>
+                <div class="highlight">
+                    <p>We will notify affected users within 72 hours of discovering any data breach.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>5. Third-Party Services</h2>
+                <ul>
+                    <li><strong>Supabase</strong> - Database and authentication</li>
+                    <li><strong>Apple</strong> - Sign-in, payments, subscriptions</li>
+                    <li><strong>RevenueCat</strong> - Subscription management</li>
+                    <li><strong>OpenAI</strong> - AI features</li>
+                    <li><strong>Google AdMob</strong> - Advertising (free tier only)</li>
+                    <li><strong>Sentry</strong> - Error monitoring</li>
+                </ul>
+                <h3>Advertising (AdMob)</h3>
+                <p>Free tier users see ads via Google AdMob. AdMob may collect device identifiers, network info, and ad interaction data. Limit tracking in iOS Settings > Privacy > Tracking.</p>
+                <p><strong>Premium subscribers are ad-free.</strong></p>
+            </div>
+
+            <div class="section">
+                <h2>6. Data Sharing</h2>
+                <div class="highlight">
+                    <p><strong>We do not sell your personal information.</strong></p>
+                </div>
+                <p>We share data only with service providers to operate the App, when required by law, to protect safety, if you share content publicly, or in business transfers.</p>
+            </div>
+
+            <div class="section">
+                <h2>7. Your Privacy Rights</h2>
+                <ul>
+                    <li><strong>Access:</strong> Request a copy of your data</li>
+                    <li><strong>Correction:</strong> Update inaccurate information</li>
+                    <li><strong>Deletion:</strong> Delete your account via Settings > Account > Delete Account</li>
+                    <li><strong>Portability:</strong> Receive data in portable format</li>
+                </ul>
+                <p>Or email <a href="mailto:support@eatinn.org" class="link">support@eatinn.org</a></p>
+            </div>
+
+            <div class="section">
+                <h2>8. California Privacy Rights (CCPA/CPRA)</h2>
+                <p>California residents have rights to know, delete, correct, and opt-out. We do not sell or share personal information for behavioral advertising.</p>
+                <p>Submit requests to <a href="mailto:support@eatinn.org" class="link">support@eatinn.org</a> with subject "CCPA Request."</p>
+            </div>
+
+            <div class="section">
+                <h2>9. European Privacy Rights (GDPR)</h2>
+                <p>EEA/UK users have rights to access, rectification, erasure, restriction, portability, and objection. Data transfers use Standard Contractual Clauses.</p>
+                <p>Contact <a href="mailto:support@eatinn.org" class="link">support@eatinn.org</a> with subject "GDPR Request."</p>
+            </div>
+
+            <div class="section">
+                <h2>10. Data Retention</h2>
+                <ul>
+                    <li>Active accounts: Data retained while active</li>
+                    <li>Deletion: Data removed within 30 days of request</li>
+                    <li>Backups purged within 90 days</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>11. Children's Privacy</h2>
+                <p>EAT-INN is not for children under 13. We don't knowingly collect data from children under 13. Users 13-17 need parental permission.</p>
+            </div>
+
+            <div class="section">
+                <h2>12. Changes to This Policy</h2>
+                <p>We may update this policy. Material changes will be communicated via the App or email. Continued use constitutes acceptance.</p>
+            </div>
+
+            <div class="section">
+                <h2>13. Contact</h2>
+                <p><strong>Beldangi Fax Machine LC</strong><br>
+                Email: <a href="mailto:support@eatinn.org" class="link">support@eatinn.org</a><br>
+                Location: Vermont, United States</p>
+                <p>We respond to privacy requests within 30 days (45 days for CCPA).</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="/terms/" data-i18n="terms">Terms</a>
+                <a href="/privacy/" data-i18n="privacy">Privacy</a>
+                <a href="mailto:support@eatinn.org" data-i18n="contact">Contact</a>
+            </div>
+            <span class="copyright">© 2026 BELDANGI FAX MACHINE LLC</span>
+        </div>
+    </footer>
 
     <script>
-        // Mobile menu toggle
-        const hamburger = document.querySelector('.hamburger');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileLinks = document.querySelectorAll('.mobile-menu a');
-
-        function toggleMobileMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        }
-
-        hamburger.addEventListener('click', toggleMobileMenu);
-        mobileMenuClose.addEventListener('click', toggleMobileMenu);
-
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (mobileMenu.classList.contains('active')) {
-                    toggleMobileMenu();
-                }
-            });
-        });
+        document.querySelector('.hamburger')?.addEventListener('click', () => document.querySelector('.mobile-menu').classList.add('active'));
+        document.querySelector('.mobile-close')?.addEventListener('click', () => document.querySelector('.mobile-menu').classList.remove('active'));
     </script>
 </body>
 </html>
