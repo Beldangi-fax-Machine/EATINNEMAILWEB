@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shared Recipe - EAT-INN</title>
 
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Eat-Inn">
+    <meta property="og:title" id="og-title" content="Shared Recipe - Eat-Inn">
+    <meta property="og:description" id="og-description" content="Check out this recipe shared via Eat-Inn - Your AI Kitchen Assistant">
+    <meta property="og:image" id="og-image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&h=630&fit=crop">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="twitter-title" content="Shared Recipe - Eat-Inn">
+    <meta name="twitter:description" id="twitter-description" content="Check out this recipe shared via Eat-Inn">
+    <meta name="twitter:image" id="twitter-image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&h=630&fit=crop">
+
     <!-- Favicons - Light mode (black icon) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/blackfavicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/blackfavicon/favicon-32x32.png">
@@ -976,7 +991,10 @@
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
 
+            console.log('[SharedRecipe] Loading recipe with ID:', id);
+
             if (!id) {
+                console.error('[SharedRecipe] ERROR: No recipe ID in URL');
                 showError('No Recipe ID', 'Please use a valid shared recipe link.');
                 return;
             }
@@ -984,38 +1002,51 @@
             // Validate UUID format
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
             if (!uuidRegex.test(id)) {
+                console.error('[SharedRecipe] ERROR: Invalid UUID format:', id);
                 showError('Invalid Link', 'This doesn\'t appear to be a valid recipe link.');
                 return;
             }
 
             try {
-                const response = await fetch(
-                    `${SUPABASE_URL}/rest/v1/shared_recipes?id=eq.${encodeURIComponent(id)}&select=*`,
-                    {
-                        headers: {
-                            'apikey': SUPABASE_ANON_KEY,
-                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                            'Content-Type': 'application/json'
-                        }
+                const fetchUrl = `${SUPABASE_URL}/rest/v1/shared_recipes?id=eq.${encodeURIComponent(id)}&select=*`;
+                console.log('[SharedRecipe] Fetching:', fetchUrl);
+
+                const response = await fetch(fetchUrl, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json'
                     }
-                );
+                });
+
+                console.log('[SharedRecipe] Response status:', response.status);
 
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
+                    const errorText = await response.text();
+                    console.error('[SharedRecipe] ERROR: HTTP', response.status, errorText);
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
                 }
 
                 const data = await response.json();
+                console.log('[SharedRecipe] Response data:', data);
+                console.log('[SharedRecipe] Found', data.length, 'recipes');
 
                 if (!data || data.length === 0) {
-                    showError('Recipe Expired', 'This shared recipe has expired. Shared links are only valid for 5 minutes.');
+                    console.error('[SharedRecipe] ERROR: No recipe found - either expired (>5min) or RLS blocking anon access');
+                    console.error('[SharedRecipe] DEBUG: Recipe ID was:', id);
+                    console.error('[SharedRecipe] DEBUG: Check if migration 20260525000000_restore_anon_select_shared_recipes.sql was pushed');
+                    showError('Recipe Expired', 'This shared recipe has expired. Shared links are only valid for 5 minutes. (Debug: Check console for details)');
                     return;
                 }
 
+                console.log('[SharedRecipe] SUCCESS: Rendering recipe:', data[0].title);
                 renderRecipe(data[0]);
 
             } catch (error) {
-                console.error('Failed to load recipe:', error);
-                showError('Connection Error', 'Unable to load the recipe. Please check your internet connection and try again.');
+                console.error('[SharedRecipe] FETCH ERROR:', error);
+                console.error('[SharedRecipe] Error name:', error.name);
+                console.error('[SharedRecipe] Error message:', error.message);
+                showError('Connection Error', 'Unable to load the recipe. Please check your internet connection and try again. (Debug: ' + error.message + ')');
             }
         }
 
