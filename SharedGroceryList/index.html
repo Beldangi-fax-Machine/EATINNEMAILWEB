@@ -127,8 +127,12 @@
                     <svg class="app-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
                 <button class="notes-btn" id="shareToNotesBtn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    <span data-i18n="copyForNotes">Copy for Notes</span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                    <span data-i18n="shareToNotes">Share to Notes</span>
+                </button>
+                <button class="notes-btn" id="copyToClipboardBtn" style="margin-top:var(--space-sm)">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                    <span data-i18n="copyToClipboard">Copy to Clipboard</span>
                 </button>
                 <p class="app-fallback" id="appFallback" style="display:none;margin-top:var(--space-md);font-size:13px;color:var(--text-muted);">
                     Don't have the app? <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" style="color:var(--text-secondary);text-decoration:underline;">Download Eat-Inn</a>
@@ -158,7 +162,8 @@
         function showToast(message){const toast=document.getElementById('toast');document.getElementById('toastText').textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2500)}
         function getCurrentItems(){if(!listData||!listData.items)return[];return listData.items.map(formatItem)}
         document.getElementById('saveToAppBtn').addEventListener('click',function(e){e.preventDefault();const params=new URLSearchParams(window.location.search);const id=params.get('id');if(!id)return;const deepLink=`eatinn://shared-grocerylist?id=${id}`;let appOpened=false;const handleVisibilityChange=function(){if(document.hidden){appOpened=true}};document.addEventListener('visibilitychange',handleVisibilityChange);window.location.href=deepLink;setTimeout(function(){document.removeEventListener('visibilitychange',handleVisibilityChange);if(!appOpened){document.getElementById('appFallback').style.display='block'}},2000)});
-        document.getElementById('shareToNotesBtn').addEventListener('click',()=>{if(!listData)return;const items=getCurrentItems();let text=`${listData.name||'Grocery List'}\n\n`;items.forEach(item=>{text+=`${item.checked?'☑️':'☐'} ${item.name}\n`});navigator.clipboard.writeText(text).then(()=>showToast('Copied to clipboard'))});
+        document.getElementById('shareToNotesBtn').addEventListener('click',async()=>{if(!listData)return;const items=getCurrentItems();let text=`${listData.name||'Grocery List'}\n\n`;items.forEach(item=>{text+=`${item.checked?'☑️':'☐'} ${item.name}`;if(item.quantity){text+=` (${item.quantity}${item.unit?' '+item.unit:''})`}text+='\n'});if(navigator.share){try{await navigator.share({title:listData.name||'Grocery List',text:text});showToast('Shared successfully')}catch(err){if(err.name!=='AbortError'){navigator.clipboard.writeText(text).then(()=>showToast('Copied to clipboard'))}}}else{navigator.clipboard.writeText(text).then(()=>showToast('Copied to clipboard'))}});
+        document.getElementById('copyToClipboardBtn').addEventListener('click',()=>{if(!listData)return;const items=getCurrentItems();let text=`${listData.name||'Grocery List'}\n\n`;items.forEach(item=>{text+=`${item.checked?'☑️':'☐'} ${item.name}`;if(item.quantity){text+=` (${item.quantity}${item.unit?' '+item.unit:''})`}text+='\n'});navigator.clipboard.writeText(text).then(()=>showToast('Copied to clipboard'))});
         document.addEventListener('DOMContentLoaded',loadSharedGroceryList);
     </script>
 </body>

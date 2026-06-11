@@ -556,6 +556,24 @@ const translations = {
       ru: "Скопировать в Заметки", sk: "Kopírovať do Poznámok", es: "Copiar para Notas", sv: "Kopiera till Anteckningar", th: "คัดลอกไปยังโน้ต",
       tr: "Notlar için Kopyala", uk: "Скопіювати для Нотаток", vi: "Sao chép cho Ghi chú"
     },
+    shareToNotes: {
+      en: "Share to Notes", ar: "مشاركة إلى الملاحظات", ca: "Compartir a Notes", "zh-Hans": "分享到备忘录", "zh-Hant": "分享到備忘錄",
+      hr: "Podijeli u Bilješke", cs: "Sdílet do Poznámek", da: "Del til Noter", nl: "Delen naar Notities", fi: "Jaa Muistiinpanoihin",
+      fr: "Partager vers Notes", de: "An Notizen teilen", el: "Κοινοποίηση στις Σημειώσεις", he: "שתף לפתקים", hi: "नोट्स में शेयर करें",
+      hu: "Megosztás a Jegyzetekben", id: "Bagikan ke Catatan", it: "Condividi su Note", ja: "メモに共有", ko: "메모로 공유",
+      ms: "Kongsi ke Nota", nb: "Del til Notater", pl: "Udostępnij do Notatek", pt: "Compartilhar para Notas", ro: "Partajează în Note",
+      ru: "Поделиться в Заметках", sk: "Zdieľať do Poznámok", es: "Compartir a Notas", sv: "Dela till Anteckningar", th: "แชร์ไปยังโน้ต",
+      tr: "Notlara Paylaş", uk: "Поділитися в Нотатках", vi: "Chia sẻ đến Ghi chú"
+    },
+    copyToClipboard: {
+      en: "Copy to Clipboard", ar: "نسخ إلى الحافظة", ca: "Copiar al porta-retalls", "zh-Hans": "复制到剪贴板", "zh-Hant": "複製到剪貼簿",
+      hr: "Kopiraj u međuspremnik", cs: "Kopírovat do schránky", da: "Kopier til udklipsholder", nl: "Kopiëren naar klembord", fi: "Kopioi leikepöydälle",
+      fr: "Copier dans le presse-papier", de: "In Zwischenablage kopieren", el: "Αντιγραφή στο πρόχειρο", he: "העתק ללוח", hi: "क्लिपबोर्ड पर कॉपी करें",
+      hu: "Másolás a vágólapra", id: "Salin ke Papan Klip", it: "Copia negli appunti", ja: "クリップボードにコピー", ko: "클립보드에 복사",
+      ms: "Salin ke Papan Keratan", nb: "Kopier til utklippstavle", pl: "Kopiuj do schowka", pt: "Copiar para área de transferência", ro: "Copiază în clipboard",
+      ru: "Скопировать в буфер", sk: "Kopírovať do schránky", es: "Copiar al portapapeles", sv: "Kopiera till urklipp", th: "คัดลอกไปยังคลิปบอร์ด",
+      tr: "Panoya Kopyala", uk: "Копіювати в буфер", vi: "Sao chép vào bộ nhớ tạm"
+    },
     items: {
       en: "items", ar: "عناصر", ca: "articles", "zh-Hans": "项目", "zh-Hant": "項目",
       hr: "stavke", cs: "položek", da: "varer", nl: "items", fi: "tuotetta",
