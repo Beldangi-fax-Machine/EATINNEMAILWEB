@@ -9,6 +9,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/blackfavicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/blackfavicon/favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="/icons/blackfavicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/whitefavicons/favicon-32x32.png" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/whitefavicons/favicon-16x16.png" media="(prefers-color-scheme: dark)">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,19 +20,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg: #000;
-            --bg-elevated: #111;
-            --text: #fff;
-            --text-secondary: #888;
-            --border: #222;
-            --primary: #FF6B35;
-            --primary-dark: #E85A2A;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --bg-input: #222222;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --accent-primary: #ffffff;
+            --accent-green: #22c55e;
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.15);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #000 0%, #1a0a0a 100%);
-            color: var(--text);
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
@@ -40,32 +46,71 @@
             padding: 20px;
         }
 
+        .bg-effects {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            top: -200px; left: -200px;
+        }
+
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            bottom: -100px; right: -100px;
+        }
+
         .container {
             max-width: 480px;
             width: 100%;
+            position: relative;
+            z-index: 1;
         }
 
         .card {
-            background: var(--bg-elevated);
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 24px;
             padding: 48px 32px;
             text-align: center;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--text-secondary));
         }
 
         .logo {
             width: 80px;
             height: 80px;
             margin: 0 auto 24px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            font-weight: 800;
-            color: white;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         h1 {
@@ -73,6 +118,7 @@
             font-weight: 700;
             margin-bottom: 12px;
             line-height: 1.2;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
@@ -82,8 +128,8 @@
         }
 
         .code-display {
-            background: rgba(255, 107, 53, 0.1);
-            border: 2px solid var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-hover);
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 32px;
@@ -102,7 +148,7 @@
             font-size: 32px;
             font-weight: 800;
             letter-spacing: 4px;
-            color: var(--primary);
+            color: var(--text-primary);
             font-family: 'Courier New', monospace;
         }
 
@@ -126,37 +172,37 @@
         }
 
         .benefit-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--primary);
-            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 12px;
             flex-shrink: 0;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .btn {
             display: inline-block;
             width: 100%;
             padding: 16px 32px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
             text-decoration: none;
             border-radius: 12px;
             font-weight: 600;
             font-size: 16px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.2s ease;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 6px 24px rgba(255, 255, 255, 0.15);
         }
 
         .btn:active {
@@ -166,17 +212,17 @@
         .expiry-note {
             margin-top: 24px;
             font-size: 13px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
         }
 
         .expiry-time {
-            color: var(--primary);
+            color: var(--text-secondary);
             font-weight: 600;
         }
 
         .error-message {
-            background: rgba(220, 38, 38, 0.1);
-            border: 2px solid #DC2626;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 24px;
@@ -187,9 +233,9 @@
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(0, 0, 0, 0.2);
             border-radius: 50%;
-            border-top-color: var(--primary);
+            border-top-color: var(--bg-primary);
             animation: spin 1s linear infinite;
         }
 
@@ -213,9 +259,16 @@
     </style>
 </head>
 <body>
+    <div class="bg-effects">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
     <div class="container">
         <div class="card">
-            <div class="logo">🍽️</div>
+            <div class="logo">
+                <img src="/icons/whiteicon.png" alt="Eat-Inn">
+            </div>
 
             <div id="content">
                 <!-- Content injected by JavaScript -->
@@ -234,7 +287,7 @@
             // No code provided
             contentDiv.innerHTML = `
                 <div class="error-message">
-                    <strong>⚠️ Missing Referral Code</strong><br>
+                    <strong>Missing Referral Code</strong><br>
                     This link is missing a referral code.
                 </div>
                 <h1>Download Eat-Inn</h1>
@@ -256,15 +309,15 @@
 
                 <div class="benefits">
                     <div class="benefit">
-                        <div class="benefit-icon">🎁</div>
+                        <div class="benefit-icon">+10</div>
                         <div>Get <strong>10 bonus tokens</strong> when you sign up</div>
                     </div>
                     <div class="benefit">
-                        <div class="benefit-icon">🍳</div>
+                        <div class="benefit-icon">AI</div>
                         <div>Generate AI recipes from your ingredients</div>
                     </div>
                     <div class="benefit">
-                        <div class="benefit-icon">📊</div>
+                        <div class="benefit-icon">+</div>
                         <div>Track nutrition and plan meals</div>
                     </div>
                 </div>
@@ -275,7 +328,7 @@
                 </button>
 
                 <p class="expiry-note">
-                    ⏱️ This code expires in <span class="expiry-time">20 minutes</span>
+                    This code expires in <span class="expiry-time">20 minutes</span>
                 </p>
             `;
 

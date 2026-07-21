@@ -21,25 +21,57 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg: #000;
+            --bg-primary: #0a0a0a;
             --bg-elevated: #111;
+            --bg-card: #1a1a1a;
             --text: #fff;
-            --text-secondary: #888;
-            --border: #222;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --border: rgba(255,255,255,0.08);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
+            background: var(--bg-primary);
             color: var(--text);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        .bg-effects {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            top: -200px; left: -200px;
+        }
+
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            bottom: -100px; right: -100px;
         }
 
         .container {
             max-width: 720px;
             margin: 0 auto;
             padding: 0 24px;
+            position: relative;
+            z-index: 1;
         }
 
         header {
@@ -163,6 +195,11 @@
     </style>
 </head>
 <body>
+    <div class="bg-effects">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
     <header>
         <div class="container">
             <a href="/" class="logo">
