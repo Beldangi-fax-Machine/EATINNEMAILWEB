@@ -209,7 +209,8 @@
             <nav>
                 <a href="/" data-i18n="support">Support</a>
                 <a href="/terms/" data-i18n="terms">Terms</a>
-                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn" data-i18n="getApp">Get App</a>
+                <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn">iOS</a>
+                <a href="#PLAY_STORE_URL" class="btn">Android</a>
             </nav>
             <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
@@ -219,7 +220,8 @@
         <button class="mobile-close">&times;</button>
         <a href="/" data-i18n="support">Support</a>
         <a href="/terms/" data-i18n="terms">Terms</a>
-        <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn" data-i18n="getApp">Get App</a>
+        <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn">iOS</a>
+        <a href="#PLAY_STORE_URL" class="btn">Android</a>
     </div>
 
     <main class="container">
@@ -300,11 +302,15 @@
                     <li><strong>Sentry</strong> - Error monitoring</li>
                 </ul>
                 <h3>Advertising & Tracking (AdMob)</h3>
-                <p>Free tier users see personalized ads via Google AdMob. When you first use the app with ads, we request your permission via Apple's App Tracking Transparency (ATT) prompt to access your device's advertising identifier (IDFA).</p>
-                <p><strong>If you allow tracking:</strong> Google AdMob uses your IDFA to serve personalized ads based on your interests and activity across apps and websites.</p>
+                <p>Free tier users see personalized ads via Google AdMob. When you first use the app with ads, we request your permission to access your device's advertising identifier for personalized ads.</p>
+                <ul>
+                    <li><strong>On iOS:</strong> Apple's App Tracking Transparency (ATT) prompt requests permission to access your IDFA.</li>
+                    <li><strong>On Android:</strong> You can manage ad personalization in your device's Google settings.</li>
+                </ul>
+                <p><strong>If you allow tracking:</strong> Google AdMob uses your advertising identifier to serve personalized ads based on your interests and activity across apps and websites.</p>
                 <p><strong>If you deny tracking:</strong> You will see non-personalized ads. We respect your choice.</p>
                 <p>AdMob may collect: device identifiers, IP address, network info, and ad interaction data. For details, see <a href="https://policies.google.com/privacy" class="link" target="_blank">Google's Privacy Policy</a>.</p>
-                <p>You can change your tracking preference anytime in iOS Settings > Privacy & Security > Tracking.</p>
+                <p>You can change your tracking preference anytime in iOS Settings > Privacy & Security > Tracking, or on Android in Settings > Google > Ads.</p>
                 <p><strong>Premium subscribers are completely ad-free with no tracking.</strong></p>
             </div>
 
@@ -361,8 +367,7 @@
             <div class="section">
                 <h2>13. Contact</h2>
                 <p><strong>Beldangi Fax Machine LC</strong><br>
-                Email: <a href="mailto:support@eatinn.org" class="link">support@eatinn.org</a><br>
-                Location: Vermont, United States</p>
+                Email: <a href="mailto:support@eatinn.org" class="link">support@eatinn.org</a></p>
                 <p>We respond to privacy requests within 30 days (45 days for CCPA).</p>
             </div>
         </section>
