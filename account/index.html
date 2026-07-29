@@ -908,28 +908,39 @@
 
         // Check auth state on load
         async function init() {
-            const { data: { session } } = await supabase.auth.getSession()
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession()
 
-            if (session) {
-                currentUser = session.user
-                await loadUserProfile()
-                showAccountView()
-            } else {
-                showLoginView()
-            }
+                if (error) {
+                    console.error('Auth error:', error)
+                    showLoginView()
+                    return
+                }
 
-            // Listen for auth changes
-            supabase.auth.onAuthStateChange(async (event, session) => {
-                if (event === 'SIGNED_IN' && session) {
+                if (session) {
                     currentUser = session.user
                     await loadUserProfile()
                     showAccountView()
-                } else if (event === 'SIGNED_OUT') {
-                    currentUser = null
-                    userProfile = null
+                } else {
                     showLoginView()
                 }
-            })
+
+                // Listen for auth changes
+                supabase.auth.onAuthStateChange(async (event, session) => {
+                    if (event === 'SIGNED_IN' && session) {
+                        currentUser = session.user
+                        await loadUserProfile()
+                        showAccountView()
+                    } else if (event === 'SIGNED_OUT') {
+                        currentUser = null
+                        userProfile = null
+                        showLoginView()
+                    }
+                })
+            } catch (e) {
+                console.error('Init error:', e)
+                showLoginView()
+            }
         }
 
         // Load user profile from profiles table (if exists)
@@ -1290,8 +1301,16 @@ Thank you.`
             }
         }
 
-        // Initialize
+        // Initialize with timeout fallback
         init()
+
+        // Fallback: if still loading after 5 seconds, show login
+        setTimeout(() => {
+            if (!loadingView.classList.contains('hidden')) {
+                console.log('Loading timeout - showing login view')
+                showLoginView()
+            }
+        }, 5000)
     </script>
 </body>
 </html>
