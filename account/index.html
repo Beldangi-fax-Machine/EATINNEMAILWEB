@@ -972,14 +972,14 @@
 
                 // Upload to Supabase Storage
                 const { data, error: uploadError } = await supabase.storage
-                    .from('avatars')
+                    .from('profile-images')
                     .upload(fileName, file, { upsert: true })
 
                 if (uploadError) throw uploadError
 
                 // Get public URL
                 const { data: { publicUrl } } = supabase.storage
-                    .from('avatars')
+                    .from('profile-images')
                     .getPublicUrl(fileName)
 
                 // Update profile
@@ -995,7 +995,7 @@
                 document.getElementById('userAvatar').src = publicUrl + '?t=' + Date.now()
             } catch (e) {
                 console.error('Error uploading avatar:', e)
-                alert('Failed to upload avatar. Storage bucket may not be configured.')
+                alert('Failed to upload avatar: ' + e.message)
             }
         }
 
