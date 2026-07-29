@@ -577,10 +577,105 @@
             font-size: 12px;
         }
 
+        /* Help Link */
+        .help-link-container {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .help-link {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+            text-decoration: underline;
+        }
+
+        .help-link:hover { color: var(--text-primary); }
+
+        /* Help Form */
+        .help-header {
+            padding: 32px 32px 0;
+            text-align: center;
+        }
+
+        .help-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .help-header .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        /* Radio buttons */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-option:hover {
+            border-color: var(--border-hover);
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-primary);
+            cursor: pointer;
+        }
+
+        .radio-label {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        /* Textarea */
+        .input-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            min-height: 100px;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .input-group textarea::placeholder { color: var(--text-muted); }
+
         @media (max-width: 480px) {
             .container { padding: 0 16px; }
             .login-card, .account-section, .logout-section { padding-left: 24px; padding-right: 24px; }
-            .profile-header { padding: 24px; }
+            .profile-header, .help-header { padding: 24px 24px 0; }
         }
     </style>
 </head>
@@ -638,6 +733,66 @@
                     </div>
                     <button class="btn-primary" onclick="sendMagicLink()" id="sendLinkBtn">Send Magic Link</button>
                     <button class="btn-secondary" onclick="showSocialButtons()">Back to all options</button>
+                </div>
+
+                <div class="help-link-container">
+                    <button class="help-link" onclick="showHelpForm()">Can't access your account?</button>
+                </div>
+            </div>
+
+            <!-- Help Request View (for users who can't log in) -->
+            <div id="helpView" class="hidden">
+                <div class="account-card">
+                    <div class="help-header">
+                        <h1>Account Assistance</h1>
+                        <p class="subtitle">Fill in your details and we'll help you via email</p>
+                    </div>
+
+                    <div class="account-section">
+                        <div class="section-title">Your Information</div>
+                        <div class="input-group">
+                            <label for="helpName">Full Name</label>
+                            <input type="text" id="helpName" placeholder="John Doe" autocomplete="name">
+                        </div>
+                        <div class="input-group">
+                            <label for="helpEmail">Email Address</label>
+                            <input type="email" id="helpEmail" placeholder="you@example.com" autocomplete="email">
+                        </div>
+                        <div class="input-group">
+                            <label for="helpUsername">Username (if known)</label>
+                            <input type="text" id="helpUsername" placeholder="Your app username">
+                        </div>
+                    </div>
+
+                    <div class="account-section">
+                        <div class="section-title">What do you need?</div>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="requestType" value="delete" checked>
+                                <span class="radio-label">Delete my account and data</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="requestType" value="data">
+                                <span class="radio-label">Request a copy of my data</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="requestType" value="help">
+                                <span class="radio-label">I need help accessing my account</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="account-section">
+                        <div class="input-group">
+                            <label for="helpDetails">Additional Details (optional)</label>
+                            <textarea id="helpDetails" placeholder="Any additional information that might help us..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="account-section" style="border-bottom: none;">
+                        <button class="btn-primary" onclick="submitHelpRequest()">Send Request via Email</button>
+                        <button class="btn-secondary" onclick="backToLogin()">Back to Sign In</button>
+                    </div>
                 </div>
             </div>
 
@@ -745,6 +900,7 @@
         const socialButtons = document.getElementById('socialButtons')
         const emailForm = document.getElementById('emailForm')
         const loginMessage = document.getElementById('loginMessage')
+        const helpView = document.getElementById('helpView')
 
         // Current user data
         let currentUser = null
@@ -800,12 +956,30 @@
         function showLoginView() {
             loadingView.classList.add('hidden')
             accountView.classList.add('hidden')
+            helpView.classList.add('hidden')
             loginView.classList.remove('hidden')
+        }
+
+        function showHelpForm() {
+            loginView.classList.add('hidden')
+            helpView.classList.remove('hidden')
+        }
+
+        function backToLogin() {
+            helpView.classList.add('hidden')
+            loginView.classList.remove('hidden')
+            // Reset form
+            document.getElementById('helpName').value = ''
+            document.getElementById('helpEmail').value = ''
+            document.getElementById('helpUsername').value = ''
+            document.getElementById('helpDetails').value = ''
+            document.querySelector('input[name="requestType"][value="delete"]').checked = true
         }
 
         function showAccountView() {
             loadingView.classList.add('hidden')
             loginView.classList.add('hidden')
+            helpView.classList.add('hidden')
             accountView.classList.remove('hidden')
             updateAccountUI()
         }
@@ -901,6 +1075,80 @@
 
         async function signOut() {
             await supabase.auth.signOut()
+        }
+
+        // Help request function (for users who can't log in)
+        function submitHelpRequest() {
+            const name = document.getElementById('helpName').value.trim()
+            const email = document.getElementById('helpEmail').value.trim()
+            const username = document.getElementById('helpUsername').value.trim()
+            const details = document.getElementById('helpDetails').value.trim()
+            const requestType = document.querySelector('input[name="requestType"]:checked').value
+
+            // Validation
+            if (!name) {
+                alert('Please enter your name')
+                return
+            }
+            if (!email) {
+                alert('Please enter your email address')
+                return
+            }
+
+            // Build email subject and body based on request type
+            let subject = ''
+            let body = ''
+
+            switch (requestType) {
+                case 'delete':
+                    subject = 'Account Deletion Request'
+                    body = `Hello Eat-Inn Support,
+
+I would like to request the deletion of my account and all associated data.
+
+Account Information:
+- Full Name: ${name}
+- Email: ${email}
+- Username: ${username || 'Not provided'}
+
+${details ? `Additional Details:\n${details}\n` : ''}
+Please confirm once my account has been deleted.
+
+Thank you.`
+                    break
+                case 'data':
+                    subject = 'Data Export Request'
+                    body = `Hello Eat-Inn Support,
+
+I would like to request a copy of all my personal data associated with my account.
+
+Account Information:
+- Full Name: ${name}
+- Email: ${email}
+- Username: ${username || 'Not provided'}
+
+${details ? `Additional Details:\n${details}\n` : ''}
+Thank you.`
+                    break
+                case 'help':
+                    subject = 'Account Access Help'
+                    body = `Hello Eat-Inn Support,
+
+I need help accessing my account.
+
+Account Information:
+- Full Name: ${name}
+- Email: ${email}
+- Username: ${username || 'Not provided'}
+
+${details ? `Issue Details:\n${details}\n` : ''}
+Thank you.`
+                    break
+            }
+
+            // Open email client
+            const mailtoLink = `mailto:support@eatinn.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+            window.location.href = mailtoLink
         }
 
         // Profile functions
