@@ -102,7 +102,7 @@
 
         .btn {
             background: var(--text);
-            color: var(--bg);
+            color: var(--bg-primary);
             padding: 8px 16px;
             border-radius: 6px;
             font-weight: 600;
@@ -254,13 +254,13 @@
     <main class="container">
         <section class="hero">
             <h1 data-i18n="termsOfUse">Terms of Use</h1>
-            <p>Last Updated: May 2026</p>
+            <p>Last Updated: July 2026</p>
         </section>
 
         <section class="content">
             <div class="section">
                 <h2>1. Acceptance of Terms</h2>
-                <p>By downloading, accessing, or using EAT-INN ("the App"), you agree to be bound by these Terms of Use. If you do not agree, do not use the App.</p>
+                <p>By downloading, accessing, or using EAT-INN ("the App") from the Apple App Store or Google Play Store, you agree to be bound by these Terms of Use. If you do not agree, do not use the App.</p>
             </div>
 
             <div class="section">
@@ -288,7 +288,7 @@
             <div class="section">
                 <h2>4. Accounts & Authentication</h2>
                 <ul>
-                    <li>Sign in using Apple Sign-In or email authentication</li>
+                    <li>Sign in using Apple Sign-In (iOS), Google Sign-In (Android), or email authentication</li>
                     <li>You are responsible for maintaining account confidentiality</li>
                     <li>You agree to provide accurate information</li>
                     <li>We may suspend accounts that violate these Terms</li>
@@ -362,10 +362,12 @@
                 <p>The App integrates with:</p>
                 <ul>
                     <li><strong>Supabase</strong> - Database and authentication</li>
-                    <li><strong>Apple</strong> - Sign-in, payments, subscriptions</li>
+                    <li><strong>Apple</strong> - Sign-in, payments, subscriptions (iOS)</li>
+                    <li><strong>Google</strong> - Sign-in, payments, subscriptions (Android)</li>
                     <li><strong>RevenueCat</strong> - Subscription management</li>
                     <li><strong>OpenAI</strong> - AI recipe generation</li>
                     <li><strong>Google AdMob</strong> - Advertising (free tier)</li>
+                    <li><strong>Google Fit</strong> - Fitness data sync (Android, optional)</li>
                     <li><strong>Sentry</strong> - Error monitoring</li>
                 </ul>
                 <h3>Advertising & Tracking</h3>
@@ -378,6 +380,15 @@
                 </ul>
                 <p>You can change your tracking preference anytime in iOS Settings > Privacy & Security > Tracking, or on Android in Settings > Google > Ads.</p>
                 <p>Premium subscribers are completely ad-free with no advertising identifier tracking.</p>
+                <h3>Google Fit Integration (Android)</h3>
+                <p>On Android, EAT-INN can optionally sync with Google Fit to track your nutrition and activity data. This integration:</p>
+                <ul>
+                    <li>Requires your explicit permission via Google's consent screen</li>
+                    <li>Allows the App to read step count, calories burned, and hydration data</li>
+                    <li>Allows the App to write nutrition entries to Google Fit</li>
+                    <li>Can be disconnected anytime in the app settings</li>
+                </ul>
+                <p>Google Fit data is governed by <a href="https://policies.google.com/privacy" class="link" target="_blank">Google's Privacy Policy</a>.</p>
             </div>
 
             <div class="section">

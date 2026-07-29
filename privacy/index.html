@@ -102,7 +102,7 @@
 
         .btn {
             background: var(--text);
-            color: var(--bg);
+            color: var(--bg-primary);
             padding: 8px 16px;
             border-radius: 6px;
             font-weight: 600;
@@ -227,17 +227,18 @@
     <main class="container">
         <section class="hero">
             <h1 data-i18n="privacyPolicy">Privacy Policy</h1>
-            <p>Last Updated: June 2026</p>
+            <p>Last Updated: July 2026</p>
         </section>
 
-        <p class="intro">We value your privacy. This policy explains how EAT-INN, operated by Beldangi Fax Machine LC, collects, uses, stores, and protects your information.</p>
+        <p class="intro">We value your privacy. This policy explains how EAT-INN (available on the Apple App Store and Google Play Store), operated by Beldangi Fax Machine LC, collects, uses, stores, and protects your information.</p>
 
         <section class="content">
             <div class="section">
                 <h2>1. Information We Collect</h2>
                 <h3>Account Information</h3>
                 <ul>
-                    <li>Apple ID identifier (via Sign in with Apple)</li>
+                    <li>Apple ID identifier (via Sign in with Apple on iOS)</li>
+                    <li>Google account identifier (via Google Sign-In on Android)</li>
                     <li>Email address (if provided)</li>
                     <li>Display name (optional)</li>
                 </ul>
@@ -255,7 +256,14 @@
                     <li>Error logs and crash reports</li>
                     <li>IP address (for security)</li>
                 </ul>
-                <p>We do not collect precise location, biometric data, or sensitive information beyond dietary preferences.</p>
+                <h3>Fitness Data (Android Only, Optional)</h3>
+                <ul>
+                    <li>Step count and calories burned (via Google Fit)</li>
+                    <li>Hydration data (synced to/from Google Fit)</li>
+                    <li>Nutrition data (synced to Google Fit)</li>
+                </ul>
+                <p>Google Fit integration is optional and requires your explicit permission. You can disconnect Google Fit anytime in the app settings.</p>
+                <p>We do not collect precise location, biometric data, or sensitive information beyond dietary preferences and optional fitness data.</p>
             </div>
 
             <div class="section">
@@ -265,6 +273,7 @@
                     <li>Generate personalized recipe suggestions using AI</li>
                     <li>Analyze food photos to identify ingredients</li>
                     <li>Sync data across your devices</li>
+                    <li>Sync nutrition and fitness data with Google Fit (Android, if enabled)</li>
                     <li>Process subscriptions and manage your account</li>
                     <li>Improve app performance</li>
                     <li>Prevent fraud and ensure security</li>
@@ -295,10 +304,12 @@
                 <h2>5. Third-Party Services</h2>
                 <ul>
                     <li><strong>Supabase</strong> - Database and authentication</li>
-                    <li><strong>Apple</strong> - Sign-in, payments, subscriptions</li>
+                    <li><strong>Apple</strong> - Sign-in, payments, subscriptions (iOS)</li>
+                    <li><strong>Google</strong> - Sign-in, payments, subscriptions (Android)</li>
                     <li><strong>RevenueCat</strong> - Subscription management</li>
                     <li><strong>OpenAI</strong> - AI features</li>
                     <li><strong>Google AdMob</strong> - Advertising (free tier only)</li>
+                    <li><strong>Google Fit</strong> - Fitness data sync (Android, optional)</li>
                     <li><strong>Sentry</strong> - Error monitoring</li>
                 </ul>
                 <h3>Advertising & Tracking (AdMob)</h3>
