@@ -115,9 +115,92 @@
             margin: 4px 0;
         }
 
+        /* Phone Showcase */
+        .phone-showcase {
+            padding: 60px 0 40px;
+            overflow: hidden;
+        }
+
+        .phone-showcase-inner {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 0;
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .phone {
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: phoneSlideIn 0.8s ease-out forwards;
+        }
+
+        .phone img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+        }
+
+        .phone-center {
+            width: 280px;
+            z-index: 3;
+            animation-delay: 0.1s;
+        }
+
+        .phone-left {
+            width: 240px;
+            margin-right: -40px;
+            z-index: 2;
+            animation-delay: 0s;
+        }
+
+        .phone-right {
+            width: 240px;
+            margin-left: -40px;
+            z-index: 2;
+            animation-delay: 0.2s;
+        }
+
+        .phone-right img {
+            transform: scaleX(-1);
+        }
+
+        /* Glow effect under phones */
+        .phone-glow {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 120px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+            filter: blur(40px);
+            z-index: 0;
+            opacity: 0;
+            animation: glowFadeIn 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes phoneSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glowFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
         /* Hero */
         .hero {
-            padding: 80px 0 60px;
+            padding: 40px 0 60px;
             text-align: center;
         }
 
@@ -306,6 +389,14 @@
             cursor: pointer;
         }
 
+        @media (max-width: 768px) {
+            .phone-showcase { padding: 40px 0 20px; }
+            .phone-center { width: 200px; }
+            .phone-left, .phone-right { width: 170px; }
+            .phone-left { margin-right: -30px; }
+            .phone-right { margin-left: -30px; }
+        }
+
         @media (max-width: 640px) {
             nav { display: none; }
             .hamburger { display: block; }
@@ -313,6 +404,19 @@
             .cards { grid-template-columns: repeat(2, 1fr); }
             .contact { padding: 32px 24px; }
             footer .container { flex-direction: column; gap: 12px; text-align: center; }
+            .phone-showcase { padding: 30px 0 10px; }
+            .phone-center { width: 160px; }
+            .phone-left, .phone-right { width: 130px; }
+            .phone-left { margin-right: -20px; }
+            .phone-right { margin-left: -20px; }
+            .phone-glow { height: 80px; bottom: -40px; }
+        }
+
+        @media (max-width: 400px) {
+            .phone-center { width: 140px; }
+            .phone-left, .phone-right { width: 110px; }
+            .phone-left { margin-right: -15px; }
+            .phone-right { margin-left: -15px; }
         }
     </style>
 </head>
@@ -346,6 +450,21 @@
         <a href="https://apps.apple.com/us/app/eat-inn/id6760630503" class="btn">iOS</a>
         <a href="#PLAY_STORE_URL" class="btn">Android</a>
     </div>
+
+    <section class="phone-showcase">
+        <div class="phone-showcase-inner">
+            <div class="phone phone-left">
+                <img src="/images/mockups/phone-side.png" alt="Eat-Inn App">
+            </div>
+            <div class="phone phone-center">
+                <img src="/images/mockups/phone-center.png" alt="Eat-Inn App">
+            </div>
+            <div class="phone phone-right">
+                <img src="/images/mockups/phone-side.png" alt="Eat-Inn App">
+            </div>
+            <div class="phone-glow"></div>
+        </div>
+    </section>
 
     <main class="container">
         <section class="hero">
