@@ -15,6 +15,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Preload phone images for faster loading -->
+    <link rel="preload" href="/images/mockups/phone-center.png" as="image">
+    <link rel="preload" href="/images/mockups/phone-left.png" as="image">
+    <link rel="preload" href="/images/mockups/phone-right.png" as="image">
     <script src="/i18n/translations.js"></script>
     <script src="/i18n/i18n.js"></script>
     <style>
@@ -23,20 +28,17 @@
         :root {
             --bg: #000;
             --bg-elevated: #111;
-            --bg-glass: rgba(20, 20, 20, 0.8);
+            --bg-glass: rgba(10, 10, 10, 0.85);
             --text: #fff;
             --text-secondary: #888;
             --border: rgba(255,255,255,0.1);
-            --gradient-start: #667eea;
-            --gradient-end: #764ba2;
-            --accent: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
         }
 
         @media (prefers-color-scheme: light) {
             :root {
                 --bg: #fafafa;
                 --bg-elevated: #fff;
-                --bg-glass: rgba(255, 255, 255, 0.8);
+                --bg-glass: rgba(255, 255, 255, 0.85);
                 --text: #111;
                 --text-secondary: #666;
                 --border: rgba(0,0,0,0.08);
@@ -113,27 +115,24 @@
         nav a:hover { color: var(--text); }
 
         .btn {
-            background: var(--accent);
-            color: #fff;
+            background: var(--text);
+            color: var(--bg);
             padding: 10px 18px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 14px;
             text-decoration: none;
             border: none;
             cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            transition: transform 0.15s, opacity 0.15s;
         }
 
         .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            opacity: 0.9;
         }
 
         .btn:active {
             transform: scale(0.97);
-            opacity: 0.9;
         }
 
         .hamburger {
@@ -278,13 +277,18 @@
         }
 
         .card:hover {
-            border-color: var(--gradient-start);
+            border-color: rgba(255,255,255,0.2);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
         }
 
         .card:active {
             transform: scale(0.98);
+        }
+
+        @media (prefers-color-scheme: light) {
+            .card:hover {
+                border-color: rgba(0,0,0,0.15);
+            }
         }
 
         .card h3 {
@@ -361,16 +365,7 @@
             overflow: hidden;
         }
 
-        .contact::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--accent);
-        }
-
+        
         .contact h2 {
             font-size: 22px;
             font-weight: 600;
@@ -449,7 +444,7 @@
         }
 
         .mobile-menu a:hover {
-            color: var(--gradient-start);
+            opacity: 0.7;
         }
 
         .mobile-close {
@@ -530,13 +525,13 @@
     <section class="phone-showcase">
         <div class="phone-showcase-inner">
             <div class="phone phone-left">
-                <img src="/images/mockups/phone-left.png" alt="Eat-Inn App">
+                <img src="/images/mockups/phone-left.png" alt="Eat-Inn App" loading="eager" fetchpriority="high" decoding="async">
             </div>
             <div class="phone phone-center">
-                <img src="/images/mockups/phone-center.png" alt="Eat-Inn App">
+                <img src="/images/mockups/phone-center.png" alt="Eat-Inn App" loading="eager" fetchpriority="high" decoding="async">
             </div>
             <div class="phone phone-right">
-                <img src="/images/mockups/phone-right.png" alt="Eat-Inn App">
+                <img src="/images/mockups/phone-right.png" alt="Eat-Inn App" loading="eager" fetchpriority="high" decoding="async">
             </div>
             <div class="phone-glow"></div>
         </div>
