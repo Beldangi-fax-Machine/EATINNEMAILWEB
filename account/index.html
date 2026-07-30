@@ -182,14 +182,14 @@
             resize: vertical;
         }
 
-        .radio-group {
+        .checkbox-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-bottom: 24px;
         }
 
-        .radio-option {
+        .checkbox-option {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -201,18 +201,23 @@
             transition: all 0.2s;
         }
 
-        .radio-option:hover {
+        .checkbox-option:hover {
             border-color: var(--border-hover);
         }
 
-        .radio-option input[type="radio"] {
+        .checkbox-option:has(input:checked) {
+            border-color: var(--accent-primary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .checkbox-option input[type="checkbox"] {
             width: 18px;
             height: 18px;
             accent-color: var(--accent-primary);
             cursor: pointer;
         }
 
-        .radio-label {
+        .checkbox-label {
             font-size: 14px;
             color: var(--text-primary);
         }
@@ -359,22 +364,22 @@
 
                 <div class="section-title">What do you need help with?</div>
 
-                <div class="radio-group">
-                    <label class="radio-option">
-                        <input type="radio" name="requestType" value="delete" checked>
-                        <span class="radio-label">Delete my account and data</span>
+                <div class="checkbox-group">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="requestType" value="Delete my account and data">
+                        <span class="checkbox-label">Delete my account and data</span>
                     </label>
-                    <label class="radio-option">
-                        <input type="radio" name="requestType" value="data">
-                        <span class="radio-label">Request a copy of my data</span>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="requestType" value="Request a copy of my data">
+                        <span class="checkbox-label">Request a copy of my data</span>
                     </label>
-                    <label class="radio-option">
-                        <input type="radio" name="requestType" value="issue">
-                        <span class="radio-label">Report a bug or issue</span>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="requestType" value="Report a bug or issue">
+                        <span class="checkbox-label">Report a bug or issue</span>
                     </label>
-                    <label class="radio-option">
-                        <input type="radio" name="requestType" value="other">
-                        <span class="radio-label">Other account help</span>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="requestType" value="Other account help">
+                        <span class="checkbox-label">Other account help</span>
                     </label>
                 </div>
 
@@ -415,7 +420,10 @@
             const email = document.getElementById('userEmail').value.trim()
             const username = document.getElementById('userUsername').value.trim()
             const message = document.getElementById('userMessage').value.trim()
-            const requestType = document.querySelector('input[name="requestType"]:checked').value
+
+            // Get all checked options
+            const checkedBoxes = document.querySelectorAll('input[name="requestType"]:checked')
+            const requestTypes = Array.from(checkedBoxes).map(cb => cb.value)
 
             // Validation
             if (!name) {
@@ -428,28 +436,18 @@
                 document.getElementById('userEmail').focus()
                 return
             }
+            if (requestTypes.length === 0) {
+                alert('Please select at least one option for what you need help with')
+                return
+            }
             if (!message) {
                 alert('Please describe your request')
                 document.getElementById('userMessage').focus()
                 return
             }
 
-            // Build email subject and body
-            let subject = ''
-            switch (requestType) {
-                case 'delete':
-                    subject = 'Account Deletion Request'
-                    break
-                case 'data':
-                    subject = 'Data Export Request'
-                    break
-                case 'issue':
-                    subject = 'Bug Report / Issue'
-                    break
-                case 'other':
-                    subject = 'Account Support Request'
-                    break
-            }
+            // Build email subject
+            let subject = requestTypes.length === 1 ? requestTypes[0] : 'Account Support Request'
 
             const body = `Hello Eat-Inn Support,
 
@@ -460,7 +458,7 @@ Account Information:
 - Name: ${name}
 - Email: ${email}
 - Username: ${username || 'Not provided'}
-- Request Type: ${subject}
+- Request Type(s): ${requestTypes.join(', ')}
 
 Thank you.`
 
