@@ -888,12 +888,7 @@
     </div>
 
     <script>
-        // Initialize Supabase
-        const supabaseUrl = 'https://juodevmrlwkkfjygmqzc.supabase.co'
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
-
-        // DOM Elements
+        // DOM Elements (get these first before any async code)
         const loadingView = document.getElementById('loadingView')
         const loginView = document.getElementById('loginView')
         const accountView = document.getElementById('accountView')
@@ -901,6 +896,30 @@
         const emailForm = document.getElementById('emailForm')
         const loginMessage = document.getElementById('loginMessage')
         const helpView = document.getElementById('helpView')
+
+        // Check if Supabase loaded
+        if (!window.supabase) {
+            console.error('Supabase failed to load')
+            loadingView.classList.add('hidden')
+            loginView.classList.remove('hidden')
+            loginMessage.innerHTML = '<div class="message error">Failed to load. Please refresh the page.</div>'
+            throw new Error('Supabase not loaded')
+        }
+
+        // Initialize Supabase
+        const supabaseUrl = 'https://juodevmrlwkkfjygmqzc.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1b2Rldm1ybHdra2ZqeWdtcXpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1MTY5MTUsImV4cCI6MjA2MTA5MjkxNX0.YrvVy27pnHusfYEjLN4duLaGk3V-NDAt3Cv483FhNPs'
+
+        let supabase
+        try {
+            supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+        } catch (e) {
+            console.error('Failed to create Supabase client:', e)
+            loadingView.classList.add('hidden')
+            loginView.classList.remove('hidden')
+            loginMessage.innerHTML = '<div class="message error">Failed to initialize. Please refresh the page.</div>'
+            throw e
+        }
 
         // Current user data
         let currentUser = null
@@ -1301,16 +1320,28 @@ Thank you.`
             }
         }
 
-        // Initialize with timeout fallback
-        init()
+        // Global error handler
+        window.onerror = function(msg, url, line, col, error) {
+            console.error('Global error:', msg, error)
+            if (!loadingView.classList.contains('hidden')) {
+                showLoginView()
+            }
+            return false
+        }
 
-        // Fallback: if still loading after 5 seconds, show login
+        // Initialize with timeout fallback
+        init().catch(e => {
+            console.error('Init failed:', e)
+            showLoginView()
+        })
+
+        // Fallback: if still loading after 3 seconds, show login
         setTimeout(() => {
             if (!loadingView.classList.contains('hidden')) {
                 console.log('Loading timeout - showing login view')
                 showLoginView()
             }
-        }, 5000)
+        }, 3000)
     </script>
 </body>
 </html>
