@@ -147,27 +147,31 @@
         }
 
         .phone-center {
-            width: 280px;
+            width: 260px;
             z-index: 3;
             animation-delay: 0.1s;
         }
 
         .phone-left {
-            width: 240px;
-            margin-right: -40px;
+            width: 260px;
+            margin-right: -50px;
             z-index: 2;
             animation-delay: 0s;
         }
 
         .phone-right {
-            width: 240px;
-            margin-left: -40px;
+            width: 260px;
+            margin-left: -50px;
             z-index: 2;
             animation-delay: 0.2s;
         }
 
         .phone-right img {
             transform: scaleX(-1);
+        }
+
+        .phone-left img {
+            transform: scaleX(1);
         }
 
         /* Glow effect under phones */
@@ -391,10 +395,9 @@
 
         @media (max-width: 768px) {
             .phone-showcase { padding: 40px 0 20px; }
-            .phone-center { width: 200px; }
-            .phone-left, .phone-right { width: 170px; }
-            .phone-left { margin-right: -30px; }
-            .phone-right { margin-left: -30px; }
+            .phone-center, .phone-left, .phone-right { width: 180px; }
+            .phone-left { margin-right: -35px; }
+            .phone-right { margin-left: -35px; }
         }
 
         @media (max-width: 640px) {
@@ -405,18 +408,16 @@
             .contact { padding: 32px 24px; }
             footer .container { flex-direction: column; gap: 12px; text-align: center; }
             .phone-showcase { padding: 30px 0 10px; }
-            .phone-center { width: 160px; }
-            .phone-left, .phone-right { width: 130px; }
-            .phone-left { margin-right: -20px; }
-            .phone-right { margin-left: -20px; }
+            .phone-center, .phone-left, .phone-right { width: 140px; }
+            .phone-left { margin-right: -25px; }
+            .phone-right { margin-left: -25px; }
             .phone-glow { height: 80px; bottom: -40px; }
         }
 
         @media (max-width: 400px) {
-            .phone-center { width: 140px; }
-            .phone-left, .phone-right { width: 110px; }
-            .phone-left { margin-right: -15px; }
-            .phone-right { margin-left: -15px; }
+            .phone-center, .phone-left, .phone-right { width: 110px; }
+            .phone-left { margin-right: -18px; }
+            .phone-right { margin-left: -18px; }
         }
     </style>
 </head>
@@ -454,13 +455,13 @@
     <section class="phone-showcase">
         <div class="phone-showcase-inner">
             <div class="phone phone-left">
-                <img src="/images/mockups/phone-side.png" alt="Eat-Inn App">
+                <img src="/images/mockups/phone-left.png" alt="Eat-Inn App">
             </div>
             <div class="phone phone-center">
                 <img src="/images/mockups/phone-center.png" alt="Eat-Inn App">
             </div>
             <div class="phone phone-right">
-                <img src="/images/mockups/phone-side.png" alt="Eat-Inn App">
+                <img src="/images/mockups/phone-right.png" alt="Eat-Inn App">
             </div>
             <div class="phone-glow"></div>
         </div>
