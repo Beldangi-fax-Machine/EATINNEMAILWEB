@@ -24,13 +24,31 @@
             --bg-secondary: #111111;
             --bg-card: #1a1a1a;
             --bg-card-hover: #222222;
+            --bg-glass: rgba(20, 20, 20, 0.8);
             --text-primary: #ffffff;
             --text-secondary: #a3a3a3;
             --text-muted: #737373;
-            --accent-primary: #ffffff;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --accent: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
             --border: rgba(255,255,255,0.08);
             --border-hover: rgba(255,255,255,0.15);
             --success: #22c55e;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-primary: #fafafa;
+                --bg-secondary: #f0f0f0;
+                --bg-card: #ffffff;
+                --bg-card-hover: #f5f5f5;
+                --bg-glass: rgba(255, 255, 255, 0.8);
+                --text-primary: #111111;
+                --text-secondary: #666666;
+                --text-muted: #999999;
+                --border: rgba(0,0,0,0.08);
+                --border-hover: rgba(0,0,0,0.15);
+            }
         }
 
         body {
@@ -39,6 +57,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
         }
 
         .bg-effects {
@@ -225,18 +244,26 @@
         .btn-primary {
             width: 100%;
             padding: 16px 24px;
-            background: var(--accent-primary);
-            color: var(--bg-primary);
+            background: var(--accent);
+            color: #fff;
             border: none;
             border-radius: 12px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
             margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
-        .btn-primary:hover { opacity: 0.9; }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
 
         .divider {
             height: 1px;
@@ -471,6 +498,13 @@ Thank you.`
         document.querySelectorAll('input').forEach(input => {
             input.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') submitRequest()
+            })
+        })
+
+        // Haptic feedback
+        document.querySelectorAll('.btn-primary, .checkbox-option').forEach(el => {
+            el.addEventListener('click', () => {
+                if ('vibrate' in navigator) navigator.vibrate(10)
             })
         })
     </script>
